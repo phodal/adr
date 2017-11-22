@@ -19,7 +19,7 @@ npm install -g adr
 2. new
 
 ```
-adr new "????"
+adr new "创建项目"
 ```
 
 3. list
