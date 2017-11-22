@@ -19,10 +19,13 @@ export function list () {
     let numberLength = 4
     let markdownWithPrefixLength = 3
 
-    let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-    tableData.push(
-      [decision, moment(file.mtime).format('YYYY-MM-DD')]
-    )
+    let index = parseInt(fileName.substring(0, 3), 10)
+    if (index) {
+      let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
+      tableData.push(
+        [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD')]
+      )
+    }
     output = table(tableData)
   }
   console.log(output)
