@@ -1,7 +1,8 @@
 let fs = require('fs')
 let path = require('path')
 let mkdirp = require('mkdirp')
-let {getSavePath, getNewIndex} = require('./utils')
+
+import Utils from './utils'
 
 function generateFileName (originFileName) {
   return originFileName.replace(/，/g, '')
@@ -22,12 +23,12 @@ function createDecisions (name: string, savePath: string | any | void) {
     .replace(/{DATE}/g, newDate)
     .replace(/{STATUS}/g, '状态')
 
-  let newIndex = getNewIndex()
+  let newIndex = Utils.getNewIndex()
   fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
 }
 
 export function create (name: string) {
-  let savePath = getSavePath()
+  let savePath = Utils.getSavePath()
   console.log('保存的路径是：' + savePath)
   mkdirp(savePath, function (err) {
     if (err) console.error(err)

@@ -1,10 +1,11 @@
 let walkSync = require('walk-sync')
 let moment = require('moment')
 let {table} = require('table')
-let {getSavePath} = require('./utils')
+
+import Utils from './utils'
 
 export function list () {
-  let path = getSavePath()
+  let path = Utils.getSavePath()
   let output
   let tableData = [
     ['决策', '上次修改时间']

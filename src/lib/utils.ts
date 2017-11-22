@@ -2,7 +2,7 @@ let fs = require('fs')
 let walkSync = require('walk-sync')
 let workDir = process.cwd()
 
-export function getSavePath () {
+function getSavePath () {
   if (!fs.existsSync(workDir + '/.adr.json')) {
     return workDir + '/doc/ard/'
   }
@@ -21,7 +21,7 @@ function pad (num, size) {
   return s.substr(s.length - size)
 }
 
-export function getLastNumber () {
+function getLastNumber () {
   let path = getSavePath()
   let files = walkSync(path)
 
@@ -41,7 +41,7 @@ export function getLastNumber () {
   }
 }
 
-export function getNewIndex () {
+function getNewIndex () {
   let lastIndex = getLastNumber()
   if (!lastIndex) {
     return '001'
@@ -49,3 +49,11 @@ export function getNewIndex () {
   lastIndex = lastIndex + 1
   return pad(lastIndex, 3)
 }
+
+let Utils = {
+  getSavePath: getSavePath,
+  getNewIndex: getNewIndex,
+  getLastNumber: getLastNumber
+}
+
+export default Utils
