@@ -2,7 +2,7 @@
 
 let program = require('commander')
 let version = require('../../package.json').version
-let {create} = require('./lib/new')
+let {create} = require('./lib/create')
 let {list} = require('./lib/list')
 
 program
