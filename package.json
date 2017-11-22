@@ -58,8 +58,6 @@
     "copyfiles": "^1.2.0",
     "cpx": "^1.5.0",
     "gh-pages": "^1.0.0",
-    "hash.js": "^1.0.3",
-    "mkdirp": "^0.5.1",
     "npm-scripts-info": "^0.3.6",
     "nyc": "^11.0.3",
     "opn-cli": "^3.1.0",
@@ -112,6 +110,7 @@
     ]
   },
   "dependencies": {
+    "mkdirp": "^0.5.1",
     "commander": "^2.11.0",
     "tslib": "^1.6.0"
   }
