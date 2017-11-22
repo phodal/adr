@@ -110,8 +110,10 @@
     ]
   },
   "dependencies": {
-    "mkdirp": "^0.5.1",
     "commander": "^2.11.0",
-    "tslib": "^1.6.0"
+    "mkdirp": "^0.5.1",
+    "moment": "^2.19.2",
+    "tslib": "^1.6.0",
+    "walk": "^2.3.9"
   }
 }

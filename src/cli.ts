@@ -3,13 +3,11 @@
 let program = require('commander')
 let version = require('../../package.json').version
 let {create} = require('./lib/new')
-
-function createDecision (name) {
-  create(name)
-}
+let {list} = require('./lib/list')
 
 program
     .version(version)
     .usage('[options] <file ...>')
-    .option('-n, new <item>', 'Create New Decision', createDecision)
+    .option('-n, new <item>', 'Create New Decision', create)
+    .option('-l, list', 'List   New Decision', list)
     .parse(process.argv)

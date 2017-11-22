@@ -1,7 +1,10 @@
+
+
 let fs = require('fs')
 let path = require('path')
 let workDir = process.cwd()
 let mkdirp = require('mkdirp')
+let {getSavePath} = require('./utils')
 
 function generateFileName (originFileName) {
   return originFileName.replace(/，/g, '')
@@ -32,18 +35,4 @@ export function create (name: string) {
     if (err) console.error(err)
     else createDecisions(name, savePath)
   })
-}
-
-function getSavePath () {
-  if (!fs.existsSync(workDir + '/.adr.json')) {
-    return workDir + '/doc/ard/'
-  }
-
-  let config = fs.readFileSync(workDir + '/.adr.json', 'utf8')
-
-  try {
-    return JSON.parse(config).path
-  } catch (e) {
-    return console.error(e)
-  }
 }
