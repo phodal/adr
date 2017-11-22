@@ -7,11 +7,11 @@ export function create (name: string) {
   let month = dateObj.getUTCMonth() + 1
   let day = dateObj.getUTCDate()
   let year = dateObj.getUTCFullYear()
-  let newdate = year + '/' + month + '/' + day
+  let newDate = year + '/' + month + '/' + day
 
   let result = raw.replace(/{NUMBER}/g, '1')
     .replace(/{TITLE}/g, name)
-    .replace(/{DATE}/g, newdate)
+    .replace(/{DATE}/g, newDate)
     .replace(/{STATUS}/g, '状态')
 
   fs.writeFileSync('001-hello' + '.md', result)
