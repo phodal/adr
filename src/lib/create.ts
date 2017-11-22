@@ -27,7 +27,7 @@ function createDecisions (name: string, savePath: string | any | void) {
   let newIndex = Utils.getNewIndex()
   fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
 
-  let toc = generate()
+  let toc = generate('toc')
   fs.writeFileSync(savePath + 'README.md', toc)
 }
 

@@ -11,5 +11,5 @@ program
     .usage('[options]')
     .option('-n, new <item>', 'create New Decision', create)
     .option('-l, list', 'list New Decision', list)
-    .option('-g, generate', 'generate Toc', generate)
+    .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
     .parse(process.argv)

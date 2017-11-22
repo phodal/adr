@@ -2,7 +2,7 @@ let walkSync = require('walk-sync')
 
 import Utils from './utils'
 
-export function generate () {
+function generateToc () {
   let path = Utils.getSavePath()
   let output = '# Architecture Decision Records\n'
   let files = walkSync.entries(path)
@@ -23,4 +23,15 @@ export function generate () {
 
   console.log(output)
   return output
+}
+
+export function generate (type) {
+  if (type === 'toc') {
+    return generateToc()
+  }
+  if (type === 'graph') {
+    return generateToc()
+  }
+
+  console.log('\n error: type ' + type + ' current not supported')
 }
