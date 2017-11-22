@@ -6,3 +6,5 @@ node_js:
   - 4
 after_success:
   - yarn send-coverage
+notifications:
+  email: false
