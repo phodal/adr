@@ -3,6 +3,7 @@ let path = require('path')
 let mkdirp = require('mkdirp')
 
 import Utils from './utils'
+import {generate} from './generate'
 
 function generateFileName (originFileName) {
   return originFileName.replace(/，/g, '')
@@ -25,6 +26,9 @@ function createDecisions (name: string, savePath: string | any | void) {
 
   let newIndex = Utils.getNewIndex()
   fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
+
+  let toc = generate()
+  fs.writeFileSync(savePath + 'README.md', toc)
 }
 
 export function create (name: string) {

@@ -14,8 +14,11 @@ export function generate () {
     let markdownWithPrefixLength = 3
 
     let index = parseInt(fileName.substring(0, 3), 10)
-    let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-    output = output + '\n * ' + index + '. [' + decision + '](' + file.relativePath + ')'
+    if (index) {
+      let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
+      output = output + '\n* [' + index + '. ' + decision + '](' + file.relativePath + ')'
+
+    }
   }
 
   console.log(output)
