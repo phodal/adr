@@ -8,6 +8,7 @@ import {generate} from './generate'
 function generateFileName (originFileName) {
   return originFileName.replace(/，/g, '')
     .replace(/。/g, '')
+    .replace(/ /g, '-')
 }
 
 function createDecisions (name: string, savePath: string | any | void) {
