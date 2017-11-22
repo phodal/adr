@@ -1,7 +1,7 @@
 {
   "name": "adr",
-  "version": "0.0.4",
-  "description": "Command-line tools for working with Architecture Decision Records",
+  "version": "0.0.5",
+  "description": "轻量级架构记录工具 - Command-line tools for working with Architecture Decision Records",
   "main": "build/main/index.js",
   "bin": "build/main/cli.js",
   "typings": "build/main/index.d.ts",

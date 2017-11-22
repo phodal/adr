@@ -1,11 +1,11 @@
-ARD Tools in Node.js
+ARD Tools in Node.js（轻量级架构记录工具的 Node.js 实现）
 ===
 
 [![Build Status](https://travis-ci.org/phodal/adr.svg?branch=master)](https://travis-ci.org/phodal/adr)
 
-Inspired by [https://github.com/npryce/adr-tools](https://github.com/npryce/adr-tools)
+[![Markdown Improve](https://img.shields.io/badge/markdown--improve-Phodal-blue.svg)](https://github.com/phodal/markdown-improve)
 
-> Markdown Improve Tools Series
+Inspired by [https://github.com/npryce/adr-tools](https://github.com/npryce/adr-tools)
 
 Install
 ---
