@@ -20,7 +20,7 @@
     ],
     "baseUrl": ".", // required for "paths"
     "paths": {
-      "typescript-starter": ["src/index.ts"] // write tests without relative paths
+      "adr": ["src/index.ts"] // write tests without relative paths
     }
   },
   "include": [
