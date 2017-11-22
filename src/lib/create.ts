@@ -19,12 +19,12 @@ function createDecisions (name: string, savePath: string | any | void) {
   let newDate = year + '/' + month + '/' + day
   let fileName = generateFileName(name)
 
-  let result = raw.replace(/{NUMBER}/g, '1')
+  let newIndex = Utils.getNewIndex()
+  let result = raw.replace(/{NUMBER}/g, Utils.getLastNumber() + 1)
     .replace(/{TITLE}/g, name)
     .replace(/{DATE}/g, newDate)
     .replace(/{STATUS}/g, '状态')
 
-  let newIndex = Utils.getNewIndex()
   fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
 
   let toc = generate('toc')

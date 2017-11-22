@@ -43,6 +43,8 @@ function getLastNumber () {
 
     return lastNumber
   }
+
+  return 0
 }
 
 function getNewIndex () {
