@@ -25,6 +25,10 @@ function getLastNumber () {
   let path = getSavePath()
   let files = walkSync(path)
 
+  if (files[files.length - 1] === 'README.md') {
+    files.splice(-1,1)
+  }
+
   if (files && files.length > 0) {
     let lastNumber = parseInt(files[files.length - 1].substring(0, 3), 10)
 
