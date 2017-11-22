@@ -1,5 +1,5 @@
 let fs = require('fs')
-let walkSync = require('walk-sync');
+let walkSync = require('walk-sync')
 let workDir = process.cwd()
 
 export function getSavePath () {
@@ -16,23 +16,23 @@ export function getSavePath () {
   }
 }
 
-function pad(num, size) {
-  var s = "000" + num;
-  return s.substr(s.length-size);
+function pad (num, size) {
+  let s = '000' + num
+  return s.substr(s.length - size)
 }
 
 export function getLastNumber () {
   let path = getSavePath()
   let files = walkSync(path)
 
-  if(files && files.length > 0) {
-    let lastNumber = parseInt(files[files.length - 1].substring(0, 3))
+  if (files && files.length > 0) {
+    let lastNumber = parseInt(files[files.length - 1].substring(0, 3), 10)
 
-    for(let i = 0;i < files.length;i++) {
+    for (let i = 0;i < files.length;i++) {
       let file = files[i]
-      let number = file.substring(0, 3)
-      let int = parseInt(number);
-      if(int > lastNumber) {
+      let fileNumber = file.substring(0, 3)
+      let int = parseInt(fileNumber, 10)
+      if (int > lastNumber) {
         lastNumber = int
       }
     }
@@ -43,7 +43,7 @@ export function getLastNumber () {
 
 export function getNewIndex () {
   let lastIndex = getLastNumber()
-  if(!lastIndex) {
+  if (!lastIndex) {
     return '001'
   }
   lastIndex = lastIndex + 1

@@ -1,5 +1,4 @@
-let walkSync = require('walk-sync');
-let fs = require('fs')
+let walkSync = require('walk-sync')
 let moment = require('moment')
 let {table} = require('table')
 let {getSavePath} = require('./utils')
@@ -9,11 +8,11 @@ export function list () {
   let output
   let tableData = [
     ['决策', '上次修改时间']
-  ];
+  ]
 
   let files = walkSync.entries(path)
-  for(let i=0;i < files.length; i++) {
-    let file = files[i];
+  for (let i = 0;i < files.length; i++) {
+    let file = files[i]
     let fileName = file.relativePath
     let fileNameLength = fileName.length
     let numberLength = 4
