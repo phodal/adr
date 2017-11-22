@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "info": "npm-scripts-info",
-    "build": "trash build && yarn build:main && yarn build:module",
+    "build": "trash build && yarn build:main && yarn build:module && copyfiles -f ./src/lib/template.md ./build/main/lib/",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p config/exports/tsconfig.module.json",
     "build:tests": "trash test && node config/exports/build-tests.js",
@@ -55,6 +55,7 @@
     "browserify": "^14.1.0",
     "codecov": "^2.2.0",
     "concurrently": "^3.4.0",
+    "copyfiles": "^1.2.0",
     "cpx": "^1.5.0",
     "gh-pages": "^1.0.0",
     "hash.js": "^1.0.3",
