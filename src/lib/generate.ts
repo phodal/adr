@@ -1,16 +1,10 @@
 let walkSync = require('walk-sync')
-let moment = require('moment')
-let {table} = require('table')
 
 import Utils from './utils'
 
-export function list () {
+export function generate () {
   let path = Utils.getSavePath()
-  let output
-  let tableData = [
-    ['决策', '上次修改时间']
-  ]
-
+  let output = '# Architecture Decision Records\n'
   let files = walkSync.entries(path)
   for (let i = 0;i < files.length; i++) {
     let file = files[i]
@@ -19,13 +13,11 @@ export function list () {
     let numberLength = 4
     let markdownWithPrefixLength = 3
 
+    let index = parseInt(fileName.substring(0, 3), 10)
     let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-    tableData.push(
-      [decision, moment(file.mtime).format('YYYY-MM-DD')]
-    )
-    output = table(tableData)
+    output = output + '\n * ' + index + '. [' + decision + '](' + file.relativePath + ')'
   }
-  console.log(output)
 
+  console.log(output)
   return output
 }
