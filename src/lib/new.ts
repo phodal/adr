@@ -1,10 +1,9 @@
-
-
 let fs = require('fs')
+let walk = require('walk')
 let path = require('path')
 let workDir = process.cwd()
 let mkdirp = require('mkdirp')
-let {getSavePath} = require('./utils')
+let {getSavePath, getNewIndex} = require('./utils')
 
 function generateFileName (originFileName) {
   return originFileName.replace(/，/g, '')
@@ -25,7 +24,8 @@ function createDecisions (name: string, savePath: string | any | void) {
     .replace(/{DATE}/g, newDate)
     .replace(/{STATUS}/g, '状态')
 
-  fs.writeFileSync(savePath + '001-' + fileName + '.md', result)
+  let newIndex = getNewIndex()
+  fs.writeFileSync(savePath + newIndex  + '-' + fileName + '.md', result)
 }
 
 export function create (name: string) {
