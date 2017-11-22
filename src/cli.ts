@@ -8,8 +8,8 @@ let {generate} = require('./lib/generate')
 
 program
     .version(version)
-    .usage('[options] <file ...>')
-    .option('-n, new <item>', 'Create New Decision', create)
-    .option('-l, list', 'List New Decision', list)
-    .option('-g, generate', 'Generate Toc', generate)
+    .usage('[options]')
+    .option('-n, new <item>', 'create New Decision', create)
+    .option('-l, list', 'list New Decision', list)
+    .option('-g, generate', 'generate Toc', generate)
     .parse(process.argv)
