@@ -2,16 +2,14 @@
 
 let program = require('commander')
 let version = require('../../package.json').version
-let fs = require('fs')
-let path = require('path')
+let {create} = require('./lib/new')
 
-function parseInput (file) {
-  console.log(file)
-  return ''
+function createDecision (name) {
+  create(name)
 }
 
 program
     .version(version)
     .usage('[options] <file ...>')
-    .option('-i  [value]', 'An integer argument', parseInput)
+    .option('-n, new <item>', 'Create New Decision', createDecision)
     .parse(process.argv)

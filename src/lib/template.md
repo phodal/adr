@@ -1,10 +1,10 @@
-# {{NUMBER}}. {{TITLE}}
+# {NUMBER}. {TITLE}
 
-日期: {{DATE}}
+日期: {DATE}
 
 ## 状态
 
-{{STATUS}}
+{STATUS}
 
 ## 上下文
 
