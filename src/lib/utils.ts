@@ -62,7 +62,7 @@ function generateFileName (originFileName) {
   return originFileName.replace(/，/g, '')
     .replace(/。/g, '')
     .replace(/ /g, '-')
-    .replace(/?/g, '-')
+    .replace(/\?/g, '-')
 }
 
 let Utils = {

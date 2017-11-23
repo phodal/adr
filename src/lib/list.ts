@@ -15,6 +15,9 @@ export function list () {
   for (let i = 0;i < files.length; i++) {
     let file = files[i]
     let fileName = file.relativePath
+    if (fileName === 'README.md') {
+      break
+    }
     let fileNameLength = fileName.length
     let numberLength = Utils.DEFAULT_DIGITS + '-'.length
     let markdownWithPrefixLength = '.md'.length
