@@ -41,7 +41,7 @@ program.command('-init, init [language]', 'init ADR with language, e.g. ``adr in
           ],
           validate: function (answer) {
             if (answer.length < 1) {
-              return 'You must choose at least one topping.'
+              return 'You must choose at least one language.'
             }
             return true
           }
