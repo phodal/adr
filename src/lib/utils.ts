@@ -3,7 +3,7 @@ let walkSync = require('walk-sync')
 
 import {init} from './init'
 
-let DEFAULT_DIGITS = 3
+let DEFAULT_DIGITS = 4
 
 function getWorkDir () {
   return process.cwd()
