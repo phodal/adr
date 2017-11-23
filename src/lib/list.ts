@@ -1,6 +1,6 @@
 let walkSync = require('walk-sync')
 let moment = require('moment')
-let table = require('table')
+let Table = require('table')
 
 import Utils from './utils'
 
@@ -29,7 +29,7 @@ export function list () {
         [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD')]
       )
     }
-    output = table(tableData)
+    output = Table.table(tableData)
   }
   console.log(output)
 
