@@ -8,16 +8,51 @@ let {generate} = require('./lib/generate')
 let {update} = require('./lib/update')
 let {init} = require('./lib/init')
 let colors = require('colors')
+let inquirer = require('inquirer')
+let prompt = inquirer.createPromptModule()
 
 program
-    .version(version)
-    .usage('[options]')
-    .option('-init, init <language>', 'init ADR with language, e.g. ``adr init en``', init)
-    .option('-n, new <item>', 'create new ADR', create)
-    .option('-l, list', 'list all ADR', list)
-    .option('-u, update', 'update ADR', update)
-    .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
-    .parse(process.argv)
+  .version(version)
+  .usage('[options]')
+  .option('-n, new <item>', 'create new ADR', create)
+  .option('-l, list', 'list all ADR', list)
+  .option('-u, update', 'update ADR', update)
+  .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
+
+program.command('-init, init [language]', 'init ADR with language, e.g. ``adr init en``')
+  .action((env, options) => {
+    if (typeof options === 'string') {
+      init(options)
+    } else {
+      prompt([
+        {
+          type: 'checkbox',
+          message: 'Language',
+          name: 'language',
+          choices: [
+            {
+              name: '中文',
+              value: 'zh-cn'
+            },
+            {
+              name: 'English',
+              value: 'en'
+            }
+          ],
+          validate: function (answer) {
+            if (answer.length < 1) {
+              return 'You must choose at least one topping.'
+            }
+            return true
+          }
+        }
+      ]).then(results => {
+        init(results)
+      })
+    }
+  })
+
+program.parse(process.argv)
 
 if (!process.argv.slice(2).length) {
   program.outputHelp(colors.green)
