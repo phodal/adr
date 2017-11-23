@@ -1,7 +1,9 @@
 let fs = require('fs')
-let workDir = process.cwd()
+
+import Utils from './utils'
 
 export function init (language) {
+  let workDir = Utils.getWorkDir()
   let defaultConfig = {
     path: 'doc/ard/',
     language: 'en'

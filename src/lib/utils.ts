@@ -1,24 +1,27 @@
 let fs = require('fs')
 let walkSync = require('walk-sync')
-let workDir = process.cwd()
 
 import {init} from './init'
 
 let DEFAULT_DIGITS = 3
 
+function getWorkDir () {
+  return process.cwd()
+}
+
 function getSavePath () {
-  if (!fs.existsSync(workDir + '/.adr.json')) {
-    return workDir + '/doc/adr/'
+  if (!fs.existsSync(getWorkDir() + '/.adr.json')) {
+    return getWorkDir() + '/doc/adr/'
   }
 
-  let config = fs.readFileSync(workDir + '/.adr.json', 'utf8')
+  let config = fs.readFileSync(getWorkDir() + '/.adr.json', 'utf8')
 
   try {
     let adrConfig = JSON.parse(config)
     if (adrConfig.path) {
-      return workDir + '/' + adrConfig.path
+      return getWorkDir() + '/' + adrConfig.path
     }
-    return workDir + '/' + 'doc/ard/'
+    return getWorkDir() + '/' + 'doc/ard/'
   } catch (e) {
     return console.error(e)
   }
@@ -75,12 +78,12 @@ function generateFileName (originFileName) {
 }
 
 function getLanguage () {
-  if (!fs.existsSync(workDir + '/.adr.json')) {
+  if (!fs.existsSync(getWorkDir() + '/.adr.json')) {
     console.log('no .adr.json files: will create a config with English')
     init('en')
     return 'en'
   }
-  let config = fs.readFileSync(workDir + '/.adr.json', 'utf8')
+  let config = fs.readFileSync(getWorkDir() + '/.adr.json', 'utf8')
 
   try {
     let adrConfig = JSON.parse(config)
@@ -91,7 +94,6 @@ function getLanguage () {
   } catch (e) {
     return 'em'
   }
-
 }
 
 export default {
@@ -101,5 +103,6 @@ export default {
   getLastNumber: getLastNumber,
   createIndexByNumber: createIndexByNumber,
   getLanguage: getLanguage,
-  generateFileName: generateFileName
+  generateFileName: generateFileName,
+  getWorkDir: getWorkDir
 }
