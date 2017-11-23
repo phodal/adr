@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "info": "npm-scripts-info",
-    "build": "trash build && yarn build:main && yarn build:module && copyfiles -f ./src/lib/template.md ./build/main/lib/",
+    "build": "trash build && yarn build:main && yarn build:module && copyfiles -f ./src/lib/templates/* ./build/main/lib/templates/",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p config/exports/tsconfig.module.json",
     "build:tests": "trash test && node config/exports/build-tests.js",
