@@ -29,6 +29,7 @@ function generateToc () {
 function generateGraph () {
   let path = Utils.getSavePath()
   let output = 'digraph {\n  node [shape=plaintext];'
+  let outputArray = ['']
   let files = walkSync.entries(path)
   for (let i = 0;i < files.length; i++) {
     let file = files[i]
@@ -40,13 +41,14 @@ function generateGraph () {
     let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-      output = output + '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
+      outputArray[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
 
       if (index !== 1) {
-        output = output + '\n  _' + (index - 1) + ' -> _' + index + ' [style="dotted"];'
+        outputArray[files.length + index] = '\n  _' + (index - 1) + ' -> _' + index + ' [style="dotted"];'
       }
     }
   }
+  output = output + outputArray.join('')
   output = output + '\n}\n'
   console.log(output)
   return output
