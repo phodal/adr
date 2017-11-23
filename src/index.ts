@@ -1,6 +1,15 @@
-export * from './lib/create'
-export * from './lib/list'
-export * from './lib/utils'
-export * from './lib/update'
-export * from './lib/generate'
-export * from './lib/init'
+import {create} from './lib/create'
+import {list} from './lib/list'
+import Utils from './lib/utils'
+import {update} from './lib/update'
+import {generate} from './lib/generate'
+import {init} from './lib/init'
+
+export default {
+  create: create,
+  list: list,
+  Utils: Utils,
+  update: update,
+  generate: generate,
+  init: init
+}

@@ -65,7 +65,10 @@ function getNewIndex () {
 }
 
 function generateFileName (originFileName) {
-  return originFileName.replace(/，/g, '')
+  return originFileName.toLowerCase().trim()
+    .replace(/[\s_-]+/g, '-') // swap any length of whitespace, underscore, hyphen characters with a single _
+    .replace(/^-+|-+$/g, '') // remove leading, trailing -
+    .replace(/，/g, '')
     .replace(/。/g, '')
     .replace(/ /g, '-')
     .replace(/\?/g, '-')
@@ -91,7 +94,7 @@ function getLanguage () {
 
 }
 
-let Utils = {
+export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
   getNewIndex: getNewIndex,
@@ -100,5 +103,3 @@ let Utils = {
   getLanguage: getLanguage,
   generateFileName: generateFileName
 }
-
-export default Utils
