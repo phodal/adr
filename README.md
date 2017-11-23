@@ -5,9 +5,16 @@ ARD：轻量级架构记录工具
 
 [![Markdown Improve](https://img.shields.io/badge/markdown--improve-Phodal-blue.svg)](https://github.com/phodal/markdown-improve)
 
-Inspired by [https://github.com/npryce/adr-tools](https://github.com/npryce/adr-tools)
+Inspired by [https://github.com/npryce/adr-tools](https://github.com/npryce/adr-tools), but supported Windows.
 
 ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)
+
+**Features**
+
+ - Support on Node.js OS: Windows, Linux, Mac OS (Done)
+ - i18n: English, 中文 (Done)
+ - status query (doing)
+ - better list view (Done)
 
 Install
 ---
@@ -109,4 +116,4 @@ License
 
 [![Phodal's Idea](http://brand.phodal.com/shields/idea-small.svg)](http://ideas.phodal.com/)
 
-? 2017 A [Phodal Huang](https://www.phodal.com)'s [Idea](http://github.com/phodal/ideas).  This code is distributed under the MIT license. See `LICENSE` in this directory.
+@ 2017 A [Phodal Huang](https://www.phodal.com)'s [Idea](http://github.com/phodal/ideas).  This code is distributed under the MIT license. See `LICENSE` in this directory.
