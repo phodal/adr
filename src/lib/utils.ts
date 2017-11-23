@@ -92,7 +92,8 @@ function getLanguage () {
     }
     return 'en'
   } catch (e) {
-    return 'em'
+    console.error(e)
+    return 'en'
   }
 }
 
