@@ -48,7 +48,7 @@
     "release": "Clean, build, test, publish docs, and prepare release (a one-step publish process)"
   },
   "engines": {
-    "node": ">=4.5"
+    "node": ">=6.0"
   },
   "devDependencies": {
     "@types/node": "^8.0.4",
