@@ -1,4 +1,4 @@
-ARD Tools in Node.js（轻量级架构记录工具的 Node.js 实现）
+ARD：轻量级架构记录工具
 ===
 
 [![Build Status](https://travis-ci.org/phodal/adr.svg?branch=master)](https://travis-ci.org/phodal/adr)
@@ -6,6 +6,8 @@ ARD Tools in Node.js（轻量级架构记录工具的 Node.js 实现）
 [![Markdown Improve](https://img.shields.io/badge/markdown--improve-Phodal-blue.svg)](https://github.com/phodal/markdown-improve)
 
 Inspired by [https://github.com/npryce/adr-tools](https://github.com/npryce/adr-tools)
+
+ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)
 
 Install
 ---
