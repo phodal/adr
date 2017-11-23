@@ -24,7 +24,7 @@ function getSavePath () {
   }
 }
 
-function pad (num) {
+function createIndexByNumber (num) {
   let s = '00000000' + num
   return s.substr(s.length - DEFAULT_DIGITS)
 }
@@ -58,10 +58,10 @@ function getLastNumber () {
 function getNewIndex () {
   let lastIndex = getLastNumber()
   if (!lastIndex) {
-    return pad(1)
+    return createIndexByNumber(1)
   }
   lastIndex = lastIndex + 1
-  return pad(lastIndex)
+  return createIndexByNumber(lastIndex)
 }
 
 function generateFileName (originFileName) {
@@ -99,7 +99,7 @@ export default {
   getSavePath: getSavePath,
   getNewIndex: getNewIndex,
   getLastNumber: getLastNumber,
-  createIndexByNumber: pad,
+  createIndexByNumber: createIndexByNumber,
   getLanguage: getLanguage,
   generateFileName: generateFileName
 }
