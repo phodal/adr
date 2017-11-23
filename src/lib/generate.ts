@@ -11,7 +11,7 @@ function generateToc () {
     let fileName = file.relativePath
     let fileNameLength = fileName.length
     let numberLength = 4
-    let markdownWithPrefixLength = 3
+    let markdownWithPrefixLength = '.md'.length
 
     let index = parseInt(fileName.substring(0, 3), 10)
     if (index) {
@@ -34,7 +34,7 @@ function generateGraph () {
     let fileName = file.relativePath
     let fileNameLength = fileName.length
     let numberLength = 4
-    let markdownWithPrefixLength = 3
+    let markdownWithPrefixLength = '.md'.length
 
     let index = parseInt(fileName.substring(0, 3), 10)
     if (index) {
