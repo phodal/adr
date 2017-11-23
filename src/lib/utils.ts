@@ -69,12 +69,31 @@ function generateFileName (originFileName) {
     .replace(/\?/g, '-')
 }
 
+function getLanguage () {
+  if (!fs.existsSync(workDir + '/.adr.json')) {
+    return 'en'
+  }
+  let config = fs.readFileSync(workDir + '/.adr.json', 'utf8')
+
+  try {
+    let adrConfig = JSON.parse(config)
+    if (adrConfig.language) {
+      return adrConfig.language
+    }
+    return 'en'
+  } catch (e) {
+    return 'em'
+  }
+
+}
+
 let Utils = {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
   getNewIndex: getNewIndex,
   getLastNumber: getLastNumber,
   createIndexByNumber: pad,
+  getLanguage: getLanguage,
   generateFileName: generateFileName
 }
 

@@ -6,7 +6,8 @@ import Utils from './utils'
 import {generate} from './generate'
 
 function createDecisions (name: string, savePath: string | any | void) {
-  let raw = fs.readFileSync(__dirname + path.normalize('/templates/zh-cn.md'), 'utf8')
+  let language = Utils.getLanguage()
+  let raw = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
   let dateObj = new Date()
   let month = dateObj.getUTCMonth() + 1
   let day = dateObj.getUTCDate()
