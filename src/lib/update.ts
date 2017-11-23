@@ -16,8 +16,8 @@ export function update () {
     let filePath = path + fileName
     let fileData = fs.readFileSync(filePath, 'utf8')
     let firstLine = fileData.split('\n')[0]
-    let title = firstLine.replace(/\#\s\d+\.\s/g, '')
-    let indexRegex = /\#\s(\d+)\.\s/.exec(firstLine)
+    let title = firstLine.replace(/#\s\d+\.\s/g, '')
+    let indexRegex = /#\s(\d+)\.\s/.exec(firstLine)
     if (!indexRegex || indexRegex.length < 1) {
       break
     }

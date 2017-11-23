@@ -8,7 +8,7 @@ let DEFAULT_DIGITS = 3
 
 function getSavePath () {
   if (!fs.existsSync(workDir + '/.adr.json')) {
-    return workDir + '/doc/ard/'
+    return workDir + '/doc/adr/'
   }
 
   let config = fs.readFileSync(workDir + '/.adr.json', 'utf8')
