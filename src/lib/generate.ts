@@ -5,6 +5,7 @@ import Utils from './utils'
 function generateToc () {
   let path = Utils.getSavePath()
   let output = '# Architecture Decision Records\n'
+  let outputArray = ['']
   let files = walkSync.entries(path)
   for (let i = 0;i < files.length; i++) {
     let file = files[i]
@@ -16,10 +17,10 @@ function generateToc () {
     let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-      output = output + '\n* [' + index + '. ' + decision + '](' + file.relativePath + ')'
-
+      outputArray[index] = '\n* [' + index + '. ' + decision + '](' + file.relativePath + ')'
     }
   }
+  output = output + outputArray.join('')
 
   console.log(output)
   return output
