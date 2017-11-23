@@ -26,7 +26,7 @@ export function update () {
     let decisionInfile = Utils.generateFileName(title)
     let newFileName = indexString + '-' + decisionInfile + '.md'
     if (fileName !== newFileName) {
-      console.log(fileName + ' 变成： ' + newFileName)
+      console.log(fileName + ' -> ' + newFileName)
       fs.renameSync(path + fileName, path + newFileName)
     }
   }
