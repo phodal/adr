@@ -18,13 +18,23 @@ Install
 npm install -g adr
 ```
 
-2. new
+2. init
 
 ```
-adr new "创建项目"
+adr init <language>
 ```
 
-3. list
+e.x: ``adr init 'en'``
+
+3. new
+
+```
+adr new <decision>
+```
+
+e.x: ``adr new "创建项目"``
+
+4. list
 
 ```
 adr list
@@ -44,7 +54,7 @@ result:
 ╚══════════════════════╧══════════════╝
 ```
 
-4. generate toc
+5. generate toc
 
 ```
 adr generate toc
@@ -60,7 +70,7 @@ results:
 * [3. 图形生成](003-图形生成.md)
 ```
 
-5. generate graph
+6. generate graph
 
 ```
 adr generate graph
@@ -79,11 +89,20 @@ digraph {
 }
 ```
 
-6. update filename by title
+7. update filename by title
 
 ```
 adr update
 ```
+
+Config
+---
+
+Current:
+
+**Language**
+
+**workdir**
 
 License
 ---

@@ -3,6 +3,7 @@ let workDir = process.cwd()
 
 export function init (language) {
   let defaultConfig = {
+    path: 'doc/ard/',
     language: 'en'
   }
   if (language === 'zh-cn' || language === 'chinese') {
