@@ -1,6 +1,6 @@
 let sinon = require('sinon')
 let fs = require('fs')
-let proxyquire = require('proxyquire')
+// let proxyquire = require('proxyquire')
 import { test } from 'ava'
 import ADR from 'adr'
 
