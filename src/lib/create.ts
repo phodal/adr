@@ -18,7 +18,6 @@ function createDecisions (name: string, savePath: string | any | void) {
   let result = raw.replace(/{NUMBER}/g, Utils.getLastNumber() + 1)
     .replace(/{TITLE}/g, name)
     .replace(/{DATE}/g, newDate)
-    .replace(/{STATUS}/g, '状态')
 
   fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
 
