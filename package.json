@@ -30,7 +30,8 @@
     "docs:publish": "yarn docs:html && gh-pages -d build/docs",
     "changelog": "standard-version",
     "release": "yarn reset && yarn test && yarn docs:publish && yarn changelog",
-    "reset": "git clean -dfx && git reset --hard && yarn"
+    "reset": "git clean -dfx && git reset --hard && yarn",
+    "cli": "node build/main/cli.js"
   },
   "scripts-info": {
     "info": "Display information about the scripts",
