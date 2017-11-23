@@ -2,6 +2,8 @@ let fs = require('fs')
 let walkSync = require('walk-sync')
 let workDir = process.cwd()
 
+let DEFAULT_DIGITS = 3
+
 function getSavePath () {
   if (!fs.existsSync(workDir + '/.adr.json')) {
     return workDir + '/doc/ard/'
@@ -17,7 +19,7 @@ function getSavePath () {
 }
 
 function pad (num, size) {
-  let s = '000' + num
+  let s = '00000000' + num
   return s.substr(s.length - size)
 }
 
@@ -30,11 +32,11 @@ function getLastNumber () {
   }
 
   if (files && files.length > 0) {
-    let lastNumber = parseInt(files[files.length - 1].substring(0, 3), 10)
+    let lastNumber = parseInt(files[files.length - 1].substring(0, DEFAULT_DIGITS), 10)
 
     for (let i = 0;i < files.length;i++) {
       let file = files[i]
-      let fileNumber = file.substring(0, 3)
+      let fileNumber = file.substring(0, DEFAULT_DIGITS)
       let int = parseInt(fileNumber, 10)
       if (int > lastNumber) {
         lastNumber = int
@@ -50,13 +52,14 @@ function getLastNumber () {
 function getNewIndex () {
   let lastIndex = getLastNumber()
   if (!lastIndex) {
-    return '001'
+    return pad(1, DEFAULT_DIGITS)
   }
   lastIndex = lastIndex + 1
-  return pad(lastIndex, 3)
+  return pad(lastIndex, DEFAULT_DIGITS)
 }
 
 let Utils = {
+  DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
   getNewIndex: getNewIndex,
   getLastNumber: getLastNumber

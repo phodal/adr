@@ -10,10 +10,10 @@ function generateToc () {
     let file = files[i]
     let fileName = file.relativePath
     let fileNameLength = fileName.length
-    let numberLength = 4
+    let numberLength = Utils.DEFAULT_DIGITS + '-'.length
     let markdownWithPrefixLength = '.md'.length
 
-    let index = parseInt(fileName.substring(0, 3), 10)
+    let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       output = output + '\n* [' + index + '. ' + decision + '](' + file.relativePath + ')'
@@ -33,10 +33,10 @@ function generateGraph () {
     let file = files[i]
     let fileName = file.relativePath
     let fileNameLength = fileName.length
-    let numberLength = 4
+    let numberLength = Utils.DEFAULT_DIGITS + '-'.length
     let markdownWithPrefixLength = '.md'.length
 
-    let index = parseInt(fileName.substring(0, 3), 10)
+    let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       output = output + '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
