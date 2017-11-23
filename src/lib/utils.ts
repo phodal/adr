@@ -18,9 +18,9 @@ function getSavePath () {
   }
 }
 
-function pad (num, size) {
+function pad (num) {
   let s = '00000000' + num
-  return s.substr(s.length - size)
+  return s.substr(s.length - DEFAULT_DIGITS)
 }
 
 function getLastNumber () {
@@ -52,10 +52,10 @@ function getLastNumber () {
 function getNewIndex () {
   let lastIndex = getLastNumber()
   if (!lastIndex) {
-    return pad(1, DEFAULT_DIGITS)
+    return pad(1)
   }
   lastIndex = lastIndex + 1
-  return pad(lastIndex, DEFAULT_DIGITS)
+  return pad(lastIndex)
 }
 
 function generateFileName (originFileName) {
@@ -69,6 +69,7 @@ let Utils = {
   getSavePath: getSavePath,
   getNewIndex: getNewIndex,
   getLastNumber: getLastNumber,
+  createIndexByNumber: pad,
   generateFileName: generateFileName
 }
 

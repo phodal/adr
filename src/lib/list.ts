@@ -19,7 +19,7 @@ export function list () {
     let numberLength = Utils.DEFAULT_DIGITS + '-'.length
     let markdownWithPrefixLength = '.md'.length
 
-    let index = parseInt(fileName.substring(0, 3), 10)
+    let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       tableData.push(
