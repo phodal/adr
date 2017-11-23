@@ -1,6 +1,6 @@
 let walkSync = require('walk-sync')
 let moment = require('moment')
-let {table} = require('table')
+let table = require('table')
 
 import Utils from './utils'
 
