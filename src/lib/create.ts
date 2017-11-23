@@ -5,12 +5,6 @@ let mkdirp = require('mkdirp')
 import Utils from './utils'
 import {generate} from './generate'
 
-function generateFileName (originFileName) {
-  return originFileName.replace(/，/g, '')
-    .replace(/。/g, '')
-    .replace(/ /g, '-')
-}
-
 function createDecisions (name: string, savePath: string | any | void) {
   let raw = fs.readFileSync(__dirname + path.normalize('/template.md'), 'utf8')
   let dateObj = new Date()
@@ -18,7 +12,7 @@ function createDecisions (name: string, savePath: string | any | void) {
   let day = dateObj.getUTCDate()
   let year = dateObj.getUTCFullYear()
   let newDate = year + '/' + month + '/' + day
-  let fileName = generateFileName(name)
+  let fileName = Utils.generateFileName(name)
 
   let newIndex = Utils.getNewIndex()
   let result = raw.replace(/{NUMBER}/g, Utils.getLastNumber() + 1)

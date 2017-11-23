@@ -58,11 +58,18 @@ function getNewIndex () {
   return pad(lastIndex, DEFAULT_DIGITS)
 }
 
+function generateFileName (originFileName) {
+  return originFileName.replace(/，/g, '')
+    .replace(/。/g, '')
+    .replace(/ /g, '-')
+}
+
 let Utils = {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
   getNewIndex: getNewIndex,
-  getLastNumber: getLastNumber
+  getLastNumber: getLastNumber,
+  generateFileName: generateFileName
 }
 
 export default Utils
