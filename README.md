@@ -79,6 +79,12 @@ digraph {
 }
 ```
 
+6. update filename by title
+
+```
+adr update
+```
+
 License
 ---
 
