@@ -12,7 +12,11 @@ function getSavePath () {
   let config = fs.readFileSync(workDir + '/.adr.json', 'utf8')
 
   try {
-    return JSON.parse(config).path
+    let adrConfig = JSON.parse(config)
+    if (adrConfig.path) {
+      return adrConfig.path
+    }
+    return workDir + '/doc/ard/'
   } catch (e) {
     return console.error(e)
   }
