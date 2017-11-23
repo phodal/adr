@@ -1,5 +1,6 @@
 let sinon = require('sinon')
 let fs = require('fs')
+let proxyquire = require('proxyquire')
 import { test } from 'ava'
 import ADR from 'adr'
 
@@ -47,6 +48,31 @@ test('getSavePath: when exist config file', t => {
   let dir = Utils.getSavePath() ? Utils.getSavePath() : ''
   if (!dir) dir = ''
   t.deepEqual(dir.indexOf('some-path') > -1, true)
+  fsExistSpy.restore()
+  fsReadSpy.restore()
+})
+
+// test('getLastNumber: when exist config file', t => {
+//   let walkSync = sinon.stub()
+//   proxyquire('walk-sync', {
+//     'default': walkSync
+//   })
+//
+//   let lastNumber = Utils.getLastNumber()
+//   console.log(lastNumber)
+//   // walkSync.restore()
+// })
+
+test('getLanguage: should enable get language', t => {
+  let fsExistSpy = sinon.stub(fs, 'existsSync').returns(true)
+  let fsReadSpy = sinon.stub(fs, 'readFileSync').returns(JSON.stringify({
+    path: 'some',
+    language: 'test'
+  }))
+
+  let language = Utils.getLanguage() ? Utils.getLanguage() : ''
+  if (!language) language = ''
+  t.deepEqual(language, 'test')
   fsExistSpy.restore()
   fsReadSpy.restore()
 })
