@@ -7,13 +7,18 @@ let {list} = require('./lib/list')
 let {generate} = require('./lib/generate')
 let {update} = require('./lib/update')
 let {init} = require('./lib/init')
+let colors = require('colors')
 
 program
     .version(version)
     .usage('[options]')
-    .option('-init, init <language>', 'init ADR', init)
-    .option('-n, new <item>', 'create New Decision', create)
-    .option('-l, list', 'list New Decision', list)
-    .option('-u, update', 'update decision', update)
+    .option('-init, init <language>', 'init ADR with language, e.g. ``adr init en``', init)
+    .option('-n, new <item>', 'create new ADR', create)
+    .option('-l, list', 'list all ADR', list)
+    .option('-u, update', 'update ADR', update)
     .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
     .parse(process.argv)
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp(colors.green)
+}
