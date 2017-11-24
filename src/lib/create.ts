@@ -22,7 +22,7 @@ function createDecisions (name: string, savePath: string | any | void) {
 
   fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
 
-  let toc = generate('toc')
+  let toc = generate('toc', {output: false})
   fs.writeFileSync(savePath + 'README.md', toc)
 }
 

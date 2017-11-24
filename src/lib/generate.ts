@@ -2,7 +2,7 @@ let walkSync = require('walk-sync')
 
 import Utils from './utils'
 
-function generateToc () {
+function generateToc (options?: object) {
   let path = Utils.getSavePath()
   let output = '# Architecture Decision Records\n'
   let outputArray = ['']
@@ -22,7 +22,9 @@ function generateToc () {
   }
   output = output + outputArray.join('')
 
-  console.log(output)
+  if (!(!!options && options['output'])) {
+    console.log(output)
+  }
   return output
 }
 
@@ -54,9 +56,9 @@ function generateGraph () {
   return output
 }
 
-export function generate (type) {
+export function generate (type, options?: object) {
   if (type === 'toc') {
-    return generateToc()
+    return generateToc(options)
   }
   if (type === 'graph') {
     return generateGraph()
