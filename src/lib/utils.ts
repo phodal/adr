@@ -126,6 +126,14 @@ function getIndexByString (fileName: string) {
   return parseInt(fileName.substring(0, numberLength), 10)
 }
 
+function createDateString () {
+  let dateObj = new Date()
+  let month = dateObj.getUTCMonth() + 1
+  let day = dateObj.getUTCDate()
+  let year = dateObj.getUTCFullYear()
+  return year + '-' + month + '-' + day;
+}
+
 export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
@@ -136,6 +144,7 @@ export default {
   generateFileName: generateFileName,
   getWorkDir: getWorkDir,
   getI18n: getI18n,
+  createDateString: createDateString,
   getNumberLength: getNumberLength,
   getIndexByString: getIndexByString
 }
