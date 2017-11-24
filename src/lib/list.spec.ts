@@ -1,5 +1,4 @@
 let sinon = require('sinon')
-let fs = require('fs')
 let walkSync = require('walk-sync')
 import { test } from 'ava'
 import ADR from 'adr'
