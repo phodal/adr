@@ -1,6 +1,9 @@
 let walkSync = require('walk-sync')
 let moment = require('moment')
+let fs = require('fs')
+let path = require('path')
 let Table = require('table')
+let md = require('markdown').markdown
 
 import Utils from './utils'
 
@@ -23,6 +26,8 @@ export function list () {
     let markdownWithPrefixLength = '.md'.length
 
     let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
+    let filePath = path + fileName
+    getStatus(filePath)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       tableData.push(
@@ -31,7 +36,73 @@ export function list () {
     }
     output = Table.table(tableData)
   }
-  console.log(output)
+  // console.log(output)
 
   return output
+}
+
+function getStatusSection (tree: any, templateStatusHeader: string) {
+  let statusFlag = false
+  let statusSection = ['']
+  for (let i = 0; i < tree.length; i++) {
+    let node = tree[i]
+    if (node && node[0] === 'header') {
+      if (node[1] && node[1]['level'] && node[1]['level'] === 2) {
+        if (node[2] === templateStatusHeader) {
+          statusFlag = true
+        } else {
+          statusFlag = false
+        }
+      }
+    }
+
+    if (statusFlag) {
+      statusSection.push(node)
+    }
+  }
+  let removeFirstAndSecondItem = function () {
+    if (statusSection.length > 2) {
+      statusSection.shift()
+      statusSection.shift()
+    }
+  }
+
+  removeFirstAndSecondItem()
+  return statusSection
+}
+
+function getStatus (filePath) {
+  let fileData
+  try {
+    fileData = fs.readFileSync(filePath, 'utf8')
+  } catch (error) {
+    return console.log(error)
+  }
+  let tree = md.parse(fileData)
+  let templateStatusHeader = getTemplateStatusHeader()
+  let statusSection = getStatusSection(tree, templateStatusHeader)
+
+  console.log(statusSection)
+}
+
+function getTemplateStatusHeader () {
+  let language = Utils.getLanguage()
+  let template = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
+  let tree = md.parse(template)
+
+  let header2Count = 0
+  let statusHeader = ''
+  for (let i = 0; i < tree.length; i++) {
+    let node = tree[i]
+    if (node && node[0] === 'header') {
+      if (node[1] && node[1]['level'] && node[1]['level'] === 2) {
+        header2Count++
+      }
+      if (header2Count === 1) {
+        statusHeader = node[2]
+      }
+    }
+  }
+
+  return statusHeader
 }

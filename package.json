@@ -116,6 +116,7 @@
     "colors": "^1.1.2",
     "commander": "^2.11.0",
     "inquirer": "^4.0.0",
+    "markdown": "^0.5.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.19.2",
     "table": "^4.0.2",
