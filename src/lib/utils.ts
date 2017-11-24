@@ -103,13 +103,13 @@ function getI18n () {
       decision: 'Decision',
       modifiedDate: 'Last Modified Date',
       lastStatus: 'Last Status',
-      logSavePath: '保存路径：'
+      logSavePath: 'Save Path:'
     },
     'zh-cn': {
       decision: '决策',
       modifiedDate: '上次修改时间',
       lastStatus: '最后状态',
-      logSavePath: 'Save Path:'
+      logSavePath: '保存路径：'
     }
   }
 
