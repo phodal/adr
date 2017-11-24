@@ -34,18 +34,17 @@ function createIndexByNumber (num) {
 
 function getLastNumber () {
   let path = getSavePath()
-  let files = walkSync(path)
-
-  if (files[files.length - 1] === 'README.md') {
-    files.splice(-1,1)
-  }
+  let files = walkSync.entries(path)
+  let lastNumber = 0
 
   if (files && files.length > 0) {
-    let lastNumber = parseInt(files[files.length - 1].substring(0, DEFAULT_DIGITS), 10)
-
     for (let i = 0;i < files.length;i++) {
-      let file = files[i]
-      let fileNumber = file.substring(0, DEFAULT_DIGITS)
+      let fileName = files[i].relativePath
+      if (fileName === 'README.md') {
+        break
+      }
+
+      let fileNumber = fileName.substring(0, DEFAULT_DIGITS)
       let int = parseInt(fileNumber, 10)
       if (int > lastNumber) {
         lastNumber = int
