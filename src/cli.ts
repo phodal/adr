@@ -21,7 +21,7 @@ program
 
 program.command('-init, init [language]', 'init ADR with language, e.g. ``adr init en``')
   .action((env, options) => {
-    if(env === 'status') {
+    if (env === 'status') {
       return program.outputHelp(colors.green)
     }
     if (typeof options === 'string') {
