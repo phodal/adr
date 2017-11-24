@@ -6,16 +6,12 @@ import Utils from './utils'
 
 function getStatusSection (tree: any, templateStatusHeader: string) {
   let statusFlag = false
-  let statusSection = ['']
+  let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
     if (node && node[0] === 'header') {
       if (node[1] && node[1]['level'] && node[1]['level'] === 2) {
-        if (node[2] === templateStatusHeader) {
-          statusFlag = true
-        } else {
-          statusFlag = false
-        }
+        statusFlag = node[2] === templateStatusHeader
       }
     }
 
@@ -23,14 +19,7 @@ function getStatusSection (tree: any, templateStatusHeader: string) {
       statusSection.push(node)
     }
   }
-  let removeFirstAndSecondItem = function () {
-    if (statusSection.length > 2) {
-      statusSection.shift()
-      statusSection.shift()
-    }
-  }
 
-  removeFirstAndSecondItem()
   return statusSection
 }
 
