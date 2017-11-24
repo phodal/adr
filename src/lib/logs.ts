@@ -24,14 +24,12 @@ let getAllFilesName = function () {
 
 function createLogsHeader (allStatus: string[]) {
   let tableHeader: string[] = []
-  for (let i = 0; i < allStatus.length; i++) {
-    tableHeader = []
-    let currentStatus = allStatus[i]
-    let splitCurrentStatus = currentStatus.split(' ')
 
-    for (let i = 0; i < splitCurrentStatus.length; i++) {
-      tableHeader.push(' - ')
-    }
+  let currentStatus = allStatus[0]
+  let splitCurrentStatus = currentStatus.split(' ')
+
+  for (let i = 0; i < splitCurrentStatus.length; i++) {
+    tableHeader.push(' - ')
   }
 
   return tableHeader
