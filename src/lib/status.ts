@@ -32,8 +32,7 @@ function getAllStatus (filePath): string[] {
     return []
   }
   let tree = md.parse(fileData)
-  let templateStatusHeader = getTemplateStatusHeader()
-  let statusSections = getStatusSection(tree, templateStatusHeader)
+  let statusSections = getStatusSection(tree, getTemplateStatusTitle())
   let lastStatusSection = statusSections[statusSections.length - 1]
   if (!(lastStatusSection && lastStatusSection[1])) {
     return []
@@ -48,7 +47,7 @@ function getLatestStatus (filePath) {
   return allStatus[allStatus.length - 1]
 }
 
-function getTemplateStatusHeader () {
+function getTemplateStatusTitle () {
   let language = Utils.getLanguage()
   let template = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
   let tree = md.parse(template)
