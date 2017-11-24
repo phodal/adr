@@ -1,4 +1,5 @@
 let walkSync = require('walk-sync')
+let Table = require('table')
 
 import Utils from './utils'
 import Status from './status'
@@ -21,14 +22,45 @@ let getAllFilesName = function () {
   return outputArray
 }
 
+function createLogsHeader (allStatus: string[]) {
+  let tableHeader: string[] = []
+  for (let i = 0; i < allStatus.length; i++) {
+    tableHeader = []
+    let currentStatus = allStatus[i]
+    let splitCurrentStatus = currentStatus.split(' ')
+
+    for (let i = 0; i < splitCurrentStatus.length; i++) {
+      tableHeader.push(' - ')
+    }
+  }
+
+  return tableHeader
+}
+function createLogsBody (allStatus: string[], tableData: string[][]) {
+  for (let i = 0; i < allStatus.length; i++) {
+    let tableHeader: string[] = []
+    let currentStatus = allStatus[i]
+    let splitCurrentStatus = currentStatus.split(' ')
+    for (let i = 0; i < splitCurrentStatus.length; i++) {
+      tableHeader.push(splitCurrentStatus[i])
+    }
+    tableData.push(tableHeader)
+  }
+  return tableData
+}
+
 export function logs (index) {
   let outputArray = getAllFilesName()
   let currentFileName = outputArray[index]
   let filePath = path + currentFileName
   let allStatus = Status.getAllStatus(filePath)
-  for (let i = 0; i < allStatus.length; i++) {
-    let currentStatus = allStatus[i]
-    console.log(currentStatus)
-  }
-  return allStatus
+  let tableData: string[][] = []
+
+  let tableHeader = createLogsHeader(allStatus)
+  tableData.push(tableHeader)
+  createLogsBody(allStatus, tableData)
+  let output = Table.table(tableData)
+
+  console.log(output)
+  return output
 }

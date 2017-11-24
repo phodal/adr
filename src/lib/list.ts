@@ -33,8 +33,8 @@ export function list () {
         [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD'), lastStatus]
       )
     }
-    output = Table.table(tableData)
   }
+  output = Table.table(tableData)
   console.log(output)
 
   return output
