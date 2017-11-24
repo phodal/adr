@@ -56,7 +56,7 @@ function getAllStatus (filePath): string[] {
   return splitSection
 }
 
-function getStatus (filePath) {
+function getLatestStatus (filePath) {
   let allStatus = getAllStatus(filePath)
   return allStatus[allStatus.length - 1]
 }
@@ -84,7 +84,7 @@ function getTemplateStatusHeader () {
 }
 
 let Status = {
-  getStatus: getStatus,
+  getLatestStatus: getLatestStatus,
   getAllStatus: getAllStatus
 }
 

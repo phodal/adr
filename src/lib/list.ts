@@ -26,7 +26,7 @@ export function list () {
 
     let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
     let filePath = path + fileName
-    let lastStatus = Status.getStatus(filePath)
+    let lastStatus = Status.getLatestStatus(filePath)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       tableData.push(
