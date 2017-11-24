@@ -24,9 +24,8 @@ export function list () {
     let numberLength = Utils.getNumberLength(fileName) + '-'.length
     let markdownWithPrefixLength = '.md'.length
 
-    let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
-    let filePath = path + fileName
-    let lastStatus = Status.getLatestStatus(filePath)
+    let index = Utils.getIndexByString(fileName)
+    let lastStatus = Status.getLatestStatus(path + fileName)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       tableData.push(

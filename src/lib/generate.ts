@@ -14,7 +14,7 @@ function generateToc (options?: object) {
     let numberLength = Utils.getNumberLength(fileName) + '-'.length
     let markdownWithPrefixLength = '.md'.length
 
-    let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
+    let index = Utils.getIndexByString(fileName)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       outputArray[index] = '\n* [' + index + '. ' + decision + '](' + file.relativePath + ')'
@@ -40,7 +40,7 @@ function generateGraph () {
     let numberLength = Utils.getNumberLength(fileName) + '-'.length
     let markdownWithPrefixLength = '.md'.length
 
-    let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
+    let index = Utils.getIndexByString(fileName)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       outputArray[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'

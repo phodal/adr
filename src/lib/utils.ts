@@ -121,6 +121,11 @@ function getNumberLength (fileName: string) {
   return numberLength.length
 }
 
+function getIndexByString (fileName: string) {
+  let numberLength = getNumberLength(fileName)
+  return parseInt(fileName.substring(0, numberLength), 10)
+}
+
 export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
@@ -131,5 +136,6 @@ export default {
   generateFileName: generateFileName,
   getWorkDir: getWorkDir,
   getI18n: getI18n,
-  getNumberLength: getNumberLength
+  getNumberLength: getNumberLength,
+  getIndexByString: getIndexByString
 }

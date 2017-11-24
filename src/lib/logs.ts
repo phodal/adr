@@ -13,7 +13,7 @@ let getAllFilesName = function () {
     let file = files[i]
     let fileName = file.relativePath
 
-    let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
+    let index = Utils.getIndexByString(fileName)
     if (index) {
       outputArray[index] = fileName
     }
