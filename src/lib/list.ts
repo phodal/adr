@@ -11,7 +11,7 @@ export function list () {
   let path = Utils.getSavePath()
   let output
   let tableData = [
-    ['决策', '上次修改时间']
+    ['决策', '上次修改时间', '最后状态']
   ]
 
   let files = walkSync.entries(path)
@@ -27,16 +27,16 @@ export function list () {
 
     let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
     let filePath = path + fileName
-    getStatus(filePath)
+    let lastStatus = getStatus(filePath)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
       tableData.push(
-        [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD')]
+        [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD'), lastStatus]
       )
     }
     output = Table.table(tableData)
   }
-  // console.log(output)
+  console.log(output)
 
   return output
 }
@@ -80,9 +80,15 @@ function getStatus (filePath) {
   }
   let tree = md.parse(fileData)
   let templateStatusHeader = getTemplateStatusHeader()
-  let statusSection = getStatusSection(tree, templateStatusHeader)
+  let statusSections = getStatusSection(tree, templateStatusHeader)
+  let lastStatusSection = statusSections[statusSections.length - 1]
+  if (!(lastStatusSection && lastStatusSection[1])) {
+    return ''
+  }
 
-  console.log(statusSection)
+  let lastStatusSectionText = lastStatusSection[1]
+  let splitSection = lastStatusSectionText.split('\n')
+  return splitSection[splitSection.length - 1]
 }
 
 function getTemplateStatusHeader () {
