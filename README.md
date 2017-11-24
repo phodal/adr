@@ -15,6 +15,7 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
 
  - Support on Node.js OS: Windows, Linux, Mac OS (Done)
  - i18n: English, 中文 (Done)
+ - status logs (Done)
  - status query (doing)
  - better list view (Done)
 
