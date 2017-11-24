@@ -4,6 +4,7 @@ import Utils from './lib/utils'
 import {update} from './lib/update'
 import {generate} from './lib/generate'
 import {init} from './lib/init'
+import {logs} from './lib/logs'
 
 export default {
   create: create,
@@ -11,5 +12,6 @@ export default {
   Utils: Utils,
   update: update,
   generate: generate,
-  init: init
+  init: init,
+  logs: logs
 }

@@ -7,6 +7,7 @@ let {list} = require('./lib/list')
 let {generate} = require('./lib/generate')
 let {update} = require('./lib/update')
 let {init} = require('./lib/init')
+let {logs} = require('./lib/logs')
 let colors = require('colors')
 
 program
@@ -16,7 +17,8 @@ program
   .option('-l, list', 'list all ADR', list)
   .option('-u, update', 'update ADR', update)
   .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
-  .option('-init, init [language]', 'init ADR with language, e.g. ``adr init en``', init)
+  .option('-init, init <language>', 'init ADR with language, e.g. ``adr init en``', init)
+  .option('-logs, logs <index>', 'list one ADR status logs', logs)
 
 program.parse(process.argv)
 
