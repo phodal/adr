@@ -12,7 +12,7 @@ function createDecisions (name: string, savePath: string | any | void) {
   let month = dateObj.getUTCMonth() + 1
   let day = dateObj.getUTCDate()
   let year = dateObj.getUTCFullYear()
-  let newDate = year + '/' + month + '/' + day
+  let newDate = year + '-' + month + '-' + day
   let fileName = Utils.generateFileName(name)
 
   let newIndex = Utils.getNewIndex()
