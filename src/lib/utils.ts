@@ -78,7 +78,7 @@ function generateFileName (originFileName) {
 
 function getLanguage () {
   if (!fs.existsSync(getWorkDir() + '/.adr.json')) {
-    console.log('no .adr.json files: will create a config with English')
+    console.log('no .adr.json, auto create ..')
     init('en')
     return 'en'
   }
@@ -102,12 +102,14 @@ function getI18n () {
     en: {
       decision: 'Decision',
       modifiedDate: 'Last Modified Date',
-      lastStatus: 'Last Status'
+      lastStatus: 'Last Status',
+      logSavePath: '保存路径：'
     },
     'zh-cn': {
       decision: '决策',
       modifiedDate: '上次修改时间',
-      lastStatus: '最后状态'
+      lastStatus: '最后状态',
+      logSavePath: 'Save Path:'
     }
   }
 
