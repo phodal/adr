@@ -34,24 +34,31 @@ function getStatusSection (tree: any, templateStatusHeader: string) {
   return statusSection
 }
 
-function getStatus (filePath) {
+function getAllStatus (filePath): string[] {
   let fileData
   try {
     fileData = fs.readFileSync(filePath, 'utf8')
   } catch (error) {
-    return console.log(error)
+    console.log(error)
+    return []
   }
   let tree = md.parse(fileData)
   let templateStatusHeader = getTemplateStatusHeader()
   let statusSections = getStatusSection(tree, templateStatusHeader)
   let lastStatusSection = statusSections[statusSections.length - 1]
   if (!(lastStatusSection && lastStatusSection[1])) {
-    return ''
+    return []
   }
 
   let lastStatusSectionText = lastStatusSection[1]
   let splitSection = lastStatusSectionText.split('\n')
-  return splitSection[splitSection.length - 1]
+
+  return splitSection
+}
+
+function getStatus (filePath) {
+  let allStatus = getAllStatus(filePath)
+  return allStatus[allStatus.length - 1]
 }
 
 function getTemplateStatusHeader () {
@@ -77,7 +84,8 @@ function getTemplateStatusHeader () {
 }
 
 let Status = {
-  getStatus: getStatus
+  getStatus: getStatus,
+  getAllStatus: getAllStatus
 }
 
 export default Status
