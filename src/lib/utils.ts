@@ -32,7 +32,7 @@ function createIndexByNumber (num) {
   return s.substr(s.length - DEFAULT_DIGITS)
 }
 
-function getLastNumber () {
+function getLatestIndex () {
   let path = getSavePath()
   let files = walkSync.entries(path)
   let lastNumber = 0
@@ -58,7 +58,7 @@ function getLastNumber () {
 }
 
 function getNewIndex () {
-  let lastIndex = getLastNumber()
+  let lastIndex = getLatestIndex()
   if (!lastIndex) {
     return createIndexByNumber(1)
   }
@@ -120,7 +120,7 @@ export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
   getNewIndex: getNewIndex,
-  getLastNumber: getLastNumber,
+  getLatestIndex: getLatestIndex,
   createIndexByNumber: createIndexByNumber,
   getLanguage: getLanguage,
   generateFileName: generateFileName,

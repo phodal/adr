@@ -52,13 +52,13 @@ test('getSavePath: when exist config file', t => {
   fsReadSpy.restore()
 })
 
-// test('getLastNumber: when exist config file', t => {
+// test('getLatestIndex: when exist config file', t => {
 //   let walkSync = sinon.stub()
 //   proxyquire('walk-sync', {
 //     'default': walkSync
 //   })
 //
-//   let lastNumber = Utils.getLastNumber()
+//   let lastNumber = Utils.getLatestIndex()
 //   console.log(lastNumber)
 //   // walkSync.restore()
 // })
