@@ -10,8 +10,9 @@ import Utils from './utils'
 export function list () {
   let path = Utils.getSavePath()
   let output
+  let i18n = Utils.getI18n()
   let tableData = [
-    ['决策', '上次修改时间', '最后状态']
+    [i18n.decision, i18n.modifiedDate, i18n.lastStatus]
   ]
 
   let files = walkSync.entries(path)

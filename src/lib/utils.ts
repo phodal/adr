@@ -96,6 +96,24 @@ function getLanguage () {
   }
 }
 
+function getI18n () {
+  let language = getLanguage()
+  let I18N = {
+    en: {
+      decision: 'Decision',
+      modifiedDate: 'Last Modified Date',
+      lastStatus: 'Last Status'
+    },
+    'zh-cn': {
+      decision: '决策',
+      modifiedDate: '上次修改时间',
+      lastStatus: '最后状态'
+    }
+  }
+
+  return I18N[language]
+}
+
 export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
@@ -104,5 +122,6 @@ export default {
   createIndexByNumber: createIndexByNumber,
   getLanguage: getLanguage,
   generateFileName: generateFileName,
-  getWorkDir: getWorkDir
+  getWorkDir: getWorkDir,
+  getI18n: getI18n
 }
