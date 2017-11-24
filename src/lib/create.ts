@@ -5,14 +5,18 @@ let mkdirp = require('mkdirp')
 import Utils from './utils'
 import {generate} from './generate'
 
-function createDecisions (name: string, savePath: string | any | void) {
-  let language = Utils.getLanguage()
-  let raw = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
+function createDateString () {
   let dateObj = new Date()
   let month = dateObj.getUTCMonth() + 1
   let day = dateObj.getUTCDate()
   let year = dateObj.getUTCFullYear()
-  let newDate = year + '-' + month + '-' + day
+  return year + '-' + month + '-' + day;
+}
+
+function createDecisions (name: string, savePath: string | any | void) {
+  let language = Utils.getLanguage()
+  let raw = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
+  let newDate = createDateString();
   let fileName = Utils.generateFileName(name)
 
   let newIndex = Utils.getNewIndex()
