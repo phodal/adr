@@ -116,6 +116,11 @@ function getI18n () {
   return I18N[language]
 }
 
+function getNumberLength (fileName: string) {
+  let numberLength = fileName.split('-')[0]
+  return numberLength.length
+}
+
 export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
@@ -125,5 +130,6 @@ export default {
   getLanguage: getLanguage,
   generateFileName: generateFileName,
   getWorkDir: getWorkDir,
-  getI18n: getI18n
+  getI18n: getI18n,
+  getNumberLength: getNumberLength
 }

@@ -21,7 +21,7 @@ export function list () {
       break
     }
     let fileNameLength = fileName.length
-    let numberLength = Utils.DEFAULT_DIGITS + '-'.length
+    let numberLength = Utils.getNumberLength(fileName) + '-'.length
     let markdownWithPrefixLength = '.md'.length
 
     let index = parseInt(fileName.substring(0, Utils.DEFAULT_DIGITS), 10)
