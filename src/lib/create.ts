@@ -12,7 +12,7 @@ function createDecisions (name: string, savePath: string | any | void) {
   let newDate = Utils.createDateString()
   let fileName = Utils.generateFileName(name)
 
-  let newIndex = Utils.getNewIndex()
+  let newIndex = Utils.getNewIndexString()
   let result = raw.replace(/{NUMBER}/g, Utils.getLatestIndex() + 1)
     .replace(/{TITLE}/g, name)
     .replace(/{DATE}/g, newDate)

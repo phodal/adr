@@ -9,7 +9,7 @@ function getWorkDir () {
   return process.cwd()
 }
 
-function getSavePath () {
+function getSavePath (): string {
   if (!fs.existsSync(getWorkDir() + '/.adr.json')) {
     return getWorkDir() + '/doc/adr/'
   }
@@ -23,16 +23,17 @@ function getSavePath () {
     }
     return getWorkDir() + '/' + 'doc/ard/'
   } catch (e) {
-    return console.error(e)
+    console.error(e)
+    return ''
   }
 }
 
-function createIndexByNumber (num) {
+function createIndexByNumber (num): string {
   let s = '00000000' + num
   return s.substr(s.length - DEFAULT_DIGITS)
 }
 
-function getLatestIndex () {
+function getLatestIndex (): number {
   let path = getSavePath()
   let files = walkSync.entries(path)
   let lastNumber = 0
@@ -57,7 +58,7 @@ function getLatestIndex () {
   return 0
 }
 
-function getNewIndex () {
+function getNewIndexString (): string {
   let lastIndex = getLatestIndex()
   if (!lastIndex) {
     return createIndexByNumber(1)
@@ -116,28 +117,28 @@ function getI18n () {
   return I18N[language]
 }
 
-function getNumberLength (fileName: string) {
+function getNumberLength (fileName: string): number {
   let numberLength = fileName.split('-')[0]
   return numberLength.length
 }
 
-function getIndexByString (fileName: string) {
+function getIndexByString (fileName: string): number {
   let numberLength = getNumberLength(fileName)
   return parseInt(fileName.substring(0, numberLength), 10)
 }
 
-function createDateString () {
+function createDateString (): string {
   let dateObj = new Date()
   let month = dateObj.getUTCMonth() + 1
   let day = dateObj.getUTCDate()
   let year = dateObj.getUTCFullYear()
-  return year + '-' + month + '-' + day;
+  return year + '-' + month + '-' + day
 }
 
 export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
   getSavePath: getSavePath,
-  getNewIndex: getNewIndex,
+  getNewIndexString: getNewIndexString,
   getLatestIndex: getLatestIndex,
   createIndexByNumber: createIndexByNumber,
   getLanguage: getLanguage,
