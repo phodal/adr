@@ -51,9 +51,7 @@ function getAllStatus (filePath): string[] {
   }
 
   let lastStatusSectionText = lastStatusSection[1]
-  let splitSection = lastStatusSectionText.split('\n')
-
-  return splitSection
+  return lastStatusSectionText.split('\n')
 }
 
 function getLatestStatus (filePath) {
