@@ -36,7 +36,7 @@ adr init <language>
 
 e.x: ``adr init 'en'``
 
-3. new
+### new
 
 ```
 adr new <decision>
@@ -44,7 +44,7 @@ adr new <decision>
 
 e.x: ``adr new "创建项目"``
 
-4. list
+### list
 
 ```
 adr list
@@ -64,7 +64,7 @@ result:
 ╚══════════════════════╧══════════════╝
 ```
 
-5. generate toc
+### generate toc
 
 ```
 adr generate toc
@@ -80,7 +80,7 @@ results:
 * [3. 图形生成](003-图形生成.md)
 ```
 
-6. generate graph
+### generate graph
 
 ```
 adr generate graph
@@ -99,20 +99,43 @@ digraph {
 }
 ```
 
-7. update filename by title
+### update filename by title
 
 ```
 adr update
 ```
 
+### decisions change logs
+
+```
+adr logs <index>
+```
+
+e.x. ``adr logs 9``
+
+```
+╔════════════╤══════╗
+║  -         │  -   ║
+╟────────────┼──────╢
+║ 2017-11-23 │ 提议 ║
+╟────────────┼──────╢
+║ 2017-11-24 │ 通过 ║
+╚════════════╧══════╝
+```
+
 Config
 ---
 
-Current:
+Current: **Language**, *workdir**
 
-**Language**
+example config: 
 
-**workdir**
+```
+{
+  "path":"doc/ard/",
+  "language":"zh-cn"
+}
+```
 
 License
 ---
