@@ -15,8 +15,7 @@ function updateNameByTitle () {
     if (fileName === 'README.md') {
       break
     }
-    let filePath = savePath + fileName
-    let fileData = fs.readFileSync(filePath, 'utf8')
+    let fileData = fs.readFileSync(savePath + fileName, 'utf8')
     let firstLine = fileData.split('\n')[0]
     let title = firstLine.replace(/#\s\d+\.\s/g, '')
     let indexRegex = /#\s(\d+)\.\s/.exec(firstLine)
