@@ -15,7 +15,7 @@ export class GenerateClass {
     this.files = walkSync.entries(this.path)
   }
 
-  buildBody (func: any) {
+  buildBody (handleBody: any) {
     let files = this.files
     for (let i = 0; i < files.length; i++) {
       let file = files[i]
@@ -26,7 +26,7 @@ export class GenerateClass {
       let index = Utils.getIndexByString(fileName)
       if (index) {
         let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-        this.bodyString[index] = func(index, decision, file.relativePath)
+        handleBody(index, decision, file.relativePath, this.bodyString, files.length)
       }
     }
     return this
@@ -55,8 +55,9 @@ function generateToc (options?: object) {
   let path = Utils.getSavePath()
   let graphGenerate = new GenerateClass(path)
   let header = '# Architecture Decision Records\n'
-  let buildBodyFunc = function (index, decision, filePath) {
-    return '\n* [' + index + '. ' + decision + '](' + filePath + ')'
+  let buildBodyFunc = function (index, decision, filePath, bodyString) {
+    bodyString[index] = '\n* [' + index + '. ' + decision + '](' + filePath + ')'
+    return bodyString
   }
   let results = graphGenerate
     .setStartString(header)
@@ -72,30 +73,23 @@ function generateToc (options?: object) {
 
 function generateGraph () {
   let path = Utils.getSavePath()
-  let output = 'digraph {\n  node [shape=plaintext];'
-  let outputArray = ['']
-  let files = walkSync.entries(path)
-  for (let i = 0;i < files.length; i++) {
-    let file = files[i]
-    let fileName = file.relativePath
-    let fileNameLength = fileName.length
-    let numberLength = Utils.getNumberLength(fileName) + '-'.length
-    let markdownWithPrefixLength = '.md'.length
-
-    let index = Utils.getIndexByString(fileName)
-    if (index) {
-      let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-      outputArray[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
-
-      if (index !== 1) {
-        outputArray[files.length + index] = '\n  _' + (index - 1) + ' -> _' + index + ' [style="dotted"];'
-      }
+  let graphGenerate = new GenerateClass(path)
+  let header = 'digraph {\n  node [shape=plaintext];'
+  let buildBodyFunc = function (index, decision, filePath, bodyString, filesLength) {
+    bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + filePath + '"]'
+    if (index !== 1) {
+      bodyString[filesLength + index] = '\n  _' + (index - 1) + ' -> _' + index + ' [style="dotted"];'
     }
+    return bodyString
   }
-  output = output + outputArray.join('')
-  output = output + '\n}\n'
-  console.log(output)
-  return output
+  let results = graphGenerate
+    .setStartString(header)
+    .setEndString('\n}\n')
+    .buildBody(buildBodyFunc)
+    .build()
+
+  console.log(results)
+  return results
 }
 
 export function generate (type, options?: object) {
