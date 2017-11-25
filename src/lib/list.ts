@@ -28,9 +28,8 @@ export function list () {
     let lastStatus = Status.getLatestStatus(path + fileName)
     if (index) {
       let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-      tableData.push(
-        [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD'), lastStatus]
-      )
+      let body = [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD'), lastStatus];
+      tableData.push(body)
     }
   }
   output = Table.table(tableData)
