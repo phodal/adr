@@ -9,7 +9,8 @@ let Utils = ADR.Utils
 test('ADR: create', t => {
   let consoleSpy = sinon.stub(console, 'log')
   let generateSpy = sinon.stub(ADR, 'generate')
-  let fsWriteSyncSpy = sinon.stub(fs, 'writeFileSync')
+  // let fsWriteSyncSpy = sinon.stub(fs, 'writeFileSync')
+  sinon.stub(fs, 'writeFileSync')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-编写完整的单元测试.md',
