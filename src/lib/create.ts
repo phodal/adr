@@ -24,13 +24,13 @@ export function create (name: string) {
   let savePath = Utils.getSavePath()
   let i18n = Utils.getI18n()
   console.log(i18n.logSavePath + savePath)
-  mkdirp(savePath, function (err) {
+  mkdirp.sync(savePath, function (err) {
     if (err) {
       console.error(err)
-    } else {
-      createDecisions(name, savePath)
-      let toc = generate('toc', {output: false})
-      fs.writeFileSync(savePath + 'README.md', toc)
     }
   })
+
+  createDecisions(name, savePath)
+  let toc = generate('toc', {output: false})
+  fs.writeFileSync(savePath + 'README.md', toc)
 }
