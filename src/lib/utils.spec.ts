@@ -1,6 +1,7 @@
 let sinon = require('sinon')
 let fs = require('fs')
-// let proxyquire = require('proxyquire')
+let walkSync = require('walk-sync')
+
 import { test } from 'ava'
 import ADR from 'adr'
 
@@ -52,16 +53,41 @@ test('getSavePath: when exist config file', t => {
   fsReadSpy.restore()
 })
 
-// test('getLatestIndex: when exist config file', t => {
-//   let walkSync = sinon.stub()
-//   proxyquire('walk-sync', {
-//     'default': walkSync
-//   })
-//
-//   let lastNumber = Utils.getLatestIndex()
-//   console.log(lastNumber)
-//   // walkSync.restore()
-// })
+test('getLatestIndex: when exist config file', t => {
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
+    relativePath: '001-编写完整的单元测试.md',
+    basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+    mode: 33188,
+    size: 246,
+    mtime: 1511435254653 }
+  ])
+
+  let lastNumber = Utils.getLatestIndex()
+  t.deepEqual(1, lastNumber)
+  entriesSpy.restore()
+})
+
+test('getNewNumber: when exist last number', t => {
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
+    relativePath: '001-编写完整的单元测试.md',
+    basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+    mode: 33188,
+    size: 246,
+    mtime: 1511435254653 }
+  ])
+
+  let newIndexString = Utils.getNewIndexString()
+  t.deepEqual('002', newIndexString)
+  entriesSpy.restore()
+})
+
+test('getNewNumber: when exist last number', t => {
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([])
+
+  let newIndexString = Utils.getNewIndexString()
+  t.deepEqual('001', newIndexString)
+  entriesSpy.restore()
+})
 
 test('getLanguage: should enable get language', t => {
   let fsExistSpy = sinon.stub(fs, 'existsSync').returns(true)
