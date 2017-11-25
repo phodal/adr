@@ -1,7 +1,8 @@
+import {getI18n} from './i18n'
+import {init} from './init'
+
 let fs = require('fs')
 let walkSync = require('walk-sync')
-
-import {init} from './init'
 
 let DEFAULT_DIGITS = 3
 
@@ -95,26 +96,6 @@ function getLanguage () {
     console.error(e)
     return 'en'
   }
-}
-
-function getI18n () {
-  let language = getLanguage()
-  let I18N = {
-    en: {
-      decision: 'Decision',
-      modifiedDate: 'Last Modified Date',
-      lastStatus: 'Last Status',
-      logSavePath: 'Save Path:'
-    },
-    'zh-cn': {
-      decision: '决策',
-      modifiedDate: '上次修改时间',
-      lastStatus: '最后状态',
-      logSavePath: '保存路径：'
-    }
-  }
-
-  return I18N[language]
 }
 
 function getNumberLength (fileName: string): number {
