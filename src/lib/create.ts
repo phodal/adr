@@ -17,9 +17,6 @@ function createDecisions (name: string, savePath: string | any | void) {
     .replace(/{DATE}/g, newDate)
 
   fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
-
-  let toc = generate('toc', {output: false})
-  fs.writeFileSync(savePath + 'README.md', toc)
 }
 
 export function create (name: string) {
@@ -27,7 +24,12 @@ export function create (name: string) {
   let i18n = Utils.getI18n()
   console.log(i18n.logSavePath + savePath)
   mkdirp(savePath, function (err) {
-    if (err) console.error(err)
-    else createDecisions(name, savePath)
+    if (err) {
+      console.error(err)
+    } else {
+      createDecisions(name, savePath)
+      let toc = generate('toc', {output: false})
+      fs.writeFileSync(savePath + 'README.md', toc)
+    }
   })
 }
