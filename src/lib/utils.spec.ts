@@ -122,9 +122,9 @@ test('getLanguage: should enable get language', t => {
 })
 
 test('createDateString: should return correct date string', t => {
-  let clock = sinon.useFakeTimers(new Date(2011,9,1).getTime())
+  let clock = sinon.useFakeTimers(new Date(2099,0,1))
 
   let language = Utils.createDateString()
-  t.deepEqual(language, '2011-9-30')
+  t.deepEqual(language, '2099-01-01')
   clock.restore()
 })

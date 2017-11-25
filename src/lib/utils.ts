@@ -2,6 +2,7 @@ import {getI18n} from './helpers/i18n'
 import {init} from './init'
 
 let fs = require('fs')
+let moment = require('moment')
 let walkSync = require('walk-sync')
 
 let DEFAULT_DIGITS = 3
@@ -109,11 +110,7 @@ function getIndexByString (fileName: string): number {
 }
 
 function createDateString (): string {
-  let dateObj = new Date()
-  let month = dateObj.getUTCMonth() + 1
-  let day = dateObj.getUTCDate()
-  let year = dateObj.getUTCFullYear()
-  return year + '-' + month + '-' + day
+  return moment().format('YYYY-MM-DD')
 }
 
 export default {
