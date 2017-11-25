@@ -17,7 +17,7 @@
     "build:tests": "trash test && node config/exports/build-tests.js",
     "lint": "tslint --project . --type-check src/**/*.ts",
     "unit": "yarn build && yarn build:tests && nyc ava",
-    "check-coverage": "nyc check-coverage --lines 20 --functions 0 --branches 0",
+    "check-coverage": "nyc check-coverage --lines 85 --functions 85 --branches 85",
     "test": "yarn lint && yarn unit && yarn check-coverage",
     "watch": "yarn build && yarn build:tests -- --no-browser  && yarn html-coverage && concurrently -r --kill-others 'npm run --silent build:main -- -w' 'npm run --silent build:tests -- -w --no-browser' 'sleepms 2000 && ava --watch'",
     "cov": "yarn unit && yarn html-coverage && opn coverage/index.html",
