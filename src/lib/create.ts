@@ -24,11 +24,7 @@ export function create (name: string) {
   let savePath = Utils.getSavePath()
   let i18n = Utils.getI18n()
   console.log(i18n.logSavePath + savePath)
-  mkdirp.sync(savePath, function (err) {
-    if (err) {
-      console.error(err)
-    }
-  })
+  mkdirp.sync(savePath)
 
   createDecisions(name, savePath)
   let toc = generate('toc', {output: false})
