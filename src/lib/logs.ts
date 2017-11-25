@@ -2,7 +2,7 @@ let walkSync = require('walk-sync')
 let Table = require('table')
 
 import Utils from './helpers/utils'
-import Status from './status'
+import Status from './helpers/status'
 
 let path = Utils.getSavePath()
 

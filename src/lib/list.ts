@@ -3,7 +3,7 @@ let moment = require('moment')
 let Table = require('table')
 
 import Utils from './helpers/utils'
-import Status from './status'
+import Status from './helpers/status'
 
 export function list () {
   let path = Utils.getSavePath()
