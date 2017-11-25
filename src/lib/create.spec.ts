@@ -37,6 +37,7 @@ test('ADR: create', t => {
   let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
 
   ADR.create('create')
+  // TODO: mock generate function
   // t.deepEqual(fsWriteSyncSpy.calledWith('./013-create.md'), true)
   t.deepEqual(fsReadSpy.callCount, 1)
   // fsWriteSyncSpy.restore()
