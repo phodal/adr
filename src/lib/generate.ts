@@ -2,7 +2,7 @@ let walkSync = require('walk-sync')
 
 import Utils from './utils'
 
-export class GenerateClass {
+export class GenerateBuilder {
   path: string
   files: [{relativePath: string}]
   startString: string
@@ -53,7 +53,7 @@ export class GenerateClass {
 
 function generateToc (options?: object) {
   let path = Utils.getSavePath()
-  let graphGenerate = new GenerateClass(path)
+  let graphGenerate = new GenerateBuilder(path)
   let header = '# Architecture Decision Records\n'
   let buildBodyFunc = function (index, decision, filePath, bodyString) {
     bodyString[index] = '\n* [' + index + '. ' + decision + '](' + filePath + ')'
@@ -73,7 +73,7 @@ function generateToc (options?: object) {
 
 function generateGraph () {
   let path = Utils.getSavePath()
-  let graphGenerate = new GenerateClass(path)
+  let graphGenerate = new GenerateBuilder(path)
   let header = 'digraph {\n  node [shape=plaintext];'
   let buildBodyFunc = function (index, decision, filePath, bodyString, filesLength) {
     bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + filePath + '"]'
