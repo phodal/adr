@@ -1,4 +1,5 @@
 * **I'm submitting a ...**
+[ ] language request
 [ ] bug report
 [ ] feature request
 [ ] question about the decisions made in the repository
