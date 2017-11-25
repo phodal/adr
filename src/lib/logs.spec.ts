@@ -20,7 +20,7 @@ let mdTemplate = `# 1. 更友好的 CLI
 `
 
 test('ADR: logs', t => {
-  // let consoleSpy = sinon.stub(console, 'log')
+  let consoleSpy = sinon.stub(console, 'log')
   let renameSpy = sinon.stub(fs, 'renameSync')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
@@ -59,6 +59,6 @@ test('ADR: logs', t => {
 `)
   fsReadSpy.restore()
   entriesSpy.restore()
-  // consoleSpy.restore()
+  consoleSpy.restore()
   renameSpy.restore()
 })
