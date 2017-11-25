@@ -12,11 +12,12 @@ function createDecisions (name: string, savePath: string | any | void) {
   let fileName = Utils.generateFileName(name)
 
   let newIndex = Utils.getNewIndexString()
-  let result = raw.replace(/{NUMBER}/g, Utils.getLatestIndex() + 1)
+  let fileData = raw.replace(/{NUMBER}/g, Utils.getLatestIndex() + 1)
     .replace(/{TITLE}/g, name)
     .replace(/{DATE}/g, newDate)
 
-  fs.writeFileSync(savePath + newIndex + '-' + fileName + '.md', result)
+  let filePath = savePath + newIndex + '-' + fileName + '.md'
+  fs.writeFileSync(filePath, fileData)
 }
 
 export function create (name: string) {
