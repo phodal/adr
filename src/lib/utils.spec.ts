@@ -19,12 +19,17 @@ test('generateFileName: test for newline', t => {
 
 test('createIndexByNumber: should return correct pad', t => {
   let str = Utils.createIndexByNumber(1)
-  t.deepEqual(str, '001')
+  t.deepEqual(str, '0001')
 })
 
 test('createIndexByNumber: should return correct pad', t => {
   let str = Utils.createIndexByNumber(11)
-  t.deepEqual(str, '011')
+  t.deepEqual(str, '0011')
+})
+
+test('createIndexByNumber: should return correct pad', t => {
+  let str = Utils.createIndexByNumber(999)
+  t.deepEqual(str, '0999')
 })
 
 test('getSavePath: when no exist config file', t => {
@@ -95,7 +100,7 @@ test('getNewNumber: when exist last number', t => {
   ])
 
   let newIndexString = Utils.getNewIndexString()
-  t.deepEqual('002', newIndexString)
+  t.deepEqual('0002', newIndexString)
   entriesSpy.restore()
 })
 
@@ -103,7 +108,7 @@ test('getNewNumber: when exist last number', t => {
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([])
 
   let newIndexString = Utils.getNewIndexString()
-  t.deepEqual('001', newIndexString)
+  t.deepEqual('0001', newIndexString)
   entriesSpy.restore()
 })
 
