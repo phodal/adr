@@ -1,7 +1,7 @@
 import {GenerateBuilder} from './base/GenerateBuilder'
-import Utils from './helpers/utils'
+import Utils from './utils'
 
-function buildGraphBuildFun (index, decision, filePath, bodyString, filesLength) {
+function buildGraphBuildFun (index, decision, filePath, bodyString, filesLength): string[] {
   bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + filePath + '"]'
   if (index !== 1) {
     bodyString[filesLength + index] = '\n  _' + (index - 1) + ' -> _' + index + ' [style="dotted"];'
@@ -9,12 +9,12 @@ function buildGraphBuildFun (index, decision, filePath, bodyString, filesLength)
   return bodyString
 }
 
-function buildTocBodyFun (index, decision, filePath, bodyString) {
+function buildTocBodyFun (index, decision, filePath, bodyString): string[] {
   bodyString[index] = '\n* [' + index + '. ' + decision + '](' + filePath + ')'
   return bodyString
 }
 
-function generateToc (options?: object) {
+function generateToc (options?: object): string {
   let path = Utils.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
   let header = '# Architecture Decision Records\n'
@@ -30,7 +30,7 @@ function generateToc (options?: object) {
   return results
 }
 
-function generateGraph () {
+function generateGraph (): string {
   let path = Utils.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
   let header = 'digraph {\n  node [shape=plaintext];'
@@ -44,7 +44,7 @@ function generateGraph () {
   return results
 }
 
-export function generate (type, options?: object) {
+export function generate (type, options?: object): string {
   if (type === 'toc') {
     return generateToc(options)
   }
@@ -52,5 +52,7 @@ export function generate (type, options?: object) {
     return generateGraph()
   }
 
-  console.log('\n error: type ' + type + ' current not supported')
+  let message = '\n error: type ' + type + ' current not supported';
+  console.log(message)
+  return message
 }

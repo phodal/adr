@@ -1,6 +1,6 @@
 let walkSync = require('walk-sync')
 
-import Utils from '../helpers/utils'
+import Utils from '../utils'
 
 export class GenerateBuilder {
   path: string

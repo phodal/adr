@@ -2,10 +2,10 @@ let walkSync = require('walk-sync')
 let moment = require('moment')
 let Table = require('table')
 
-import Utils from './helpers/utils'
+import Utils from './utils'
 import Status from './helpers/status'
 
-export function list () {
+export function list (): string {
   let path = Utils.getSavePath()
   let output
   let i18n = Utils.getI18n()

@@ -1,12 +1,12 @@
 let walkSync = require('walk-sync')
 let Table = require('table')
 
-import Utils from './helpers/utils'
+import Utils from './utils'
 import Status from './helpers/status'
 
 let path = Utils.getSavePath()
 
-let getAllFilesName = function () {
+let getAllFilesName = function (): string[] {
   let outputArray = ['']
   let files = walkSync.entries(path)
   for (let i = 0; i < files.length; i++) {
@@ -22,7 +22,7 @@ let getAllFilesName = function () {
   return outputArray
 }
 
-function createLogsHeader (allStatus: string[]) {
+function createLogsHeader (allStatus: string[]): string[] {
   let tableHeader: string[] = []
 
   let currentStatus = allStatus[0]
@@ -34,7 +34,7 @@ function createLogsHeader (allStatus: string[]) {
 
   return tableHeader
 }
-function createLogsBody (allStatus: string[], tableData: string[][]) {
+function createLogsBody (allStatus: string[], tableData: string[][]): string[][] {
   for (let i = 0; i < allStatus.length; i++) {
     let tableHeader: string[] = []
     let currentStatus = allStatus[i]
@@ -47,7 +47,7 @@ function createLogsBody (allStatus: string[], tableData: string[][]) {
   return tableData
 }
 
-export function logs (index) {
+export function logs (index): string {
   let outputArray = getAllFilesName()
   let currentFileName = outputArray[index]
   let filePath = path + currentFileName

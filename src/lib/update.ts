@@ -2,12 +2,12 @@
 let walkSync = require('walk-sync')
 let fs = require('fs')
 
-import Utils from './helpers/utils'
+import Utils from './utils'
 import {generate} from './generate'
 
 let savePath = Utils.getSavePath()
 
-function updateNameByTitle () {
+function updateNameByTitle (): void {
   let files = walkSync.entries(savePath)
   for (let i = 0; i < files.length; i++) {
     let file = files[i]
@@ -33,12 +33,12 @@ function updateNameByTitle () {
   }
 }
 
-function updateToc () {
+function updateToc (): void {
   let toc = generate('toc', {output: false})
   fs.writeFileSync(savePath + 'README.md', toc)
 }
 
-export function update () {
+export function update (): void {
   console.log('update decisions ...')
   updateNameByTitle()
   console.log('update adr toc ...')

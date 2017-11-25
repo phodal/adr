@@ -101,7 +101,7 @@
   ],
   "nyc": {
     "exclude": [
-      "**/*.spec.js",
+      "**/*/*.spec.js",
       "build/browser/**"
     ]
   },
