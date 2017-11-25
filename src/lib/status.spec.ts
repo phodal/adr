@@ -2,7 +2,7 @@
 // let fs = require('fs')
 import { test } from 'ava'
 
-import ADR from 'adr'
+// import ADR from 'adr'
 // let Status = ADR.Status
 
 // test('ADR: init in chinese', t => {

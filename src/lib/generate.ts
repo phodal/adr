@@ -52,7 +52,7 @@ export function generate (type, options?: object): string {
     return generateGraph()
   }
 
-  let message = '\n error: type ' + type + ' current not supported';
+  let message = '\n error: type ' + type + ' current not supported'
   console.log(message)
   return message
 }
