@@ -1,14 +1,13 @@
-version: "2"
+---
+engines:
+  tslint:
+    channel: beta
+    config: tslint.json
+    enabled: true
 exclude_patterns:
-  - config/
-  - db/
-  - dist/
-  - features/
-  - **/node_modules/
-  - script/
-  - **/spec/
-  - **/test/
-  - **/tests/
-  - **/vendor/
-  - **/*.d.ts
-  - **/*/*.spec.ts
+  - "config"
+  - "**/*.d.ts"
+  - "src/**/*.spec.ts"
+ratings:
+  paths:
+    - "src/**/*.ts"
