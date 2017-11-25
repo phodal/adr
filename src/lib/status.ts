@@ -9,7 +9,7 @@ function getStatusSection (tree: any, templateStatusHeader: string) {
   let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
-    let hasHeader2 = node && node[0] === 'header' && node[1] && node[1]['level'] && node[1]['level'] === 2;
+    let hasHeader2 = node && node[0] === 'header' && node[1] && node[1]['level'] && node[1]['level'] === 2
 
     if (hasHeader2) {
       statusFlag = node[2] === templateStatusHeader
