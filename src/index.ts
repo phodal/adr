@@ -2,10 +2,11 @@ import {create} from './lib/create'
 import {list} from './lib/list'
 import Utils from './lib/utils'
 import {update} from './lib/update'
-import {generate, GenerateBuilder} from './lib/generate'
+import {generate} from './lib/generate'
 import {init} from './lib/init'
 import {logs} from './lib/logs'
 import Status from './lib/status'
+import {GenerateBuilder} from './lib/GenerateBuilder'
 
 export default {
   create: create,
