@@ -3,14 +3,14 @@ let fs = require('fs')
 let walkSync = require('walk-sync')
 
 import { test } from 'ava'
+
 import ADR from 'adr'
 let Utils = ADR.Utils
 
 test('ADR: create', t => {
   let consoleSpy = sinon.stub(console, 'log')
   let generateSpy = sinon.stub(ADR, 'generate')
-  // let fsWriteSyncSpy = sinon.stub(fs, 'writeFileSync')
-  sinon.stub(fs, 'writeFileSync')
+  let fsWriteSyncSpy = sinon.stub(fs, 'writeFileSync')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-编写完整的单元测试.md',
@@ -41,7 +41,7 @@ test('ADR: create', t => {
   // TODO: mock generate function
   // t.deepEqual(fsWriteSyncSpy.calledWith('./013-create.md'), true)
   t.deepEqual(fsReadSpy.callCount, 1)
-  // fsWriteSyncSpy.restore()
+  fsWriteSyncSpy.restore()
   ADRGetSavePathSpy.restore()
   fsExistSpy.restore()
   fsReadSpy.restore()
