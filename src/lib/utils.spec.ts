@@ -54,12 +54,21 @@ test('getSavePath: when exist config file', t => {
 })
 
 test('getLatestIndex: when exist config file', t => {
-  let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
-    relativePath: '001-编写完整的单元测试.md',
-    basePath: '/Users/fdhuang/learing/adr/doc/ard/',
-    mode: 33188,
-    size: 246,
-    mtime: 1511435254653 }
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
   ])
 
   let lastNumber = Utils.getLatestIndex()
@@ -111,12 +120,11 @@ test('getLanguage: should enable get language', t => {
   fsExistSpy.restore()
   fsReadSpy.restore()
 })
-//
-// test('createDateString: should return correct date string', t => {
-//   let now = new Date()
-//   let clock = sinon.useFakeTimers(now.getTime())
-//
-//   let language = Utils.createDateString()
-//   t.deepEqual(language, 'test')
-//   clock.restore()
-// })
+
+test('createDateString: should return correct date string', t => {
+  let clock = sinon.useFakeTimers(new Date(2011,9,1).getTime())
+
+  let language = Utils.createDateString()
+  t.deepEqual(language, '2011-9-30')
+  clock.restore()
+})
