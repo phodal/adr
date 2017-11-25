@@ -35,29 +35,33 @@ function createIndexByNumber (num): string {
   return s.substr(s.length - DEFAULT_DIGITS)
 }
 
+function getMaxIndex (files: {relativePath: string}[]) {
+  let maxNumber = 0
+  for (let i = 0; i < files.length; i++) {
+    let fileName = files[i].relativePath
+    if (fileName === 'README.md') {
+      break
+    }
+
+    let fileNumber = fileName.substring(0, DEFAULT_DIGITS)
+    let currentIndex = parseInt(fileNumber, 10)
+    if (currentIndex > maxNumber) {
+      maxNumber = currentIndex
+    }
+  }
+
+  return maxNumber
+}
+
 function getLatestIndex (): number {
   let path = getSavePath()
   let files = walkSync.entries(path)
-  let lastNumber = 0
 
-  if (files && files.length > 0) {
-    for (let i = 0;i < files.length;i++) {
-      let fileName = files[i].relativePath
-      if (fileName === 'README.md') {
-        break
-      }
-
-      let fileNumber = fileName.substring(0, DEFAULT_DIGITS)
-      let int = parseInt(fileNumber, 10)
-      if (int > lastNumber) {
-        lastNumber = int
-      }
-    }
-
-    return lastNumber
+  if (!(files && files.length > 0)) {
+    return 0
   }
 
-  return 0
+  return getMaxIndex(files)
 }
 
 function getNewIndexString (): string {
