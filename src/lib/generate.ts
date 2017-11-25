@@ -1,4 +1,4 @@
-import {GenerateBuilder} from './GenerateBuilder'
+import {GenerateBuilder} from './base/GenerateBuilder'
 import Utils from './helpers/utils'
 
 function buildGraphBuildFun (index, decision, filePath, bodyString, filesLength) {
