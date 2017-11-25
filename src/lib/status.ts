@@ -2,7 +2,7 @@ let fs = require('fs')
 let path = require('path')
 let md = require('markdown').markdown
 
-import Utils from '../utils'
+import Utils from './utils'
 
 function getStatusSection (tree: any, templateStatusHeader: string) {
   let statusFlag = false
