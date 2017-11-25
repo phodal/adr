@@ -1,6 +1,6 @@
 import {create} from './lib/create'
 import {list} from './lib/list'
-import Utils from './lib/utils'
+import Utils from './lib/helpers/utils'
 import {update} from './lib/update'
 import {generate} from './lib/generate'
 import {init} from './lib/init'

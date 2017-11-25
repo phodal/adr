@@ -2,7 +2,7 @@ let fs = require('fs')
 let path = require('path')
 let mkdirp = require('mkdirp')
 
-import Utils from './utils'
+import Utils from './helpers/utils'
 import {generate} from './generate'
 
 function createDecisions (name: string, savePath: string | any | void) {

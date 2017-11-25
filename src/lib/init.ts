@@ -1,6 +1,6 @@
 let fs = require('fs')
 
-import Utils from './utils'
+import Utils from './helpers/utils'
 
 export function init (language) {
   let workDir = Utils.getWorkDir()

@@ -1,5 +1,5 @@
 import {GenerateBuilder} from './GenerateBuilder'
-import Utils from './utils'
+import Utils from './helpers/utils'
 
 function buildGraphBuildFun (index, decision, filePath, bodyString, filesLength) {
   bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + filePath + '"]'

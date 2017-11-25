@@ -2,7 +2,7 @@ let walkSync = require('walk-sync')
 let moment = require('moment')
 let Table = require('table')
 
-import Utils from './utils'
+import Utils from './helpers/utils'
 import Status from './status'
 
 export function list () {
