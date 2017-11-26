@@ -19,9 +19,9 @@ function generateToc (options?: object) {
   let graphGenerate = new GenerateBuilder(path)
   let header = '# Architecture Decision Records\n'
   let results = graphGenerate
-    .setStartString(header)
-    .setEndString('')
-    .buildBody(buildTocBodyFun)
+    .setStart(header)
+    .setEnd('')
+    .setBody(buildTocBodyFun)
     .build()
 
   if (!(!!options && options['output'])) {
@@ -35,9 +35,9 @@ function generateGraph () {
   let graphGenerate = new GenerateBuilder(path)
   let header = 'digraph {\n  node [shape=plaintext];'
   let results = graphGenerate
-    .setStartString(header)
-    .setEndString('\n}\n')
-    .buildBody(buildGraphBuildFun)
+    .setStart(header)
+    .setEnd('\n}\n')
+    .setBody(buildGraphBuildFun)
     .build()
 
   console.log(results)

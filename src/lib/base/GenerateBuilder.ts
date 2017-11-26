@@ -15,7 +15,7 @@ export class GenerateBuilder {
     this.files = walkSync.entries(this.path)
   }
 
-  buildBody (handleBody: any) {
+  setBody (handleBody: any) {
     let files = this.files
     for (let i = 0; i < files.length; i++) {
       let file = files[i]
@@ -32,12 +32,12 @@ export class GenerateBuilder {
     return this
   }
 
-  setStartString (startSting: string | string[]) {
+  setStart (startSting: string | string[]) {
     this.startString = startSting
     return this
   }
 
-  setEndString (endString?: string | string[]) {
+  setEnd (endString?: string | string[]) {
     if (endString) {
       this.endString = endString
     } else if (typeof endString === 'string') {

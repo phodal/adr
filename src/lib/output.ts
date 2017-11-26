@@ -18,9 +18,9 @@ function listAdr () {
   let graphGenerate = new GenerateBuilder(path)
   let startString = `Index, ${i18n.decision}, ${i18n.modifiedDate}, ${i18n.lastStatus}\n`
   let results = graphGenerate
-    .setStartString(startString)
-    .setEndString('')
-    .buildBody(buildTocBodyFun)
+    .setStart(startString)
+    .setEnd('')
+    .setBody(buildTocBodyFun)
     .build()
 
   return results
