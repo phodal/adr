@@ -35,7 +35,7 @@ export function output (type: string): string {
     output = generateCsv()
     let workDir = Utils.getWorkDir()
     // console.log(csv)
-    fs.writeFileSync(workDir + '/export.csv', output)
+    fs.writeFileSync(workDir + '/export.csv', output, 'utf-8')
   }
 
   let message = '\n error: type ' + type + ' current not supported'
