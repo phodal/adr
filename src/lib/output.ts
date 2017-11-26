@@ -19,8 +19,8 @@ function generateCsv () {
     let numberLength = Utils.getNumberLength(fileName) + '-'.length
     let index = Utils.getIndexByString(fileName)
     if (index) {
-      let lastStatus = Status.getLatestStatus(path + fileName)
       let decision = fileName.substring(numberLength, fileName.length - '.md'.length)
+      let lastStatus = Status.getLatestStatus(path + fileName)
       let body = `${index}, ${decision}, ${moment(file.mtime).format('YYYY-MM-DD')}, ${lastStatus}\n`
       csvString = csvString + body
     }
