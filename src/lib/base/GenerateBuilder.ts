@@ -1,8 +1,10 @@
+///<reference path="AbstractBuilder.ts"/>
 let walkSync = require('walk-sync')
+import {AbstractBuilder} from './AbstractBuilder'
 
 import Utils from '../utils'
 
-export class GenerateBuilder {
+export class GenerateBuilder implements AbstractBuilder {
   path: string
   files: [{ relativePath: string }]
   startString: string | string[]
