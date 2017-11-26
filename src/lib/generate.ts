@@ -14,7 +14,7 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
   return bodyString
 }
 
-function generateToc (options?: object): string {
+function generateToc (options?: object) {
   let path = Utils.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
   let header = '# Architecture Decision Records\n'
@@ -30,7 +30,7 @@ function generateToc (options?: object): string {
   return results
 }
 
-function generateGraph (): string {
+function generateGraph () {
   let path = Utils.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
   let header = 'digraph {\n  node [shape=plaintext];'
@@ -44,7 +44,7 @@ function generateGraph (): string {
   return results
 }
 
-export function generate (type, options?: object): string {
+export function generate (type, options?: object) {
   if (type === 'toc') {
     return generateToc(options)
   }

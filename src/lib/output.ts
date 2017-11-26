@@ -34,7 +34,6 @@ export function output (type: string): string {
   if (type === 'csv') {
     output = generateCsv()
     let workDir = Utils.getWorkDir()
-    // console.log(csv)
     fs.writeFileSync(workDir + '/export.csv', output, 'utf-8')
   }
 
