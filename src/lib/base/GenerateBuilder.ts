@@ -26,7 +26,7 @@ export class GenerateBuilder {
       let index = Utils.getIndexByString(fileName)
       if (index) {
         let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-        handleBody(index, decision, file.relativePath, this.bodyString, files.length)
+        handleBody(index, decision, file, this.bodyString, files.length)
       }
     }
     return this

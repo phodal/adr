@@ -1,16 +1,16 @@
 import {GenerateBuilder} from './base/GenerateBuilder'
 import Utils from './utils'
 
-function buildGraphBuildFun (index, decision, filePath, bodyString, filesLength): string[] {
-  bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + filePath + '"]'
+function buildGraphBuildFun (index, decision, file, bodyString, filesLength): string[] {
+  bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
   if (index !== 1) {
     bodyString[filesLength + index] = '\n  _' + (index - 1) + ' -> _' + index + ' [style="dotted"];'
   }
   return bodyString
 }
 
-function buildTocBodyFun (index, decision, filePath, bodyString): string[] {
-  bodyString[index] = '\n* [' + index + '. ' + decision + '](' + filePath + ')'
+function buildTocBodyFun (index, decision, file, bodyString): string[] {
+  bodyString[index] = '\n* [' + index + '. ' + decision + '](' + file.relativePath + ')'
   return bodyString
 }
 
