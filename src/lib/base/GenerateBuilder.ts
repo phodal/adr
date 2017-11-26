@@ -5,9 +5,9 @@ import Utils from '../utils'
 export class GenerateBuilder {
   path: string
   files: [{ relativePath: string }]
-  startString: string | object
-  endString: string | object
-  bodyString: string[] | object[]
+  startString: string | string[]
+  endString: string | string[]
+  bodyString: string[] | any
 
   constructor (path: string) {
     this.path = path
@@ -32,27 +32,34 @@ export class GenerateBuilder {
     return this
   }
 
-  setStartString (startSting: string | object) {
+  setStartString (startSting: string | string[]) {
     this.startString = startSting
     return this
   }
 
-  setEndString (endString?: string) {
+  setEndString (endString?: string | string[]) {
     if (endString) {
       this.endString = endString
-    } else {
+    } else if (typeof endString === 'string') {
       this.endString = ''
     }
     return this
   }
 
-  build (): string {
+  build () {
     if (typeof this.startString === 'string') {
       return this.startString + this.bodyString.join('') + this.endString
     }
     if (typeof this.startString === 'object') {
-      return ''
-      // return this.startString + this.bodyString.join('') + this.endString
+      let results: string[][] = []
+      results.push(this.startString)
+      for (let i = 0; i < this.bodyString.length; i ++) {
+        let currentBodyString = this.bodyString[i]
+        if (currentBodyString) {
+          results.push(currentBodyString)
+        }
+      }
+      return results
     }
     return ''
   }
