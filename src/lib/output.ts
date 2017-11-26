@@ -1,15 +1,16 @@
 let walkSync = require('walk-sync')
 let moment = require('moment')
+let fs = require('fs')
 
 import Utils from './utils'
 import Status from './status'
 
-export function output (): string {
+function generateCsv () {
   let path = Utils.getSavePath()
   let i18n = Utils.getI18n()
   let csvString = `Index, ${i18n.decision}, ${i18n.modifiedDate}, ${i18n.lastStatus}\n`
   let files = walkSync.entries(path)
-  for (let i = 0;i < files.length; i++) {
+  for (let i = 0; i < files.length; i++) {
     let file = files[i]
     let fileName = file.relativePath
     if (fileName === 'README.md') {
@@ -24,7 +25,15 @@ export function output (): string {
       csvString = csvString + body
     }
   }
-  console.log(csvString)
 
   return csvString
+}
+
+export function output (): string {
+  let csv = generateCsv()
+  let workDir = Utils.getWorkDir()
+  // console.log(csv)
+  fs.writeFileSync(workDir + '/export.csv', csv)
+
+  return csv
 }
