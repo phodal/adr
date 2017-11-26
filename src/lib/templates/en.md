@@ -6,7 +6,7 @@ Date: {DATE}
 
 STATUS：proposed/accepted/done/deprecated/superseded
 
-{DATE} proposed 
+{DATE} proposed
 
 ## Context
 
