@@ -29,11 +29,16 @@ function generateCsv () {
   return csvString
 }
 
-export function output (): string {
-  let csv = generateCsv()
-  let workDir = Utils.getWorkDir()
-  // console.log(csv)
-  fs.writeFileSync(workDir + '/export.csv', csv)
+export function output (type: string): string {
+  let output
+  if (type === 'csv') {
+    output = generateCsv()
+    let workDir = Utils.getWorkDir()
+    // console.log(csv)
+    fs.writeFileSync(workDir + '/export.csv', output)
+  }
 
-  return csv
+  let message = '\n error: type ' + type + ' current not supported'
+  console.log(message)
+  return output
 }
