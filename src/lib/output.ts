@@ -4,15 +4,16 @@ let fs = require('fs')
 import Utils from './utils'
 import Status from './status'
 import {GenerateBuilder} from './base/GenerateBuilder'
+import {JsonGenerateBuilder} from './base/JsonGenerateBuilder'
 
 let path = Utils.getSavePath()
-function buildTocBodyFun (index, decision, file, bodyString): string[] {
+function buildCsvBodyFun (index, decision, file, bodyString): string[] {
   let lastStatus = Status.getLatestStatus(path + file.relativePath)
   let body = `${index}, ${decision}, ${moment(file.mtime).format('YYYY-MM-DD')}, ${lastStatus}\n`
   return bodyString.push(body)
 }
 
-function listAdr () {
+function outputCsv () {
   let path = Utils.getSavePath()
   let i18n = Utils.getI18n()
   let graphGenerate = new GenerateBuilder(path)
@@ -20,7 +21,28 @@ function listAdr () {
   let results = graphGenerate
     .setStart(startString)
     .setEnd('')
-    .setBody(buildTocBodyFun)
+    .setBody(buildCsvBodyFun)
+    .build()
+
+  return results
+}
+
+function buildJsonBodyFun (index, decision, file, bodyString): string[] {
+  let lastStatus = Status.getLatestStatus(path + file.relativePath)
+  let body = {
+    index: index,
+    decision: decision,
+    modifiedDate: moment(file.mtime).format('YYYY-MM-DD'),
+    lastStatus: lastStatus
+  }
+  return bodyString.push(body)
+}
+
+function outputJson () {
+  let path = Utils.getSavePath()
+  let graphGenerate = new JsonGenerateBuilder(path)
+  let results = graphGenerate
+    .setBody(buildJsonBodyFun)
     .build()
 
   return results
@@ -28,14 +50,19 @@ function listAdr () {
 
 export function output (type: string): string {
   let output
-  if (type === 'csv') {
-    output = listAdr()
+  if (type.toLowerCase() === 'csv') {
+    output = outputCsv()
     console.log(output)
     let workDir = Utils.getWorkDir()
     fs.writeFileSync(workDir + '/export.csv', output, 'utf-8')
+  } else if (type.toLowerCase() === 'json') {
+    output = outputJson()
+    let workDir = Utils.getWorkDir()
+    fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
+  } else {
+    let message = '\n error: type ' + type + ' current not supported'
+    console.log(message)
   }
 
-  let message = '\n error: type ' + type + ' current not supported'
-  console.log(message)
   return output
 }
