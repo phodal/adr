@@ -143,13 +143,13 @@ Index, 决策, 上次修改时间, 最后状态
 Config
 ---
 
-Current: **Language**, *workdir**
+current: **language**, **path**
 
 example config: 
 
 ```
 {
-  "path":"doc/ard/",
+  "path":"doc/adr/",
   "language":"zh-cn"
 }
 ```
