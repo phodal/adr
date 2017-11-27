@@ -86,7 +86,7 @@ export function output (type: string): string {
       let workDir = Utils.getWorkDir()
       fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
       break
-    case 'html':
+    case 'markdown':
       output = outputMarkdown()
       break
     default:
