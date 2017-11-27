@@ -23,7 +23,7 @@ function getSavePath (): string {
     if (adrConfig.path) {
       return getWorkDir() + '/' + adrConfig.path
     }
-    return getWorkDir() + '/' + 'doc/ard/'
+    return getWorkDir() + '/' + 'doc/adr/'
   } catch (e) {
     console.error(e)
     return ''
