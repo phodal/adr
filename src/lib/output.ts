@@ -84,7 +84,6 @@ function outputHtml () {
   let mdToc = toc(fileData).content
   let tocHtml = md.render(mdToc)
   let contentHtml = md.render(fileData)
-  console.log(tocHtml, contentHtml)
   let htmlTemplate =
 `
 <html>
@@ -94,9 +93,36 @@ function outputHtml () {
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ADR Documents</title>
+
+<style type="text/css">
+#toc {
+  width: 30%;
+  max-width: 420px;
+  max-height: 85%;
+  float: left;
+  margin: 25px 0px 20px 0px;
+}
+
+#toc > ul {
+  margin: 0;
+  padding: 0;
+  padding-left: 40px;
+}
+
+#toc > ul > li {
+  list-style: none;
+}
+
+#content {
+  width: 70%;
+  max-width: 980px;
+  float: left;
+}
+
+</style>
 </head>
 <body>
-<div id="toc">
+<div id="toc" class="tocify">
   ${tocHtml}
 </div>
 <div id="content">
