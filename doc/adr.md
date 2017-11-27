@@ -1,6 +1,8 @@
 架构决策记录
 ===
 
+原文连接：[Architecture Decision Records](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)
+
 上下文
 ---
 
