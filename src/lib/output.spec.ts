@@ -53,3 +53,32 @@ test('ADR: export csv', t => {
   entriesSpy.restore()
   consoleSpy.restore()
 })
+
+test('ADR: export json', t => {
+  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let consoleSpy = sinon.stub(console, 'log')
+  let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(JSON.stringify(adrOptions))
+    .onCall(1).returns(JSON.stringify(adrOptions))
+    .onCall(2).returns(JSON.stringify(adrOptions))
+    .onCall(3).returns(adrTemplate)
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+
+  let results = ADR.output('json')
+  t.deepEqual(results, `[{"index":1,"decision":"编写完整的单元测试","modifiedDate":"2017-11-23"}]`)
+  // t.deepEqual(fsWriteSpy.calledWith('./export.csv'), true)
+  ADRGetSavePathSpy.restore()
+  fsReadSpy.restore()
+  fsWriteSpy.restore()
+  entriesSpy.restore()
+  consoleSpy.restore()
+})
