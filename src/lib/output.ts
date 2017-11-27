@@ -77,7 +77,29 @@ function outputHtml () {
   let fileData = fs.readFileSync('output.md', 'utf-8')
   fs.unlinkSync('output.md')
   let mdToc = toc(fileData).content
-  console.log(md.render(mdToc))
+  let tocHtml = md.render(mdToc)
+  let contentHtml = md.render(fileData)
+  let htmlTemplate =
+`
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADR Documents</title>
+</head>
+<body>
+<div id="toc">
+  ${tocHtml}
+</div>
+<div id="content">
+  ${contentHtml}
+</div>
+</body>
+</html>
+`
+  return htmlTemplate
 }
 
 export function output (type: string): string {
