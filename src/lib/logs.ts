@@ -53,7 +53,8 @@ export function logs (index): string {
   let filePath = path + currentFileName
   let allStatus = Status.getAllStatus(filePath)
   if (allStatus.length === 0) {
-    return 'no status: did .adr.json config has correct config of language??'
+    console.log('no status: did .adr.json config has correct config of language??')
+    return ''
   }
   let tableData: string[][] = []
 
