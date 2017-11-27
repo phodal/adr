@@ -1,6 +1,8 @@
 let moment = require('moment')
 let fs = require('fs')
 let walkSync = require('walk-sync')
+let toc = require('markdown-toc')
+let Remarkable = require('remarkable')
 
 import Utils from './utils'
 import Status from './status'
@@ -68,6 +70,16 @@ function outputMarkdown () {
   }
 }
 
+function outputHtml () {
+  let md = new Remarkable()
+  outputMarkdown()
+
+  let fileData = fs.readFileSync('output.md', 'utf-8')
+  fs.unlinkSync('output.md')
+  let mdToc = toc(fileData).content
+  console.log(md.render(mdToc))
+}
+
 export function output (type: string): string {
   let output
   switch (type.toLowerCase()) {
@@ -82,6 +94,9 @@ export function output (type: string): string {
       break
     case 'markdown':
       output = outputMarkdown()
+      break
+    case 'html':
+      output = outputHtml()
       break
     default:
       let message = '\n error: type ' + type + ' current not supported'
