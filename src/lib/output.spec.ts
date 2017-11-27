@@ -97,9 +97,24 @@ test('ADR: export markdown', t => {
   let fsAppendSpy = sinon.stub(fs, 'appendFileSync')
   let fsReadSpy = sinon.stub(fs, 'readFileSync')
     .onCall(0).returns(adrTemplate)
+    .onCall(1).returns(`# 0. no index case`)
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-编写完整的单元测试.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: '0000-Hello-world.md',
       basePath: '/Users/fdhuang/learing/adr/doc/adr/',
       mode: 33188,
       size: 246,
