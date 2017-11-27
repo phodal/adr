@@ -58,7 +58,7 @@ export function output (type: string): string {
   } else if (type.toLowerCase() === 'json') {
     output = outputJson()
     let workDir = Utils.getWorkDir()
-    fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
+    fs.writeFileSync(workDir + '/export.json', JSON.stringify(output), 'utf-8')
   } else {
     let message = '\n error: type ' + type + ' current not supported'
     console.log(message)
