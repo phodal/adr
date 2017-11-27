@@ -72,6 +72,11 @@ function outputMarkdown () {
 
 function outputHtml () {
   let md = new Remarkable()
+    .use(remarkable => {
+      remarkable.renderer.rules.heading_open = function (tokens, idx) {
+        return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content) + '>'
+      }
+    })
   outputMarkdown()
 
   let fileData = fs.readFileSync('output.md', 'utf-8')
@@ -79,6 +84,7 @@ function outputHtml () {
   let mdToc = toc(fileData).content
   let tocHtml = md.render(mdToc)
   let contentHtml = md.render(fileData)
+  console.log(tocHtml, contentHtml)
   let htmlTemplate =
 `
 <html>
@@ -104,14 +110,15 @@ function outputHtml () {
 
 export function output (type: string): string {
   let output
+  let workDir = Utils.getWorkDir()
+
   switch (type.toLowerCase()) {
     case 'csv':
       output = outputCsv()
-      fs.writeFileSync(Utils.getWorkDir() + '/export.csv', output, 'utf-8')
+      fs.writeFileSync(workDir + '/export.csv', output, 'utf-8')
       break
     case 'json':
       output = outputJson()
-      let workDir = Utils.getWorkDir()
       fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
       break
     case 'markdown':
@@ -119,6 +126,7 @@ export function output (type: string): string {
       break
     case 'html':
       output = outputHtml()
+      fs.writeFileSync(workDir + '/export.html', output, 'utf-8')
       break
     default:
       let message = '\n error: type ' + type + ' current not supported'
