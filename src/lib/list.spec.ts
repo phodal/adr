@@ -10,7 +10,7 @@ test('ADR: list', t => {
   let consoleSpy = sinon.stub(console, 'log')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
     relativePath: '001-编写完整的单元测试.md',
-    basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+    basePath: '/Users/fdhuang/learing/adr/doc/adr/',
     mode: 33188,
     size: 246,
     mtime: 1511435254653 }
@@ -18,11 +18,11 @@ test('ADR: list', t => {
 
   let results = ADR.list()
   t.deepEqual(results,
-`╔══════════════════════╤══════════════╤═══════════╗
-║ 决策                 │ 上次修改时间 │ 最后状态  ║
-╟──────────────────────┼──────────────┼───────────╢
-║ 1.编写完整的单元测试 │ 2017-11-23   │           ║
-╚══════════════════════╧══════════════╧═══════════╝
+`╔══════════════════════╤════════════════════╤═════════════╗
+║ Decision             │ Last Modified Date │ Last Status ║
+╟──────────────────────┼────────────────────┼─────────────╢
+║ 1.编写完整的单元测试 │ 2017-11-23         │             ║
+╚══════════════════════╧════════════════════╧═════════════╝
 `)
   ADRGetSavePathSpy.restore()
   entriesSpy.restore()
@@ -34,13 +34,13 @@ test('ADR: list with README.md', t => {
   let consoleSpy = sinon.stub(console, 'log')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
     relativePath: '001-编写完整的单元测试.md',
-    basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+    basePath: '/Users/fdhuang/learing/adr/doc/adr/',
     mode: 33188,
     size: 246,
     mtime: 1511435254653 },
     {
       relativePath: 'README.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/ard/',
+      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
       mode: 33188,
       size: 246,
       mtime: 1511435254653 }
@@ -48,11 +48,11 @@ test('ADR: list with README.md', t => {
 
   let results = ADR.list()
   t.deepEqual(results,
-`╔══════════════════════╤══════════════╤═══════════╗
-║ 决策                 │ 上次修改时间 │ 最后状态  ║
-╟──────────────────────┼──────────────┼───────────╢
-║ 1.编写完整的单元测试 │ 2017-11-23   │           ║
-╚══════════════════════╧══════════════╧═══════════╝
+`╔══════════════════════╤════════════════════╤═════════════╗
+║ Decision             │ Last Modified Date │ Last Status ║
+╟──────────────────────┼────────────────────┼─────────────╢
+║ 1.编写完整的单元测试 │ 2017-11-23         │             ║
+╚══════════════════════╧════════════════════╧═════════════╝
 `)
   ADRGetSavePathSpy.restore()
   entriesSpy.restore()

@@ -9,7 +9,7 @@ test('ADR: init in chinese', t => {
 
   ADR.init('chinese')
   t.deepEqual(fsWriteSpy.calledOnce, true)
-  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', JSON.stringify({ path: 'doc/ard/', language: 'zh-cn' })), true)
+  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', JSON.stringify({ path: 'doc/adr/', language: 'zh-cn' })), true)
   cwdSpy.restore()
   fsWriteSpy.restore()
 })
@@ -20,7 +20,7 @@ test('ADR: init en', t => {
 
   ADR.init('en')
   t.deepEqual(fsWriteSpy.calledOnce, true)
-  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', JSON.stringify({ path: 'doc/ard/', language: 'en' })), true)
+  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', JSON.stringify({ path: 'doc/adr/', language: 'en' })), true)
   cwdSpy.restore()
   fsWriteSpy.restore()
 })
