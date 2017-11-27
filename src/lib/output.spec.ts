@@ -82,3 +82,36 @@ test('ADR: export json', t => {
   entriesSpy.restore()
   consoleSpy.restore()
 })
+
+test('ADR: when export error', t => {
+  let consoleSpy = sinon.stub(console, 'log')
+
+  ADR.output('excel')
+  t.deepEqual(consoleSpy.calledWith('\n error: type excel current not supported'), true)
+  consoleSpy.restore()
+})
+
+test('ADR: export markdown', t => {
+  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let consoleSpy = sinon.stub(console, 'log')
+  let fsAppendSpy = sinon.stub(fs, 'appendFileSync')
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(adrTemplate)
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+
+  ADR.output('markdown')
+  t.deepEqual(fsAppendSpy.calledWith('output.md'), true)
+  ADRGetSavePathSpy.restore()
+  fsReadSpy.restore()
+  // fsAppendSpy.restore()
+  entriesSpy.restore()
+  consoleSpy.restore()
+})

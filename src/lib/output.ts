@@ -64,7 +64,7 @@ function outputMarkdown () {
       break
     }
 
-    fs.appendFile('output.md', fileData + '\n\n', function (err) {
+    fs.appendFileSync('output.md', fileData + '\n\n', function (err) {
       if (err) {
         console.error(err)
       } else {
@@ -76,6 +76,7 @@ function outputMarkdown () {
 
 export function output (type: string): string {
   let output
+  console.log(type)
   switch (type.toLowerCase()) {
     case 'csv':
       output = outputCsv()
@@ -87,6 +88,7 @@ export function output (type: string): string {
       fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
       break
     case 'markdown':
+      console.log('markdown')
       output = outputMarkdown()
       break
     default:
