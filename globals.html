@@ -912,6 +912,12 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-class">
 			<a href="classes/generatebuilder.html" class="tsd-kind-icon">Generate<wbr>Builder</a>
 		</li>
+		<li class=" tsd-kind-class">
+			<a href="classes/jsongeneratebuilder.html" class="tsd-kind-icon">Json<wbr>Generate<wbr>Builder</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/abstractbuilder.html" class="tsd-kind-icon">Abstract<wbr>Builder</a>
+		</li>
 		<li class=" tsd-kind-variable tsd-is-not-exported">
 			<a href="globals.html#default_digits" class="tsd-kind-icon">DEFAULT_<wbr>DIGITS</a>
 		</li>
@@ -961,6 +967,9 @@ img { max-width: 100%; }
 			<a href="globals.html#moment" class="tsd-kind-icon">moment</a>
 		</li>
 		<li class=" tsd-kind-variable tsd-is-not-exported">
+			<a href="globals.html#output" class="tsd-kind-icon">output</a>
+		</li>
+		<li class=" tsd-kind-variable tsd-is-not-exported">
 			<a href="globals.html#path" class="tsd-kind-icon">path</a>
 		</li>
 		<li class=" tsd-kind-variable tsd-is-not-exported">
@@ -982,7 +991,13 @@ img { max-width: 100%; }
 			<a href="globals.html#walksync" class="tsd-kind-icon">walk<wbr>Sync</a>
 		</li>
 		<li class=" tsd-kind-function tsd-is-not-exported">
+			<a href="globals.html#buildcsvbodyfun" class="tsd-kind-icon">build<wbr>Csv<wbr>Body<wbr>Fun</a>
+		</li>
+		<li class=" tsd-kind-function tsd-is-not-exported">
 			<a href="globals.html#buildgraphbuildfun" class="tsd-kind-icon">build<wbr>Graph<wbr>Build<wbr>Fun</a>
+		</li>
+		<li class=" tsd-kind-function tsd-is-not-exported">
+			<a href="globals.html#buildjsonbodyfun" class="tsd-kind-icon">build<wbr>Json<wbr>Body<wbr>Fun</a>
 		</li>
 		<li class=" tsd-kind-function tsd-is-not-exported">
 			<a href="globals.html#buildtocbodyfun" class="tsd-kind-icon">build<wbr>Toc<wbr>Body<wbr>Fun</a>
@@ -1054,6 +1069,15 @@ img { max-width: 100%; }
 			<a href="globals.html#getworkdir" class="tsd-kind-icon">get<wbr>Work<wbr>Dir</a>
 		</li>
 		<li class=" tsd-kind-function tsd-is-not-exported">
+			<a href="globals.html#listadr" class="tsd-kind-icon">list<wbr>Adr</a>
+		</li>
+		<li class=" tsd-kind-function tsd-is-not-exported">
+			<a href="globals.html#outputcsv" class="tsd-kind-icon">output<wbr>Csv</a>
+		</li>
+		<li class=" tsd-kind-function tsd-is-not-exported">
+			<a href="globals.html#outputjson" class="tsd-kind-icon">output<wbr>Json</a>
+		</li>
+		<li class=" tsd-kind-function tsd-is-not-exported">
 			<a href="globals.html#updatenamebytitle" class="tsd-kind-icon">update<wbr>Name<wbr>ByTitle</a>
 		</li>
 		<li class=" tsd-kind-function tsd-is-not-exported">
@@ -1072,7 +1096,7 @@ img { max-width: 100%; }
 				<p>ADR - Architecture Decision Records（轻量级架构决策记录工具）</p>
 			</blockquote>
 			<p><a href="https://travis-ci.org/phodal/adr"><img src="https://travis-ci.org/phodal/adr.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/github/phodal/adr?branch=master"><img src="https://codecov.io/github/phodal/adr/coverage.svg?branch=master" alt="codecov.io"></a>  <a href="https://codeclimate.com/github/phodal/adr/maintainability"><img src="https://api.codeclimate.com/v1/badges/5cd05f9857e0a2031ba1/maintainability" alt="Maintainability"></a> </p>
-			<p><a href="https://github.com/phodal/markdown-improve"><img src="https://img.shields.io/badge/markdown--improve-Phodal-blue.svg" alt="Markdown Improve"></a> <a href=""><img src="https://img.shields.io/node/v/adr.svg" alt="node"></a> <a href=""><img src="https://img.shields.io/npm/v/adr.svg" alt="npm"></a></p>
+			<p><a href="https://github.com/phodal/markdown-improve"><img src="https://img.shields.io/badge/markdown--improve-Phodal-blue.svg" alt="Markdown Improve"></a> <a href="https://www.npmjs.com/package/adr"><img src="https://img.shields.io/node/v/adr.svg" alt="node"></a> <a href=""><img src="https://img.shields.io/npm/v/adr.svg" alt="npm"></a></p>
 			<p>Inspired by <a href="https://github.com/npryce/adr-tools">https://github.com/npryce/adr-tools</a>, but supported Windows.</p>
 			<p>ADR Blogpost: <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">Documenting Architecture Decisions</a></p>
 			<p><strong>Features</strong></p>
@@ -1099,15 +1123,17 @@ img { max-width: 100%; }
 			<h3 id="list">list</h3>
 			<pre><code>adr <span class="hljs-built_in">list</span>
 </code></pre><p>result:</p>
-			<pre><code>╔══════════════════════╤══════════════╗
-║ 决策                 │ 上次修改时间 ║
-╟──────────────────────┼──────────────╢
-║ <span class="hljs-number">1.</span>编写完整的单元测试 │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-22</span>   ║
-╟──────────────────────┼──────────────╢
-║ <span class="hljs-number">2.</span>添加目录生成       │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-22</span>   ║
-╟──────────────────────┼──────────────╢
-║ <span class="hljs-number">3.</span>图形生成           │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-22</span>   ║
-╚══════════════════════╧══════════════╝
+			<pre><code>╔══════════════════════════════════════╤══════════════╤═══════════════════╗
+║ Decision                             │ Last Modified│ Last Status       ║
+╟──────────────────────────────────────┼──────────────┼───────────────────╢
+║ <span class="hljs-number">1.</span>编写完整的单元测试                    │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span>   │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span> 已完成  ║
+╟──────────────────────────────────────┼──────────────┼───────────────────╢
+║ <span class="hljs-number">2.</span>添加目录生成                         │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span>   │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-25</span> 已完成  ║
+╟──────────────────────────────────────┼──────────────┼───────────────────╢
+║ <span class="hljs-number">3.</span>图形生成功能                         │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span>   │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-24</span> 已完成  ║
+╟──────────────────────────────────────┼──────────────┼───────────────────╢
+║ <span class="hljs-number">4.</span>生成在线图形                         │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span>   │ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-22</span> 提议    ║
+╚══════════════════════════════════════╧══════════════╧═══════════════════╝
 </code></pre><h3 id="generate-toc">generate toc</h3>
 			<pre><code>adr <span class="hljs-keyword">generate</span> toc
 </code></pre><p>results:</p>
@@ -1139,6 +1165,13 @@ img { max-width: 100%; }
 ╟────────────┼──────╢
 ║ <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-24</span> │ 通过 ║
 ╚════════════╧══════╝
+</code></pre><h3 id="export-adr">export adr</h3>
+			<pre><code><span class="hljs-title">adr</span> <span class="hljs-keyword">export</span> &lt;<span class="hljs-class"><span class="hljs-keyword">type</span>&gt;</span>
+</code></pre><p>e.x. <code>adr export csv</code></p>
+			<pre><code>Index, 决策, 上次修改时间, 最后状态
+<span class="hljs-number">1</span>, 编写完整的单元测试, <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span>, <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span> 已完成
+<span class="hljs-number">2</span>, 添加目录生成, <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span>, <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-25</span> 已完成
+<span class="hljs-number">3</span>, 图形生成功能, <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-26</span>, <span class="hljs-number">2017</span><span class="hljs-number">-11</span><span class="hljs-number">-24</span> 已完成
 </code></pre><h2 id="config">Config</h2>
 			<p>Current: <strong>Language</strong>, <em>workdir*</em></p>
 			<p>example config: </p>
@@ -1158,6 +1191,13 @@ img { max-width: 100%; }
 						<h3>Classes</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-class"><a href="classes/generatebuilder.html" class="tsd-kind-icon">Generate<wbr>Builder</a></li>
+							<li class="tsd-kind-class"><a href="classes/jsongeneratebuilder.html" class="tsd-kind-icon">Json<wbr>Generate<wbr>Builder</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Interfaces</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-interface"><a href="interfaces/abstractbuilder.html" class="tsd-kind-icon">Abstract<wbr>Builder</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section tsd-is-not-exported">
@@ -1179,6 +1219,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#mdtemplate" class="tsd-kind-icon">md<wbr>Template</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#mkdirp" class="tsd-kind-icon">mkdirp</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#moment" class="tsd-kind-icon">moment</a></li>
+							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#output" class="tsd-kind-icon">output</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#path" class="tsd-kind-icon">path</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#program" class="tsd-kind-icon">program</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#savepath" class="tsd-kind-icon">save<wbr>Path</a></li>
@@ -1191,7 +1232,9 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Functions</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#buildcsvbodyfun" class="tsd-kind-icon">build<wbr>Csv<wbr>Body<wbr>Fun</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#buildgraphbuildfun" class="tsd-kind-icon">build<wbr>Graph<wbr>Build<wbr>Fun</a></li>
+							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#buildjsonbodyfun" class="tsd-kind-icon">build<wbr>Json<wbr>Body<wbr>Fun</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#buildtocbodyfun" class="tsd-kind-icon">build<wbr>Toc<wbr>Body<wbr>Fun</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#createdatestring" class="tsd-kind-icon">create<wbr>Date<wbr>String</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#createdecisions" class="tsd-kind-icon">create<wbr>Decisions</a></li>
@@ -1215,6 +1258,9 @@ img { max-width: 100%; }
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#getstatussection" class="tsd-kind-icon">get<wbr>Status<wbr>Section</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#gettemplatestatustitle" class="tsd-kind-icon">get<wbr>Template<wbr>Status<wbr>Title</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#getworkdir" class="tsd-kind-icon">get<wbr>Work<wbr>Dir</a></li>
+							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#listadr" class="tsd-kind-icon">list<wbr>Adr</a></li>
+							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#outputcsv" class="tsd-kind-icon">output<wbr>Csv</a></li>
+							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#outputjson" class="tsd-kind-icon">output<wbr>Json</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#updatenamebytitle" class="tsd-kind-icon">update<wbr>Name<wbr>ByTitle</a></li>
 							<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#updatetoc" class="tsd-kind-icon">update<wbr>Toc</a></li>
 						</ul>
@@ -1236,7 +1282,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>DIGITS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;4</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L8">lib/utils.ts:8</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L8">lib/utils.ts:8</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1246,8 +1292,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Table<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;table&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/list.ts#L3">lib/list.ts:3</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.ts#L2">lib/logs.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.ts#L2">lib/list.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.ts#L2">lib/logs.ts:2</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1257,10 +1303,11 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Utils<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;ADR.Utils</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.spec.ts#L9">lib/create.spec.ts:9</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.spec.ts#L6">lib/generate.spec.ts:6</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/list.spec.ts#L6">lib/list.spec.ts:6</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.spec.ts#L8">lib/utils.spec.ts:8</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.spec.ts#L9">lib/create.spec.ts:9</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.spec.ts#L6">lib/generate.spec.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.spec.ts#L6">lib/list.spec.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.spec.ts#L7">lib/output.spec.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.spec.ts#L8">lib/utils.spec.ts:8</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1311,17 +1358,19 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">adr<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;JSON.stringify({path: &#x27;./&#x27;,language: &#x27;en&#x27;})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.spec.ts#L20">lib/create.spec.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.spec.ts#L20">lib/create.spec.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.spec.ts#L20">lib/output.spec.ts:20</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
 				<a name="adrtemplate" class="tsd-anchor"></a>
 				<h3>adr<wbr>Template</h3>
-				<div class="tsd-signature tsd-kind-icon">adr<wbr>Template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;# {NUMBER}. {TITLE}日期: {DATE}## 状态列表：提议/通过/完成/已弃用/已取代{DATE} 提议&#x60;</span></div>
+				<div class="tsd-signature tsd-kind-icon">adr<wbr>Template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;# 1. 编写完整的单元测试日期: 2017/11/22## 状态2017-11-22 提议2017-11-26 已完成&#x60;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.spec.ts#L11">lib/create.spec.ts:11</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.spec.ts#L11">lib/create.spec.ts:11</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.spec.ts#L9">lib/output.spec.ts:9</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1331,7 +1380,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">colors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;colors&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/cli.ts#L11">cli.ts:11</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/cli.ts#L4">cli.ts:4</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1345,7 +1394,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.ts#L23">lib/create.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.ts#L23">lib/create.ts:23</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1364,16 +1413,18 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">fs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;fs&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/init.ts#L1">lib/init.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L4">lib/utils.ts:4</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.ts#L1">lib/create.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L1">lib/status.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.ts#L3">lib/update.ts:3</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.spec.ts#L2">lib/create.spec.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/init.spec.ts#L2">lib/init.spec.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.spec.ts#L2">lib/logs.spec.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.spec.ts#L2">lib/update.spec.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.spec.ts#L2">lib/utils.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/init.ts#L1">lib/init.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L4">lib/utils.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.ts#L1">lib/create.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L1">lib/status.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.ts#L3">lib/update.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L2">lib/output.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.spec.ts#L2">lib/create.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/init.spec.ts#L2">lib/init.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.spec.ts#L2">lib/logs.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.spec.ts#L3">lib/output.spec.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.spec.ts#L2">lib/update.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.spec.ts#L2">lib/utils.spec.ts:2</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1381,13 +1432,13 @@ img { max-width: 100%; }
 				<a name="generate" class="tsd-anchor"></a>
 				<h3>generate</h3>
 				<ul class="tsd-signatures tsd-kind-variable tsd-is-not-exported">
-					<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.ts#L47">lib/generate.ts:47</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.ts#L47">lib/generate.ts:47</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1399,7 +1450,10 @@ img { max-width: 100%; }
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span>
+							<span class="tsd-signature-symbol"> | </span>
+							<span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span>
+						</h4>
 					</li>
 				</ul>
 			</section>
@@ -1413,7 +1467,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/init.ts#L5">lib/init.ts:5</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/init.ts#L5">lib/init.ts:5</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1436,7 +1490,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/list.ts#L8">lib/list.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.ts#L30">lib/list.ts:30</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -1453,7 +1507,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.ts#L50">lib/logs.ts:50</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.ts#L50">lib/logs.ts:50</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1472,7 +1526,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">md<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;markdown&#x27;).markdown</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L3">lib/status.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L3">lib/status.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1482,8 +1536,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">md<wbr>Template<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;# 1. 更友好的 CLI日期: 2017-11-23## 状态列表：提议/通过/完成/已弃用/已取代2017-11-23 提议&#x60;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.spec.ts#L9">lib/logs.spec.ts:9</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.spec.ts#L9">lib/update.spec.ts:9</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.spec.ts#L9">lib/logs.spec.ts:9</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.spec.ts#L9">lib/update.spec.ts:9</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1493,8 +1547,8 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">mkdirp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;mkdirp&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.ts#L3">lib/create.ts:3</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.spec.ts#L3">lib/create.spec.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.ts#L3">lib/create.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.spec.ts#L3">lib/create.spec.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1504,10 +1558,34 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">moment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;moment&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L5">lib/utils.ts:5</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/list.ts#L2">lib/list.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L5">lib/utils.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.ts#L1">lib/list.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L1">lib/output.ts:1</a></li>
 					</ul>
 				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+				<a name="output" class="tsd-anchor"></a>
+				<h3>output</h3>
+				<ul class="tsd-signatures tsd-kind-variable tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">output<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L51">lib/output.ts:51</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>type: <span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
 				<a name="path" class="tsd-anchor"></a>
@@ -1515,9 +1593,11 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;Utils.getSavePath()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.ts#L2">lib/create.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L2">lib/status.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.ts#L7">lib/logs.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.ts#L2">lib/create.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L2">lib/status.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.ts#L8">lib/list.ts:8</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.ts#L7">lib/logs.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L9">lib/output.ts:9</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1527,7 +1607,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">program<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;commander&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/cli.ts#L3">cli.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/cli.ts#L3">cli.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1537,7 +1617,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">save<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;Utils.getSavePath()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.ts#L8">lib/update.ts:8</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.ts#L8">lib/update.ts:8</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1547,13 +1627,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">sinon<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;sinon&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.spec.ts#L1">lib/create.spec.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.spec.ts#L1">lib/generate.spec.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/init.spec.ts#L1">lib/init.spec.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/list.spec.ts#L1">lib/list.spec.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.spec.ts#L1">lib/logs.spec.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.spec.ts#L1">lib/update.spec.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.spec.ts#L1">lib/utils.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.spec.ts#L1">lib/create.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.spec.ts#L1">lib/generate.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/init.spec.ts#L1">lib/init.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.spec.ts#L1">lib/list.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.spec.ts#L1">lib/logs.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.spec.ts#L1">lib/output.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.spec.ts#L1">lib/update.spec.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.spec.ts#L1">lib/utils.spec.ts:1</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1567,7 +1648,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.ts#L41">lib/update.ts:41</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.ts#L41">lib/update.ts:41</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1580,7 +1661,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;../../package.json&#x27;).version</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/cli.ts#L4">cli.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/cli.ts#L5">cli.ts:5</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1590,17 +1671,17 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">walk<wbr>Sync<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;walk-sync&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L6">lib/utils.ts:6</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/base/GenerateBuilder.ts#L1">lib/base/GenerateBuilder.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/list.ts#L1">lib/list.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.ts#L2">lib/update.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.ts#L1">lib/logs.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.spec.ts#L4">lib/create.spec.ts:4</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.spec.ts#L2">lib/generate.spec.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/list.spec.ts#L2">lib/list.spec.ts:2</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.spec.ts#L3">lib/logs.spec.ts:3</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.spec.ts#L3">lib/update.spec.ts:3</a></li>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.spec.ts#L3">lib/utils.spec.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L6">lib/utils.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/base/GenerateBuilder.ts#L2">lib/base/GenerateBuilder.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.ts#L2">lib/update.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.ts#L1">lib/logs.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.spec.ts#L4">lib/create.spec.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.spec.ts#L2">lib/generate.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.spec.ts#L2">lib/list.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.spec.ts#L3">lib/logs.spec.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.spec.ts#L2">lib/output.spec.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.spec.ts#L3">lib/update.spec.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.spec.ts#L3">lib/utils.spec.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1608,16 +1689,16 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Functions</h2>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
-				<a name="buildgraphbuildfun" class="tsd-anchor"></a>
-				<h3>build<wbr>Graph<wbr>Build<wbr>Fun</h3>
+				<a name="buildcsvbodyfun" class="tsd-anchor"></a>
+				<h3>build<wbr>Csv<wbr>Body<wbr>Fun</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-					<li class="tsd-signature tsd-kind-icon">build<wbr>Graph<wbr>Build<wbr>Fun<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, decision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, filePath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, bodyString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, filesLength<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					<li class="tsd-signature tsd-kind-icon">build<wbr>Csv<wbr>Body<wbr>Fun<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, decision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, file<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, bodyString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.ts#L4">lib/generate.ts:4</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L10">lib/output.ts:10</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1629,7 +1710,39 @@ img { max-width: 100%; }
 								<h5>decision: <span class="tsd-signature-type">any</span></h5>
 							</li>
 							<li>
-								<h5>filePath: <span class="tsd-signature-type">any</span></h5>
+								<h5>file: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>bodyString: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+				<a name="buildgraphbuildfun" class="tsd-anchor"></a>
+				<h3>build<wbr>Graph<wbr>Build<wbr>Fun</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">build<wbr>Graph<wbr>Build<wbr>Fun<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, decision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, file<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, bodyString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, filesLength<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.ts#L4">lib/generate.ts:4</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>index: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>decision: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>file: <span class="tsd-signature-type">any</span></h5>
 							</li>
 							<li>
 								<h5>bodyString: <span class="tsd-signature-type">any</span></h5>
@@ -1643,16 +1756,16 @@ img { max-width: 100%; }
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
-				<a name="buildtocbodyfun" class="tsd-anchor"></a>
-				<h3>build<wbr>Toc<wbr>Body<wbr>Fun</h3>
+				<a name="buildjsonbodyfun" class="tsd-anchor"></a>
+				<h3>build<wbr>Json<wbr>Body<wbr>Fun</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-					<li class="tsd-signature tsd-kind-icon">build<wbr>Toc<wbr>Body<wbr>Fun<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, decision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, filePath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, bodyString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					<li class="tsd-signature tsd-kind-icon">build<wbr>Json<wbr>Body<wbr>Fun<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, decision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, file<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, bodyString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.ts#L12">lib/generate.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L30">lib/output.ts:30</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1664,7 +1777,39 @@ img { max-width: 100%; }
 								<h5>decision: <span class="tsd-signature-type">any</span></h5>
 							</li>
 							<li>
-								<h5>filePath: <span class="tsd-signature-type">any</span></h5>
+								<h5>file: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>bodyString: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+				<a name="buildtocbodyfun" class="tsd-anchor"></a>
+				<h3>build<wbr>Toc<wbr>Body<wbr>Fun</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">build<wbr>Toc<wbr>Body<wbr>Fun<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, decision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, file<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, bodyString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.ts#L12">lib/generate.ts:12</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>index: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>decision: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>file: <span class="tsd-signature-type">any</span></h5>
 							</li>
 							<li>
 								<h5>bodyString: <span class="tsd-signature-type">any</span></h5>
@@ -1684,7 +1829,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L116">lib/utils.ts:116</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L116">lib/utils.ts:116</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -1701,7 +1846,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/create.ts#L8">lib/create.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/create.ts#L8">lib/create.ts:8</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1727,7 +1872,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L33">lib/utils.ts:33</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L33">lib/utils.ts:33</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1750,7 +1895,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.ts#L37">lib/logs.ts:37</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.ts#L37">lib/logs.ts:37</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1776,7 +1921,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.ts#L25">lib/logs.ts:25</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.ts#L25">lib/logs.ts:25</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1799,7 +1944,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L76">lib/utils.ts:76</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L76">lib/utils.ts:76</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1816,16 +1961,19 @@ img { max-width: 100%; }
 				<a name="generategraph" class="tsd-anchor"></a>
 				<h3>generate<wbr>Graph</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-					<li class="tsd-signature tsd-kind-icon">generate<wbr>Graph<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					<li class="tsd-signature tsd-kind-icon">generate<wbr>Graph<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.ts#L33">lib/generate.ts:33</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.ts#L33">lib/generate.ts:33</a></li>
 							</ul>
 						</aside>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span>
+							<span class="tsd-signature-symbol"> | </span>
+							<span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span>
+						</h4>
 					</li>
 				</ul>
 			</section>
@@ -1833,13 +1981,13 @@ img { max-width: 100%; }
 				<a name="generatetoc" class="tsd-anchor"></a>
 				<h3>generate<wbr>Toc</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-					<li class="tsd-signature tsd-kind-icon">generate<wbr>Toc<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					<li class="tsd-signature tsd-kind-icon">generate<wbr>Toc<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/generate.ts#L17">lib/generate.ts:17</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/generate.ts#L17">lib/generate.ts:17</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1848,7 +1996,10 @@ img { max-width: 100%; }
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span>
+							<span class="tsd-signature-symbol"> | </span>
+							<span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span>
+						</h4>
 					</li>
 				</ul>
 			</section>
@@ -1862,7 +2013,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/logs.ts#L9">lib/logs.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/logs.ts#L9">lib/logs.ts:9</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -1879,7 +2030,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L26">lib/status.ts:26</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L26">lib/status.ts:26</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1902,7 +2053,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/helpers/i18n.ts#L3">lib/helpers/i18n.ts:3</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/helpers/i18n.ts#L3">lib/helpers/i18n.ts:3</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -1919,7 +2070,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L111">lib/utils.ts:111</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L111">lib/utils.ts:111</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1942,7 +2093,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L86">lib/utils.ts:86</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L86">lib/utils.ts:86</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -1959,7 +2110,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L56">lib/utils.ts:56</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L56">lib/utils.ts:56</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1976,7 +2127,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L45">lib/status.ts:45</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L45">lib/status.ts:45</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1999,7 +2150,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L38">lib/utils.ts:38</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L38">lib/utils.ts:38</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2022,7 +2173,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L67">lib/utils.ts:67</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L67">lib/utils.ts:67</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -2039,7 +2190,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L106">lib/utils.ts:106</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L106">lib/utils.ts:106</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2062,7 +2213,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L14">lib/utils.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L14">lib/utils.ts:14</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -2079,7 +2230,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L7">lib/status.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L7">lib/status.ts:7</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2105,7 +2256,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L50">lib/status.ts:50</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L50">lib/status.ts:50</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -2122,7 +2273,61 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/utils.ts#L10">lib/utils.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/utils.ts#L10">lib/utils.ts:10</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+				<a name="listadr" class="tsd-anchor"></a>
+				<h3>list<wbr>Adr</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">list<wbr>Adr<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/list.ts#L16">lib/list.ts:16</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+				<a name="outputcsv" class="tsd-anchor"></a>
+				<h3>output<wbr>Csv</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">output<wbr>Csv<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L16">lib/output.ts:16</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span>
+							<span class="tsd-signature-symbol"> | </span>
+							<span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span>
+						</h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+				<a name="outputjson" class="tsd-anchor"></a>
+				<h3>output<wbr>Json</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">output<wbr>Json<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/output.ts#L41">lib/output.ts:41</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -2139,7 +2344,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.ts#L10">lib/update.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.ts#L10">lib/update.ts:10</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -2156,7 +2361,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/update.ts#L36">lib/update.ts:36</a></li>
+								<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/update.ts#L36">lib/update.ts:36</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -2172,7 +2377,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L72">lib/status.ts:72</a></li>
+						<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L72">lib/status.ts:72</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -2181,7 +2386,7 @@ img { max-width: 100%; }
 					<div class="tsd-signature tsd-kind-icon">get<wbr>All<wbr>Status<span class="tsd-signature-symbol">:</span> <a href="globals.html#getallstatus" class="tsd-signature-type">getAllStatus</a><span class="tsd-signature-symbol"> =&nbsp;getAllStatus</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L74">lib/status.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L74">lib/status.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2191,7 +2396,7 @@ img { max-width: 100%; }
 					<div class="tsd-signature tsd-kind-icon">get<wbr>Latest<wbr>Status<span class="tsd-signature-symbol">:</span> <a href="globals.html#getlateststatus" class="tsd-signature-type">getLatestStatus</a><span class="tsd-signature-symbol"> =&nbsp;getLatestStatus</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/phodal/adr/blob/b84fa5c/src/lib/status.ts#L73">lib/status.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/phodal/adr/blob/4df269b/src/lib/status.ts#L73">lib/status.ts:73</a></li>
 						</ul>
 					</aside>
 				</section>
