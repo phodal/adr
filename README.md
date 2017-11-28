@@ -127,7 +127,7 @@ e.x. ``adr logs 9``
 
 ### export adr
 
-support: json, csv
+support: json, csv, html, markdown
 
 ```
 adr export <type>
