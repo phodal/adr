@@ -76,7 +76,7 @@ function outputHtml () {
   let md = new Remarkable()
     .use(remarkable => {
       remarkable.renderer.rules.heading_open = function (tokens, idx) {
-        let content = tokens[idx + 1].content;
+        let content = tokens[idx + 1].content
         if (tokens[idx].hLevel === 1) {
           lastH1Index = content.split('. ')[0] - 1
           return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(content) + '>'
