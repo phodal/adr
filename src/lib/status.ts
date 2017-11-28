@@ -23,6 +23,20 @@ function getStatusSection (tree: any, templateStatusHeader: string) {
   return statusSection
 }
 
+function getStatusWithDate (statusSections: string[]) {
+  let status: string[] = []
+  for (let i = 0; i < statusSections.length; i++) {
+    let currentStatusSection = statusSections[i]
+    if (currentStatusSection[0] === 'para') {
+      if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection[1])) {
+        status.push(currentStatusSection[1])
+      }
+    }
+  }
+
+  return status
+}
+
 function getAllStatus (filePath): string[] {
   let fileData
   try {
@@ -33,14 +47,14 @@ function getAllStatus (filePath): string[] {
   }
   let tree = md.parse(fileData)
   let statusSections = getStatusSection(tree, getTemplateStatusTitle())
-  let status: string[] = []
-  for (let i = 0; i < statusSections.length;i++) {
-    let currentStatusSection = statusSections[i]
-    if (currentStatusSection[0] === 'para') {
-      if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection[1])) {
-        status.push(currentStatusSection[1])
-      }
+  let status = getStatusWithDate(statusSections)
+
+  if (status.length === 0) {
+    let lastStatusSection = statusSections[statusSections.length - 1]
+    if (!(lastStatusSection && lastStatusSection[1])) {
+      return []
     }
+    status = [lastStatusSection[1]]
   }
 
   return status
