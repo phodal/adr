@@ -72,10 +72,16 @@ function outputMarkdown () {
 }
 
 function outputHtml () {
+  let lastH1Index = 0
   let md = new Remarkable()
     .use(remarkable => {
       remarkable.renderer.rules.heading_open = function (tokens, idx) {
-        return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content) + '>'
+        if(tokens[idx].hLevel === 1) {
+          lastH1Index = parseInt(tokens[idx + 1].content.split('. ')[0] - 1)
+          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content) + '>'
+        } else {
+          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content + ' ' + lastH1Index) + '>'
+        }
       }
     })
   outputMarkdown()
