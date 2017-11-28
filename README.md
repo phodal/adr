@@ -14,10 +14,18 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
 **Features**
 
  - Support on Node.js OS: Windows, Linux, Mac OS (Done)
+ - export: html, csv, markdown
  - i18n: English, 中文 (Done)
  - status logs (Done)
  - status query (doing)
  - better list view (Done)
+
+examples
+---
+ 
+[Export HTML Example](https://phodal.github.io/adr/examples/export.html)
+
+[Export CSV Example](https://phodal.github.io/adr/examples/export.csv)
 
 Install
 ---
