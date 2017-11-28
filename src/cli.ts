@@ -21,7 +21,7 @@ program
   .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
   .option('-init, init <language>', 'init ADR with language, e.g. ``adr init en``', init)
   .option('-logs, logs <index>', 'list one ADR status logs', logs)
-  .option('-o, export <format>', 'export ADR in CSV, JSON', output)
+  .option('-o, export <format>', 'export ADR reporter in HTML, CSV, JSON, Markdown', output)
 
 program.parse(process.argv)
 
