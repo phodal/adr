@@ -76,11 +76,12 @@ function outputHtml () {
   let md = new Remarkable()
     .use(remarkable => {
       remarkable.renderer.rules.heading_open = function (tokens, idx) {
-        if(tokens[idx].hLevel === 1) {
-          lastH1Index = parseInt(tokens[idx + 1].content.split('. ')[0] - 1)
-          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content) + '>'
+        let content = tokens[idx + 1].content;
+        if (tokens[idx].hLevel === 1) {
+          lastH1Index = content.split('. ')[0] - 1
+          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(content) + '>'
         } else {
-          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content + ' ' + lastH1Index) + '>'
+          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(content + ' ' + lastH1Index) + '>'
         }
       }
     })
