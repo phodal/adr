@@ -5,7 +5,6 @@ import { test } from 'ava'
 import ADR from 'adr'
 
 let Utils = ADR.Utils
-let MdHelper = ADR.MdHelper
 
 let adrTemplate = `# 1. 编写完整的单元测试
 
@@ -21,20 +20,6 @@ let adrOptions = JSON.stringify({
   path: './',
   language: 'en'
 })
-
-let renderHtml = `
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>ADR Documents</title>
-</head>
-<body>
-
-</body>
-`
 
 test('ADR: export csv', t => {
   let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
@@ -146,6 +131,21 @@ test('ADR: export markdown', t => {
 })
 //
 // test('ADR: export html', t => {
+//   let MdHelper = ADR.MdHelper
+//   let renderHtml = `
+// <html>
+// <head>
+//   <meta charset="UTF-8">
+//   <meta name="viewport"
+//         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+//   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+//   <title>ADR Documents</title>
+// </head>
+// <body>
+//
+// </body>
+// `
+//
 //   let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
 //   let dirSpy = sinon.stub(Utils, 'getWorkDir').returns('.')
 //   let fsUnlink = sinon.stub(fs, 'unlinkSync').returns(true)
