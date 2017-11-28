@@ -8,6 +8,7 @@ import Utils from './utils'
 import Status from './status'
 import {GenerateBuilder} from './base/GenerateBuilder'
 import {JsonGenerateBuilder} from './base/JsonGenerateBuilder'
+import {htmlRender} from './helpers/htmlRender'
 
 let path = Utils.getSavePath()
 function buildCsvBodyFun (index, decision, file, bodyString): string[] {
@@ -70,55 +71,6 @@ function outputMarkdown () {
   }
 }
 
-function renderHTML (tocHtml: string | void, contentHtml: string | void) {
-  return `
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>ADR Documents</title>
-
-<style type="text/css">
-#toc {
-  width: 30%;
-  max-width: 420px;
-  max-height: 85%;
-  float: left;
-  margin: 25px 0px 20px 0px;
-}
-
-#toc > ul {
-  margin: 0;
-  padding: 0;
-  padding-left: 40px;
-}
-
-#toc > ul > li {
-  list-style: none;
-}
-
-#content {
-  width: 70%;
-  max-width: 980px;
-  float: left;
-}
-
-</style>
-</head>
-<body>
-<div id="toc" class="tocify">
-  ${tocHtml}
-</div>
-<div id="content">
-  ${contentHtml}
-</div>
-</body>
-</html>
-`
-}
-
 function outputHtml () {
   let md = new Remarkable()
     .use(remarkable => {
@@ -133,7 +85,7 @@ function outputHtml () {
   let mdToc = toc(fileData).content
   let tocHtml = md.render(mdToc)
   let contentHtml = md.render(fileData)
-  return renderHTML(tocHtml, contentHtml)
+  return htmlRender(tocHtml, contentHtml)
 }
 
 export function output (type: string): string {

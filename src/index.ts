@@ -6,6 +6,7 @@ import {generate} from './lib/generate'
 import {init} from './lib/init'
 import {logs} from './lib/logs'
 import {output} from './lib/output'
+import {htmlRender} from './lib/helpers/htmlRender'
 import Status from './lib/status'
 import {GenerateBuilder} from './lib/base/GenerateBuilder'
 
@@ -18,6 +19,7 @@ export default {
   init: init,
   logs: logs,
   output: output,
+  htmlRender: htmlRender,
   GenerateClass: GenerateBuilder,
   Status: Status
 }

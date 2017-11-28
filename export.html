@@ -1,0 +1,824 @@
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADR Documents</title>
+
+<style type="text/css">
+html {
+  color: #333;
+  background: #fff;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-rendering: optimizelegibility;
+}
+
+/* 如果你的项目仅支持 IE9+ | Chrome | Firefox 等，推荐在 <html> 中添加 .borderbox 这个 class */
+html.borderbox *, html.borderbox *:before, html.borderbox *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+  margin: 0;
+  padding: 0;
+}
+
+/* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+  display: block;
+}
+
+/* HTML5 媒体文件跟 img 保持一致 */
+audio, canvas, video {
+  display: inline-block;
+}
+
+/* 要注意表单元素并不继承父级 font 的问题 */
+body, button, input, select, textarea {
+  font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/* 去掉各Table cell 的边距并让其边重合 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 去除默认边框 */
+fieldset, img {
+  border: 0;
+}
+
+/* 块/段落引用 */
+blockquote {
+  position: relative;
+  color: #999;
+  font-weight: 400;
+  border-left: 1px solid #1abc9c;
+  padding-left: 1em;
+  margin: 1em 3em 1em 2em;
+}
+
+@media only screen and ( max-width: 640px ) {
+  blockquote {
+    margin: 1em 0;
+  }
+}
+
+/* Firefox 以外，元素没有下划线，需添加 */
+acronym, abbr {
+  border-bottom: 1px dotted;
+  font-variant: normal;
+}
+
+/* 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌） */
+abbr {
+  cursor: help;
+}
+
+/* 一致的 del 样式 */
+del {
+  text-decoration: line-through;
+}
+
+address, caption, cite, code, dfn, em, th, var {
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
+ul, ol {
+  list-style: none;
+}
+
+/* 对齐是排版最重要的因素, 别让什么都居中 */
+caption, th {
+  text-align: left;
+}
+
+q:before, q:after {
+  content: '';
+}
+
+/* 统一上标和下标 */
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+}
+
+:root sub, :root sup {
+  vertical-align: baseline; /* for ie9 and other modern browsers */
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* 让链接在 hover 状态下显示下划线 */
+a {
+  color: #1abc9c;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.typo a {
+  border-bottom: 1px solid #1abc9c;
+}
+
+.typo a:hover {
+  border-bottom-color: #555;
+  color: #555;
+  text-decoration: none;
+}
+
+/* 默认不显示下划线，保持页面简洁 */
+ins, a {
+  text-decoration: none;
+}
+
+/* 专名号：虽然 u 已经重回 html5 Draft，但在所有浏览器中都是可以使用的，
+ * 要做到更好，向后兼容的话，添加 class="typo-u" 来显示专名号
+ * 关于 <u> 标签：http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-u-element
+ * 被放弃的是 4，之前一直搞错 http://www.w3.org/TR/html401/appendix/changes.html#idx-deprecated
+ * 一篇关于 <u> 标签的很好文章：http://html5doctor.com/u-element/
+ */
+u, .typo-u {
+  text-decoration: underline;
+}
+
+/* 标记，类似于手写的荧光笔的作用 */
+mark {
+  background: #fffdd1;
+  border-bottom: 1px solid #ffedce;
+  padding: 2px;
+  margin: 0 5px;
+}
+
+/* 代码片断 */
+pre, code, pre tt {
+  font-family: Courier, 'Courier New', monospace;
+}
+
+pre {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 1em 1.5em;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 一致化 horizontal rule */
+hr {
+  border: none;
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 0.8em;
+  height: 10px;
+}
+
+/* 底部印刷体、版本等标记 */
+small, .typo-small,
+  /* 图片说明 */
+figcaption {
+  font-size: 0.9em;
+  color: #888;
+}
+
+strong, b {
+  font-weight: bold;
+  color: #000;
+}
+
+/* 可拖动文件添加拖动手势 */
+[draggable] {
+  cursor: move;
+}
+
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+/* 强制文本换行 */
+.textwrap, .textwrap td, .textwrap th {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.textwrap-table {
+  table-layout: fixed;
+}
+
+/* 提供 serif 版本的字体设置: iOS 下中文自动 fallback 到 sans-serif */
+.serif {
+  font-family: Palatino, Optima, Georgia, serif;
+}
+
+/* 保证块/段落之间的空白隔行 */
+.typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
+.typo-p, .typo-pre, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote {
+  margin-bottom: 1.2em
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+  font-weight: 100;
+  color: #000;
+  line-height: 1.35;
+}
+
+/* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
+.typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6,
+.typo-h1, .typo-h2, .typo-h3, .typo-h4, .typo-h5, .typo-h6 {
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+  line-height: 1.35;
+}
+
+.typo h1, .typo-h1 {
+  font-size: 2em;
+}
+
+.typo h2, .typo-h2 {
+  font-size: 1.8em;
+}
+
+.typo h3, .typo-h3 {
+  font-size: 1.6em;
+}
+
+.typo h4, .typo-h4 {
+  font-size: 1.4em;
+}
+
+.typo h5, .typo h6, .typo-h5, .typo-h6 {
+  font-size: 1.2em;
+}
+
+/* 在文章中，应该还原 ul 和 ol 的样式 */
+.typo ul, .typo-ul {
+  margin-left: 1.3em;
+  list-style: disc;
+}
+
+.typo ol, .typo-ol {
+  list-style: decimal;
+  margin-left: 1.9em;
+}
+
+.typo li ul, .typo li ol, .typo-ul ul, .typo-ul ol, .typo-ol ul, .typo-ol ol {
+  margin-bottom: 0.8em;
+  margin-left: 2em;
+}
+
+.typo li ul, .typo-ul ul, .typo-ol ul {
+  list-style: circle;
+}
+
+/* 同 ul/ol，在文章中应用 table 基本格式 */
+.typo table th, .typo table td, .typo-table th, .typo-table td, .typo table caption {
+  border: 1px solid #ddd;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+.typo table th, .typo-table th {
+  background: #fbfbfb;
+}
+
+.typo table thead th, .typo-table thead th {
+  background: #f1f1f1;
+}
+
+.typo table caption {
+  border-bottom: none;
+}
+
+/* 去除 webkit 中 input 和 textarea 的默认样式  */
+.typo-input, .typo-textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.typo-em, .typo em, legend, caption {
+  color: #000;
+  font-weight: inherit;
+}
+
+/* 着重号，只能在少量（少于100个字符）且全是全角字符的情况下使用 */
+.typo-em {
+  position: relative;
+}
+
+.typo-em:after {
+  position: absolute;
+  top: 0.65em;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  content: "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・";
+}
+
+/* Responsive images */
+.typo img {
+  max-width: 100%;
+}
+
+header {
+    position: absolute;
+    z-index: 1024;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    text-transform: uppercase;
+    font-size: 20px
+}
+
+header .logo {
+    display: inline-block;
+    padding-left: 37px;
+    float: left;
+    text-decoration: none;
+    color: #333;
+    line-height: 60px;
+    background-repeat: no-repeat;
+    background-position: left center
+}
+
+header nav {
+    text-align: right;
+    font-size: 0
+}
+
+header nav ul {
+    display: inline-block;
+    padding: 0;
+    margin: 0 -15px 0 0;
+    list-style: none
+}
+
+header nav li {
+    display: inline
+}
+
+header nav a {
+    display: inline-block;
+    padding: 0 15px;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 60px;
+    transition: opacity .2s
+}
+
+header nav a.current {
+    color: #9600ff
+}
+
+header nav a:hover {
+    opacity: .75
+}
+.content {
+  padding-top: 100px;
+}
+
+#toc {
+  width: 30%;
+  max-width: 420px;
+  max-height: 85%;
+  float: left;
+  margin: 25px 0px 20px 0px;
+}
+
+#toc > ul {
+  list-style: none;
+  padding: 20px 40px 0 40px;
+  margin: 0;
+  border-bottom: 1px solid #eee
+}
+
+#toc > ul > li > ul {
+  padding-left: 40px;
+}
+
+#toc a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    transition: opacity .2s
+}
+
+#toc a.current {
+    color: #9600ff
+}
+
+#toc a:hover {
+    opacity: .75
+}
+
+.main {
+  width: 70%;
+  max-width: 980px;
+  float: left;
+}
+</style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <a href="https://github.com/phodal/adr" class="logo">ADR</a>
+        <nav>
+            <ul>
+                <li><a href="https://github.com/phodal/adr">GitHub</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="content">
+  <div id="toc" class="tocify">
+    <ul>
+<li><a href="#1-%E7%BC%96%E5%86%99%E5%AE%8C%E6%95%B4%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">1. 编写完整的单元测试</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C">结果</a></li>
+</ul></li>
+<li><a href="#2-%E6%B7%BB%E5%8A%A0%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90">2. 添加目录生成</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-1">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-1">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-1">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-1">结果</a></li>
+</ul></li>
+<li><a href="#3-%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E5%8A%9F%E8%83%BD">3. 图形生成功能</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-2">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-2">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-2">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-2">结果</a></li>
+</ul></li>
+<li><a href="#4-%E7%94%9F%E6%88%90%E5%9C%A8%E7%BA%BF%E5%9B%BE%E5%BD%A2">4. 生成在线图形</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-3">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-3">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-3">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-3">结果</a></li>
+</ul></li>
+<li><a href="#5-%E4%BF%9D%E6%8C%81%E5%8A%9F%E8%83%BD%E4%B8%8E-adr-tools-%E5%9F%BA%E6%9C%AC%E4%B8%80%E8%87%B4">5. 保持功能与 ADR-TOOLS 基本一致</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-4">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-4">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-4">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-4">结果</a></li>
+</ul></li>
+<li><a href="#6-%E6%B7%BB%E5%8A%A0-update-%E5%8A%9F%E8%83%BD%E6%9D%A5%E9%80%9A%E8%BF%87%E5%86%85%E5%AE%B9%E6%9B%B4%E6%96%B0%E6%96%87%E4%BB%B6">6. 添加 update 功能来通过内容更新文件</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-5">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-5">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-5">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-5">结果</a></li>
+</ul></li>
+<li><a href="#7-%E5%9C%A8-list-%E5%B1%95%E7%A4%BA-adr-%E7%9A%84%E7%8A%B6%E6%80%81">7. 在 list 展示 ADR 的状态</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-6">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-6">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-6">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-6">结果</a></li>
+</ul></li>
+<li><a href="#8-%E4%BD%BF%E7%94%A8-logs-%E6%9F%A5%E7%9C%8B%E6%8C%87%E5%AE%9A-index-%E7%8A%B6%E6%80%81%E8%AE%B0%E5%BD%95">8. 使用 logs 查看指定 index 状态记录</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-7">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-7">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-7">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-7">结果</a></li>
+</ul></li>
+<li><a href="#9-%E6%8F%90%E4%BE%9B%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81">9. 提供多语言支持</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-8">状态</a></li>
+<li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87-8">上下文</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-8">决策</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-8">结果</a></li>
+</ul></li>
+<li><a href="#10-%E6%9B%B4%E5%8F%8B%E5%A5%BD%E7%9A%84-cli">10. 更友好的 CLI</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-9">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-9">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C">后果</a></li>
+</ul></li>
+<li><a href="#11-%E6%B7%BB%E5%8A%A0-3-%E4%BD%8D%E6%95%B0%E5%88%B0-4-%E4%BD%8D%E6%95%B0%E5%8D%87%E7%BA%A7%E7%9A%84%E6%94%AF%E6%8C%81">11. 添加 3 位数到 4 位数升级的支持</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-10">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-1">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-10">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-1">后果</a></li>
+</ul></li>
+<li><a href="#12-%E9%87%8D%E6%9E%84%E9%87%8D%E5%A4%8D%E4%BB%A3%E7%A0%81%E5%88%B0-typescript-%E9%A3%8E%E6%A0%BC">12. 重构重复代码到 TypeScript 风格</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-11">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-2">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-11">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-2">后果</a></li>
+</ul></li>
+<li><a href="#13-%E8%80%83%E8%99%91%E6%B7%BB%E5%8A%A0-link-cli-%E6%9D%A5%E6%98%A0%E5%B0%84%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB">13. 考虑添加 link CLI 来映射对应关系</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-12">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-3">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-12">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-3">后果</a></li>
+</ul></li>
+<li><a href="#14-%E8%80%83%E8%99%91%E6%B7%BB%E5%8A%A0-tag-cli-%E6%9D%A5%E4%BD%BF%E7%94%A8%E6%A0%87%E7%AD%BE%E6%9F%A5%E8%AF%A2">14. 考虑添加 tag CLI 来使用标签查询</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-13">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-4">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-13">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-4">后果</a></li>
+</ul></li>
+<li><a href="#15-%E8%80%83%E8%99%91%E6%B7%BB%E5%8A%A0-export-%E5%8A%9F%E8%83%BD%E6%9D%A5%E5%AF%BC%E5%87%BA-adr">15. 考虑添加 export 功能来导出 ADR</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-14">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-5">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-14">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-5">后果</a></li>
+</ul></li>
+<li><a href="#16-%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%90%8C%E8%89%B2%E5%BD%A9%E6%9D%A5%E6%A0%87%E6%B3%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%8A%B6%E6%80%81">16. 使用不同色彩来标注不同的状态</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-15">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-6">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-15">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-6">后果</a></li>
+</ul></li>
+<li><a href="#17-%E7%94%9F%E6%88%90-html-%E6%8A%A5%E8%A1%A8">17. 生成 HTML 报表</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-16">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-7">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-16">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-7">后果</a></li>
+</ul></li>
+<li><a href="#18-%E8%80%83%E8%99%91%E6%B7%BB%E5%8A%A0%E5%AF%B9-vs-code-%E5%92%8C-atom-%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%8F%92%E4%BB%B6%E6%94%AF%E6%8C%81">18. 考虑添加对 VS Code 和 Atom 编辑器的插件支持</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-17">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-8">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-17">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-8">后果</a></li>
+</ul></li>
+<li><a href="#19-%E6%B7%BB%E5%8A%A0-e2e-%E6%B5%8B%E8%AF%95">19. 添加 E2E 测试</a>
+<ul>
+<li><a href="#%E7%8A%B6%E6%80%81-18">状态</a></li>
+<li><a href="#%E8%83%8C%E6%99%AF-9">背景</a></li>
+<li><a href="#%E5%86%B3%E7%AD%96-18">决策</a></li>
+<li><a href="#%E5%90%8E%E6%9E%9C-9">后果</a></li>
+</ul></li>
+</ul>
+
+  </div>
+  <div class="main typo">
+    <h1 id=1-编写完整的单元测试>1. 编写完整的单元测试</h1>
+<p>日期: 2017/11/22</p>
+<h2 id=状态>状态</h2>
+<p>2017-11-22 提议
+2017-11-26 已完成</p>
+<h2 id=上下文>上下文</h2>
+<p>当前，项目的单元测试比较少</p>
+<h2 id=决策>决策</h2>
+<p>决定进行编写单元测试</p>
+<h2 id=结果>结果</h2>
+<p>ava.js 目前不支持对文件的 mock，导致一定的问题</p>
+<h1 id=2-添加目录生成>2. 添加目录生成</h1>
+<p>日期: 2017/11/22</p>
+<h2 id=状态>状态</h2>
+<p>2017-11-22 提议
+2017-11-25 已完成</p>
+<h2 id=上下文>上下文</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=结果>结果</h2>
+<p>创建 READE.md 在 <code>doc</code> 目录下</p>
+<h1 id=3-图形生成功能>3. 图形生成功能</h1>
+<p>日期: 2017/11/22</p>
+<h2 id=状态>状态</h2>
+<p>2017-11-22 提议
+2017-11-24 已完成</p>
+<h2 id=上下文>上下文</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=结果>结果</h2>
+<p>在这里记录结果...</p>
+<h1 id=4-生成在线图形>4. 生成在线图形</h1>
+<p>日期: 2017/11/22</p>
+<h2 id=状态>状态</h2>
+<p>2017-11-22 提议</p>
+<h2 id=上下文>上下文</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=结果>结果</h2>
+<p>在这里记录结果...</p>
+<h1 id=5-保持功能与-adr-tools-基本一致>5. 保持功能与 ADR-TOOLS 基本一致</h1>
+<p>日期: 2017/11/22</p>
+<h2 id=状态>状态</h2>
+<p>2017-11-22 提议
+2017-11-26 已弃用</p>
+<h2 id=上下文>上下文</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=结果>结果</h2>
+<p>在这里记录结果...</p>
+<h1 id=6-添加-update-功能来通过内容更新文件>6. 添加 update 功能来通过内容更新文件</h1>
+<p>日期: 2017-11-23</p>
+<h2 id=状态>状态</h2>
+<p>2017-11-23 提议
+2017-11-24 已完成</p>
+<h2 id=上下文>上下文</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=结果>结果</h2>
+<p>在这里记录结果...</p>
+<h1 id=7-在-list-展示-adr-的状态>7. 在 list 展示 ADR 的状态</h1>
+<p>日期: 2017-11-23</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-23 提议
+2017-11-23 通过
+2017/11/24 完成</p>
+<h2 id=上下文>上下文</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=结果>结果</h2>
+<p>在这里记录结果...</p>
+<h1 id=8-使用-logs-查看指定-index-状态记录>8. 使用 logs 查看指定 index 状态记录</h1>
+<p>日期: 2017-11-23</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-23 提议</p>
+<h2 id=上下文>上下文</h2>
+<p>我想查看某一个指定记录的状态记录</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=结果>结果</h2>
+<p>在这里记录结果...</p>
+<h1 id=9-提供多语言支持>9. 提供多语言支持</h1>
+<p>日期: 2017-11-23</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-23 提议
+2017-11-23 通过</p>
+<h2 id=上下文>上下文</h2>
+<p>当前只支持中文模板，但是可以支持更多的语言</p>
+<h2 id=决策>决策</h2>
+<p>添加英语支持，并能匹配不同的语言</p>
+<h2 id=结果>结果</h2>
+<p>在这里记录结果...</p>
+<h1 id=10-更友好的-cli>10. 更友好的 CLI</h1>
+<p>日期: 2017-11-23</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-23 提议</p>
+<h2 id=背景>背景</h2>
+<p>当前的 CLI，不支持默认参数，在显示上不友好</p>
+<h2 id=决策>决策</h2>
+<p>添加额外的输入手段</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=11-添加-3-位数到-4-位数升级的支持>11. 添加 3 位数到 4 位数升级的支持</h1>
+<p>日期: 2017-11-24</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-24 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=12-重构重复代码到-typescript-风格>12. 重构重复代码到 TypeScript 风格</h1>
+<p>日期: 2017-11-25</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-25 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=13-考虑添加-link-cli-来映射对应关系>13. 考虑添加 link CLI 来映射对应关系</h1>
+<p>日期: 2017-11-26</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-26 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=14-考虑添加-tag-cli-来使用标签查询>14. 考虑添加 tag CLI 来使用标签查询</h1>
+<p>日期: 2017-11-26</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-26 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=15-考虑添加-export-功能来导出-adr>15. 考虑添加 export 功能来导出 ADR</h1>
+<p>日期: 2017-11-26</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-26 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>添加 CSV、JSON 输出支持</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=16-使用不同色彩来标注不同的状态>16. 使用不同色彩来标注不同的状态</h1>
+<p>日期: 2017-11-27</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-27 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=17-生成-html-报表>17. 生成 HTML 报表</h1>
+<p>日期: 2017-11-27</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-27 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>合成完成的 Markdown 文件，再将 Markdown 文件转换成 HTML</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=18-考虑添加对-vs-code-和-atom-编辑器的插件支持>18. 考虑添加对 VS Code 和 Atom 编辑器的插件支持</h1>
+<p>日期: 2017-11-27</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-27 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+<h1 id=19-添加-e2e-测试>19. 添加 E2E 测试</h1>
+<p>日期: 2017-11-28</p>
+<h2 id=状态>状态</h2>
+<p>列表：提议/通过/完成/已弃用/已取代</p>
+<p>2017-11-28 提议</p>
+<h2 id=背景>背景</h2>
+<p>在这里补充上下文...</p>
+<h2 id=决策>决策</h2>
+<p>在这里补充上决策信息...</p>
+<h2 id=后果>后果</h2>
+<p>在这里记录结果...</p>
+
+  </div>
+</div>
+</body>
+</html>
