@@ -14,7 +14,6 @@ let adrTemplate = `# 1. 编写完整的单元测试
 
 2017-11-22 提议
 2017-11-26 已完成
-
 `
 
 let adrOptions = JSON.stringify({
@@ -130,3 +129,38 @@ test('ADR: export markdown', t => {
   entriesSpy.restore()
   consoleSpy.restore()
 })
+
+// test('ADR: export html', t => {
+//   let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+//   let fsUnlink = sinon.stub(fs, 'unlinkSync').returns(true)
+//   // let consoleSpy = sinon.stub(console, 'log')
+//   let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
+//   let fsReadSpy = sinon.stub(fs, 'readFileSync')
+//     .onCall(0).returns(adrTemplate)
+//     .onCall(1).returns(adrTemplate)
+//     .onCall(2).returns('')
+//   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+//     {
+//       relativePath: '001-编写完整的单元测试.md',
+//       basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+//       mode: 33188,
+//       size: 246,
+//       mtime: 1511435254653
+//     },
+//     {
+//       relativePath: 'README.md',
+//       basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+//       mode: 33188,
+//       size: 246,
+//       mtime: 1511435254653
+//     }
+//   ])
+//
+//   ADR.output('html')
+//   t.deepEqual(fsWriteSpy.calledWith('output.html'), true)
+//   ADRGetSavePathSpy.restore()
+//   fsReadSpy.restore()
+//   fsUnlink.restore()
+//   entriesSpy.restore()
+//   // consoleSpy.restore()
+// })
