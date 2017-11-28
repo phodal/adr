@@ -9,6 +9,7 @@ import {output} from './lib/output'
 import {htmlRender} from './lib/helpers/htmlRender'
 import Status from './lib/status'
 import {GenerateBuilder} from './lib/base/GenerateBuilder'
+import MdHelper from './lib/helpers/MdHelper'
 
 export default {
   create: create,
@@ -20,6 +21,7 @@ export default {
   logs: logs,
   output: output,
   htmlRender: htmlRender,
+  MdHelper: MdHelper,
   GenerateClass: GenerateBuilder,
   Status: Status
 }

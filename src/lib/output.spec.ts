@@ -5,6 +5,7 @@ import { test } from 'ava'
 import ADR from 'adr'
 
 let Utils = ADR.Utils
+let MdHelper = ADR.MdHelper
 
 let adrTemplate = `# 1. 编写完整的单元测试
 
@@ -20,6 +21,20 @@ let adrOptions = JSON.stringify({
   path: './',
   language: 'en'
 })
+
+let renderHtml = `
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADR Documents</title>
+</head>
+<body>
+
+</body>
+`
 
 test('ADR: export csv', t => {
   let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
@@ -130,37 +145,43 @@ test('ADR: export markdown', t => {
   consoleSpy.restore()
 })
 
-// test('ADR: export html', t => {
-//   let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
-//   let fsUnlink = sinon.stub(fs, 'unlinkSync').returns(true)
-//   // let consoleSpy = sinon.stub(console, 'log')
-//   let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
-//   let fsReadSpy = sinon.stub(fs, 'readFileSync')
-//     .onCall(0).returns(adrTemplate)
-//     .onCall(1).returns(adrTemplate)
-//     .onCall(2).returns('')
-//   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
-//     {
-//       relativePath: '001-编写完整的单元测试.md',
-//       basePath: '/Users/fdhuang/learing/adr/doc/adr/',
-//       mode: 33188,
-//       size: 246,
-//       mtime: 1511435254653
-//     },
-//     {
-//       relativePath: 'README.md',
-//       basePath: '/Users/fdhuang/learing/adr/doc/adr/',
-//       mode: 33188,
-//       size: 246,
-//       mtime: 1511435254653
-//     }
-//   ])
-//
-//   ADR.output('html')
-//   t.deepEqual(fsWriteSpy.calledWith('output.html'), true)
-//   ADRGetSavePathSpy.restore()
-//   fsReadSpy.restore()
-//   fsUnlink.restore()
-//   entriesSpy.restore()
-//   // consoleSpy.restore()
-// })
+test('ADR: export html', t => {
+  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let dirSpy = sinon.stub(Utils, 'getWorkDir').returns('.')
+  let fsUnlink = sinon.stub(fs, 'unlinkSync').returns(true)
+  let mdHelperSpy = sinon.stub(MdHelper, 'mdRender').returns(renderHtml)
+  let consoleSpy = sinon.stub(console, 'log')
+  let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(adrTemplate)
+    .onCall(1).returns(adrTemplate)
+    .onCall(2).returns('')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.md',
+      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+
+  ADR.output('html')
+  t.deepEqual(fsWriteSpy.callCount, 1)
+  t.deepEqual(fsWriteSpy.calledWith('./export.html', renderHtml), true)
+  // t.deepEqual(fsWriteSpy.calledWith(renderHtml), true)
+  ADRGetSavePathSpy.restore()
+  fsReadSpy.restore()
+  fsUnlink.restore()
+  entriesSpy.restore()
+  mdHelperSpy.restore()
+  dirSpy.restore()
+  consoleSpy.restore()
+})
