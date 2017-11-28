@@ -24,8 +24,8 @@ export function mdRender (fileData) {
   return htmlRender(tocHtml, contentHtml)
 }
 
-let mdHelper = {
+let MdHelper = {
   mdRender: mdRender
 }
 
-export default mdHelper
+export default MdHelper

@@ -1,16 +1,12 @@
-import mdHelper from "./helpers/mdHelper";
-
 let moment = require('moment')
 let fs = require('fs')
 let walkSync = require('walk-sync')
-let toc = require('markdown-toc')
-let Remarkable = require('remarkable')
 
 import Utils from './utils'
 import Status from './status'
 import {GenerateBuilder} from './base/GenerateBuilder'
 import {JsonGenerateBuilder} from './base/JsonGenerateBuilder'
-import {htmlRender} from './helpers/htmlRender'
+import MdHelper from './helpers/MdHelper'
 
 let path = Utils.getSavePath()
 function buildCsvBodyFun (index, decision, file, bodyString): string[] {
@@ -78,7 +74,7 @@ function outputHtml () {
   let fileData = fs.readFileSync('output.md', 'utf-8')
   fs.unlinkSync('output.md')
 
-  return mdHelper.mdRender(fileData)
+  return MdHelper.mdRender(fileData)
 }
 
 export function output (type: string): string {
