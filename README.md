@@ -11,6 +11,8 @@ Inspired by [https://github.com/npryce/adr-tools](https://github.com/npryce/adr-
 
 ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)
 
+中文翻译：[架构决策记录](https://www.phodal.com/blog/documenting-architecture-decisions/)
+
 **Features**
 
  - Support on Node.js OS: Windows, Linux, Mac OS (Done)
