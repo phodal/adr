@@ -33,13 +33,17 @@ function getAllStatus (filePath): string[] {
   }
   let tree = md.parse(fileData)
   let statusSections = getStatusSection(tree, getTemplateStatusTitle())
-  let lastStatusSection = statusSections[statusSections.length - 1]
-  if (!(lastStatusSection && lastStatusSection[1])) {
-    return []
+  let status: string[] = []
+  for (let i = 0; i < statusSections.length;i++) {
+    let currentStatusSection = statusSections[i]
+    if (currentStatusSection[0] === 'para') {
+      if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection[1])) {
+        status.push(currentStatusSection[1])
+      }
+    }
   }
 
-  let lastStatusSectionText = lastStatusSection[1]
-  return lastStatusSectionText.split('\n')
+  return status
 }
 
 function getLatestStatus (filePath) {
