@@ -1,3 +1,5 @@
+import mdHelper from "./helpers/mdHelper";
+
 let moment = require('moment')
 let fs = require('fs')
 let walkSync = require('walk-sync')
@@ -72,27 +74,11 @@ function outputMarkdown () {
 }
 
 function outputHtml () {
-  let lastH1Index = 0
-  let md = new Remarkable()
-    .use(remarkable => {
-      remarkable.renderer.rules.heading_open = function (tokens, idx) {
-        let content = tokens[idx + 1].content
-        if (tokens[idx].hLevel === 1) {
-          lastH1Index = content.split('. ')[0] - 1
-          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(content) + '>'
-        } else {
-          return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(content + ' ' + lastH1Index) + '>'
-        }
-      }
-    })
   outputMarkdown()
-
   let fileData = fs.readFileSync('output.md', 'utf-8')
   fs.unlinkSync('output.md')
-  let mdToc = toc(fileData).content
-  let tocHtml = md.render(mdToc)
-  let contentHtml = md.render(fileData)
-  return htmlRender(tocHtml, contentHtml)
+
+  return mdHelper.mdRender(fileData)
 }
 
 export function output (type: string): string {
