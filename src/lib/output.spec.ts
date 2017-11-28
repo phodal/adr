@@ -113,7 +113,7 @@ test('ADR: export markdown', t => {
       mtime: 1511435254653
     },
     {
-      relativePath: '0000-Hello-world.md',
+      relativePath: '0000-Hello-world',
       basePath: '/Users/fdhuang/learing/adr/doc/adr/',
       mode: 33188,
       size: 246,

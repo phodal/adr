@@ -57,7 +57,7 @@ function outputMarkdown () {
   for (let i = 0; i < files.length; i++) {
     let file = files[i]
     let fileName = file.relativePath
-    if (fileName === 'README.md') {
+    if (fileName === 'README.md' || fileName.indexOf('.md') === -1) {
       break
     }
     let fileData = fs.readFileSync(path + fileName, 'utf8')
