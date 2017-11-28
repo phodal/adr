@@ -14,7 +14,7 @@ export class GenerateBuilder implements AbstractBuilder {
   constructor (path: string) {
     this.path = path
     this.bodyString = ['']
-    this.files = walkSync.entries(this.path)
+    this.files = walkSync.entries(this.path, {globs: ['**/*.md']})
   }
 
   setBody (handleBody: any) {

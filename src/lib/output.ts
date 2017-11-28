@@ -53,7 +53,7 @@ function outputJson () {
 }
 
 function outputMarkdown () {
-  let files = walkSync.entries(path)
+  let files = walkSync.entries(path, {globs: ['**/*.md']})
   for (let i = 0; i < files.length; i++) {
     let file = files[i]
     let fileName = file.relativePath

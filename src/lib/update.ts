@@ -8,7 +8,7 @@ import {generate} from './generate'
 let savePath = Utils.getSavePath()
 
 function updateNameByTitle (): void {
-  let files = walkSync.entries(savePath)
+  let files = walkSync.entries(savePath, {globs: ['**/*.md']})
   for (let i = 0; i < files.length; i++) {
     let file = files[i]
     let fileName = file.relativePath

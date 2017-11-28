@@ -55,7 +55,7 @@ function getMaxIndex (files: {relativePath: string}[]) {
 
 function getLatestIndex (): number {
   let path = getSavePath()
-  let files = walkSync.entries(path)
+  let files = walkSync.entries(path, {globs: ['**/*.md']})
 
   if (!(files && files.length > 0)) {
     return 0
