@@ -353,7 +353,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header {
-    position: absolute;
+    position: fixed;
+    z-index: 2;
     z-index: 1024;
     top: 0;
     left: 0;
@@ -418,6 +419,16 @@ header nav a:hover {
   max-height: 85%;
   float: left;
   margin: 25px 0px 20px 0px;
+  position: fixed !important;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  box-sizing: border-box;
+  z-index: 1;
+  left: 0;
+  top: 40px;
+  bottom: 0;
+  padding: 20px;
 }
 
 #toc > ul {
@@ -452,6 +463,7 @@ header nav a:hover {
   width: 70%;
   max-width: 980px;
   float: left;
+  padding-left: 30%;
 }
 </style>
 </head>
