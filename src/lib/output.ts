@@ -70,22 +70,8 @@ function outputMarkdown () {
   }
 }
 
-function outputHtml () {
-  let md = new Remarkable()
-    .use(remarkable => {
-      remarkable.renderer.rules.heading_open = function (tokens, idx) {
-        return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content) + '>'
-      }
-    })
-  outputMarkdown()
-
-  let fileData = fs.readFileSync('output.md', 'utf-8')
-  fs.unlinkSync('output.md')
-  let mdToc = toc(fileData).content
-  let tocHtml = md.render(mdToc)
-  let contentHtml = md.render(fileData)
-  let htmlTemplate =
-`
+function renderHTML (tocHtml: string | void, contentHtml: string | void) {
+  return `
 <html>
 <head>
   <meta charset="UTF-8">
@@ -131,7 +117,23 @@ function outputHtml () {
 </body>
 </html>
 `
-  return htmlTemplate
+}
+
+function outputHtml () {
+  let md = new Remarkable()
+    .use(remarkable => {
+      remarkable.renderer.rules.heading_open = function (tokens, idx) {
+        return '<h' + tokens[idx].hLevel + ' id=' + toc.slugify(tokens[idx + 1].content) + '>'
+      }
+    })
+  outputMarkdown()
+
+  let fileData = fs.readFileSync('output.md', 'utf-8')
+  fs.unlinkSync('output.md')
+  let mdToc = toc(fileData).content
+  let tocHtml = md.render(mdToc)
+  let contentHtml = md.render(fileData)
+  return renderHTML(tocHtml, contentHtml)
 }
 
 export function output (type: string): string {
