@@ -28,3 +28,7 @@ program.parse(process.argv)
 if (!process.argv.slice(2).length) {
   program.outputHelp(colors.green)
 }
+
+if (!process.argv.length) {
+  program.outputHelp(colors.green)
+}
