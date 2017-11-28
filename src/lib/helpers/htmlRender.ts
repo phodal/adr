@@ -464,6 +464,7 @@ header nav a:hover {
   max-width: 980px;
   float: left;
   padding-left: 30%;
+  padding-top: 160px;
 }
 </style>
 </head>
