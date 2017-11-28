@@ -26,7 +26,7 @@ const makeTransform = (filePath, buildPath) => {
 }
 
 // copy, then watch for changes to the tests
-const testsFromRoot = 'build/main/**/**/*.spec.js';
+const testsFromRoot = 'build/main/**/*.spec.js';
 const watchMode = process.argv.indexOf('-w') !== -1 ? true : false;
 const task = watchMode ? cpx.watch : cpx.copy;
 
