@@ -384,7 +384,6 @@ header nav {
 header nav ul {
     display: inline-block;
     padding: 0;
-    margin: 0 -15px 0 0;
     list-style: none
 }
 
