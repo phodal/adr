@@ -15,7 +15,7 @@
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p config/exports/tsconfig.module.json",
     "build:tests": "trash test && copyfiles -f ./src/test/*.html ./test/main/test/ && node config/exports/build-tests.js",
-    "lint": "tslint --project . --type-check src/**/*.ts",
+    "lint": "tslint --project . src/**/*.ts",
     "unit": "yarn build && yarn build:tests && nyc ava",
     "check-coverage": "nyc check-coverage --lines 85 --functions 80 --branches 80",
     "test": "yarn lint && yarn unit && yarn check-coverage",
