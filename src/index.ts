@@ -11,6 +11,7 @@ import Status from './lib/status'
 import {GenerateBuilder} from './lib/base/GenerateBuilder'
 import MdHelper from './lib/helpers/MdHelper'
 import CSVBuilder from './lib/output/CSVBuilder'
+import JSONBuilder from './lib/output/JSONBuilder'
 
 export default {
   create: create,
@@ -21,7 +22,8 @@ export default {
   init: init,
   logs: logs,
   output: output,
-  CsvOutput: CSVBuilder,
+  CSVBuilder: CSVBuilder,
+  JSONBuilder: JSONBuilder,
   htmlRender: htmlRender,
   MdHelper: MdHelper,
   GenerateClass: GenerateBuilder,
