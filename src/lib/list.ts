@@ -16,9 +16,9 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
 function listAdr (): string {
   let path = Utils.getSavePath()
   let i18n = Utils.getI18n()
-  let graphGenerate = new ListGenerateBuilder(path)
   let tableData = [i18n.decision, i18n.modifiedDate, i18n.lastStatus]
-  let results = graphGenerate
+  let listGenerateBuilder = new ListGenerateBuilder(path)
+  let results = listGenerateBuilder
     .setStart(tableData)
     .setEnd()
     .setBody(buildTocBodyFun)
@@ -29,5 +29,7 @@ function listAdr (): string {
 
 export function list (): string {
   let adrs = listAdr()
+  // TODO: not to remove again
+  console.log(adrs)
   return adrs
 }
