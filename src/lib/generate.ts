@@ -1,6 +1,5 @@
 import { GenerateBuilder } from './base/GenerateBuilder'
 
-import Utils from './utils'
 import Config from './Config'
 
 function buildGraphBuildFun (index, decision, file, bodyString, filesLength): string[] {
