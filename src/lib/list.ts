@@ -29,6 +29,5 @@ function listAdr (): string {
 
 export function list (): string {
   let adrs = listAdr()
-  console.log(adrs)
   return adrs
 }
