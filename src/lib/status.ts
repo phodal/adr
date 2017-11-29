@@ -65,11 +65,7 @@ function getLatestStatus (filePath) {
   return allStatus[allStatus.length - 1]
 }
 
-function getTemplateStatusTitle () {
-  let language = Utils.getLanguage()
-  let template = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
-  let tree = md.parse(template)
-
+function getStatusHeader (tree: any) {
   let header2Count = 0
   let statusHeader = ''
   for (let i = 0; i < tree.length; i++) {
@@ -83,8 +79,15 @@ function getTemplateStatusTitle () {
       }
     }
   }
-
   return statusHeader
+}
+
+function getTemplateStatusTitle () {
+  let language = Utils.getLanguage()
+  let template = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
+  let tree = md.parse(template)
+
+  return getStatusHeader(tree)
 }
 
 let Status = {
