@@ -1,4 +1,4 @@
-import {htmlRender} from './htmlRender'
+import { htmlRender } from './htmlRender'
 
 let toc = require('markdown-toc')
 let Remarkable = require('remarkable')

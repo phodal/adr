@@ -1,6 +1,6 @@
 let fs = require('fs')
 
-import {GenerateBuilder} from './GenerateBuilder'
+import { GenerateBuilder } from './GenerateBuilder'
 import Utils from '../utils'
 
 let savePath = Utils.getSavePath()

@@ -1,6 +1,6 @@
 ///<reference path="AbstractBuilder.ts"/>
 let walkSync = require('walk-sync')
-import {AbstractBuilder} from './AbstractBuilder'
+import { AbstractBuilder } from './AbstractBuilder'
 
 import Utils from '../utils'
 

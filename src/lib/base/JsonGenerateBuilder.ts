@@ -1,4 +1,4 @@
-import {GenerateBuilder} from './GenerateBuilder'
+import { GenerateBuilder } from './GenerateBuilder'
 
 export class JsonGenerateBuilder extends GenerateBuilder {
   build () {
