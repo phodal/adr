@@ -1,6 +1,6 @@
 let fs = require('fs')
 
-import Utils from './Utils'
+import Utils from './utils'
 
 function getConfig (defaultValue: string) {
   if (!fs.existsSync(Utils.getWorkDir() + '/.adr.json')) {
