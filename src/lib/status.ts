@@ -71,11 +71,11 @@ function getStatusHeader (tree: any) {
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
     if (node && node[0] === 'header') {
-      let hasHeader2 = node[1] && node[1]['level'] && node[1]['level'] === 2;
+      let hasHeader2 = node[1] && node[1]['level'] && node[1]['level'] === 2
       if (hasHeader2) {
         header2Count++
       }
-      let isFirstHeader2 = header2Count === 1;
+      let isFirstHeader2 = header2Count === 1
       if (isFirstHeader2) {
         statusHeader = node[2]
       }
