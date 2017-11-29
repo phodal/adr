@@ -8,23 +8,22 @@ let path = Utils.getSavePath()
 export function output (type: string): string {
   let output
   let workDir = Utils.getWorkDir()
+  let builder
 
   if (type.toLowerCase() === 'csv') {
-    let csvBuilder = new CSVBuilder(path, workDir)
-    output = csvBuilder.buildContent()
-    csvBuilder.output()
+    builder = new CSVBuilder(path, workDir)
   } else if (type.toLowerCase() === 'json') {
-    let csvBuilder = new JSONBuilder(path, workDir)
-    output = csvBuilder.buildContent()
-    csvBuilder.output()
+    builder = new JSONBuilder(path, workDir)
   } else if (type.toLowerCase() === 'html') {
-    let htmlBuilder = new HtmlBuilder(path, workDir)
-    output = htmlBuilder.buildContent()
-    htmlBuilder.output()
+    builder = new HtmlBuilder(path, workDir)
   } else {
     let message = '\n error: type ' + type + ' current not supported'
     console.log(message)
+    return message
   }
+
+  output = builder.buildContent()
+  builder.output()
 
   return output
 }
