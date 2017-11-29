@@ -1,5 +1,5 @@
-import {getI18n} from './helpers/i18n'
-import {init} from './init'
+import { getI18n } from './helpers/i18n'
+import { init } from './init'
 
 let fs = require('fs')
 let moment = require('moment')

@@ -3,7 +3,7 @@ let Table = require('table')
 
 import Utils from './utils'
 import Status from './status'
-import {ListGenerateBuilder} from './base/ListGenerateBuilder'
+import { ListGenerateBuilder } from './base/ListGenerateBuilder'
 
 let path = Utils.getSavePath()
 

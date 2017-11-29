@@ -3,7 +3,7 @@ let path = require('path')
 let mkdirp = require('mkdirp')
 
 import Utils from './utils'
-import {generate} from './generate'
+import { generate } from './generate'
 
 function createDecisions (name: string, savePath: string | any | void) {
   let language = Utils.getLanguage()

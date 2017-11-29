@@ -1,5 +1,3 @@
-let fs = require('fs')
-
 import Utils from './utils'
 import CSVBuilder from './output/CSVBuilder'
 import JSONBuilder from './output/JSONBuilder'

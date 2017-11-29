@@ -17,7 +17,7 @@ class HtmlBuilder implements AbstractOutput {
     savePath = this.path
   }
 
-  buildFunc() {
+  buildFunc () {
     let files = walkSync.entries(this.path, {globs: ['**/*.md']})
     for (let i = 0; i < files.length; i++) {
       let file = files[i]

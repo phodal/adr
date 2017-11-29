@@ -3,7 +3,7 @@ let walkSync = require('walk-sync')
 let fs = require('fs')
 
 import Utils from './utils'
-import {generate} from './generate'
+import { generate } from './generate'
 
 let savePath = Utils.getSavePath()
 
