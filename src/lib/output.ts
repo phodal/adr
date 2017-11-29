@@ -6,7 +6,7 @@ import Utils from './utils'
 import Status from './status'
 import {JsonGenerateBuilder} from './base/JsonGenerateBuilder'
 import MdHelper from './helpers/MdHelper'
-import CSVBuilder from './base/CSVBuilder'
+import CSVBuilder from './output/CSVBuilder'
 
 let path = Utils.getSavePath()
 

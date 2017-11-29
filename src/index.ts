@@ -10,7 +10,7 @@ import {htmlRender} from './lib/helpers/htmlRender'
 import Status from './lib/status'
 import {GenerateBuilder} from './lib/base/GenerateBuilder'
 import MdHelper from './lib/helpers/MdHelper'
-import CSVBuilder from './lib/base/CSVBuilder'
+import CSVBuilder from './lib/output/CSVBuilder'
 
 export default {
   create: create,
