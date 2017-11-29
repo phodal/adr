@@ -3,7 +3,7 @@ let Table = require('table')
 
 import Utils from './utils'
 import Status from './status'
-import {GenerateBuilder} from './base/GenerateBuilder'
+import {ListGenerateBuilder} from './base/ListGenerateBuilder'
 
 let path = Utils.getSavePath()
 
@@ -16,7 +16,7 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
 function listAdr (): string {
   let path = Utils.getSavePath()
   let i18n = Utils.getI18n()
-  let graphGenerate = new GenerateBuilder(path)
+  let graphGenerate = new ListGenerateBuilder(path)
   let tableData = [i18n.decision, i18n.modifiedDate, i18n.lastStatus]
   let results = graphGenerate
     .setStart(tableData)
