@@ -63,9 +63,9 @@ export function output (type: string): string {
   let workDir = Utils.getWorkDir()
 
   if (type.toLowerCase() === 'csv') {
-    let csvOutput = new CSVBuilder(path, workDir)
-    output = csvOutput.buildContent()
-    csvOutput.output()
+    let csvBuilder = new CSVBuilder(path, workDir)
+    output = csvBuilder.buildContent()
+    csvBuilder.output()
   } else if (type.toLowerCase() === 'json') {
     output = outputJson()
     fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
