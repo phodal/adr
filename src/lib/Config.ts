@@ -33,10 +33,20 @@ function getSavePath (): string {
   return defaultPath
 }
 
+function getPrefix (): string {
+  let defaultPath = ''
+  let config = getConfig(defaultPath)
+  if (config && config.prefix) {
+    return config.prefix
+  }
+  return defaultPath
+}
+
 let Config = {
   getConfig: getConfig,
   getSavePath: getSavePath,
-  getLanguage: getLanguage
+  getLanguage: getLanguage,
+  getPrefix: getPrefix
 }
 
 export default Config
