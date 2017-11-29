@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "info": "npm-scripts-info",
-    "build": "trash build && yarn build:main && yarn build:module && copyfiles -f ./src/lib/templates/* ./build/main/lib/templates/",
+    "build": "trash build && yarn build:main && yarn build:module && copyfiles -f ./src/lib/templates/* ./build/main/lib/templates/ && yarn copy:template",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p config/exports/tsconfig.module.json",
     "build:tests": "trash test && copyfiles -f ./src/test/*.html ./test/main/test/ && node config/exports/build-tests.js",
@@ -30,7 +30,8 @@
     "changelog": "standard-version",
     "release": "yarn reset && yarn test && yarn docs:publish && yarn changelog",
     "reset": "git clean -dfx && git reset --hard && yarn",
-    "cli": "node build/main/cli.js"
+    "cli": "node build/main/cli.js",
+    "copy:template": "copyfiles -f ./src/lib/helpers/*.html ./build/main/lib/helpers/ && copyfiles -f ./src/lib/helpers/*.html ./build/module/lib/helpers/"
   },
   "scripts-info": {
     "info": "Display information about the scripts",
