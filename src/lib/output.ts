@@ -6,7 +6,6 @@ import HtmlBuilder from './output/HtmlBuilder'
 let path = Utils.getSavePath()
 
 export function output (type: string): string {
-  let output
   let workDir = Utils.getWorkDir()
   let builder
 
@@ -22,7 +21,7 @@ export function output (type: string): string {
     return message
   }
 
-  output = builder.buildContent()
+  let output = builder.buildContent()
   builder.output()
 
   return output
