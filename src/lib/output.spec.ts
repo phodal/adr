@@ -90,45 +90,6 @@ test('ADR: when export error', t => {
   consoleSpy.restore()
 })
 
-test('ADR: export markdown', t => {
-  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
-  let consoleSpy = sinon.stub(console, 'log')
-  let fsAppendSpy = sinon.stub(fs, 'appendFileSync')
-  let fsReadSpy = sinon.stub(fs, 'readFileSync')
-    .onCall(0).returns(adrTemplate)
-    .onCall(1).returns(`# 0. no index case`)
-  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
-    {
-      relativePath: '001-编写完整的单元测试.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
-      mode: 33188,
-      size: 246,
-      mtime: 1511435254653
-    },
-    {
-      relativePath: 'README.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
-      mode: 33188,
-      size: 246,
-      mtime: 1511435254653
-    },
-    {
-      relativePath: '0000-Hello-world',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
-      mode: 33188,
-      size: 246,
-      mtime: 1511435254653
-    }
-  ])
-
-  ADR.output('markdown')
-  t.deepEqual(fsAppendSpy.calledWith('output.md'), true)
-  ADRGetSavePathSpy.restore()
-  fsReadSpy.restore()
-  // fsAppendSpy.restore()
-  entriesSpy.restore()
-  consoleSpy.restore()
-})
 //
 // test('ADR: export html', t => {
 //   let MdHelper = ADR.MdHelper

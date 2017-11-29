@@ -65,7 +65,7 @@ typings/
 # dotenv environment variables file
 .env
 .idea/
-./export.html
-./export.json
-./export.csv
-./export.md
+export.html
+export.json
+export.csv
+export.md
