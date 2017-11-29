@@ -2,7 +2,7 @@ let fs = require('fs')
 let path = require('path')
 let md = require('markdown').markdown
 
-import Utils from './utils'
+import Config from './Config'
 
 function getStatusSection (tree: any, templateStatusHeader: string) {
   let statusFlag = false
@@ -88,7 +88,7 @@ function getStatusHeader (tree: any) {
 }
 
 function getTemplateStatusTitle () {
-  let language = Utils.getLanguage()
+  let language = Config.getLanguage()
   let template = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
   let tree = md.parse(template)
 

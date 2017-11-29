@@ -1,9 +1,10 @@
 let fs = require('fs')
 
 import { GenerateBuilder } from './GenerateBuilder'
+import Config from '../Config'
 import Utils from '../utils'
 
-let savePath = Utils.getSavePath()
+let savePath = Config.getSavePath()
 
 export class ListGenerateBuilder extends GenerateBuilder {
   setBody (handleBody: any) {

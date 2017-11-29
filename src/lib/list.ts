@@ -4,8 +4,9 @@ let Table = require('table')
 import Utils from './utils'
 import Status from './status'
 import { ListGenerateBuilder } from './base/ListGenerateBuilder'
+import Config from './Config'
 
-let path = Utils.getSavePath()
+let path = Config.getSavePath()
 
 function buildTocBodyFun (index, decision, file, bodyString): string[] {
   let lastStatus = Status.getLatestStatus(path + file.relativePath)
@@ -14,7 +15,7 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
 }
 
 function listAdr (): string {
-  let path = Utils.getSavePath()
+  let path = Config.getSavePath()
   let i18n = Utils.getI18n()
   let tableData = [i18n.decision, i18n.modifiedDate, i18n.lastStatus]
   let listGenerateBuilder = new ListGenerateBuilder(path)

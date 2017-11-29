@@ -3,10 +3,10 @@ let walkSync = require('walk-sync')
 import { test } from 'ava'
 import ADR from 'adr'
 
-let Utils = ADR.Utils
+let Config = ADR.Config
 
 test('ADR: generate graph', t => {
-  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
   let consoleSpy = sinon.stub(console, 'log')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
@@ -48,7 +48,7 @@ test('ADR: generate graph', t => {
 })
 
 test('ADR: generate toc', t => {
-  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
   let consoleSpy = sinon.stub(console, 'log')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {

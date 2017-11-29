@@ -3,8 +3,9 @@ let Table = require('table')
 
 import Utils from './utils'
 import Status from './status'
+import Config from './Config'
 
-let path = Utils.getSavePath()
+let path = Config.getSavePath()
 
 let getAllFilesName = function (): string[] {
   let outputArray = ['']

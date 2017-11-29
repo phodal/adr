@@ -7,6 +7,7 @@ import ADR from 'adr'
 
 let MdHelper = ADR.MdHelper
 let Utils = ADR.Utils
+let Config = ADR.Config
 
 let adrTemplate = `# 1. 编写完整的单元测试
 
@@ -21,7 +22,7 @@ let adrTemplate = `# 1. 编写完整的单元测试
 test('ADR: export html', t => {
   let renderHtml = `<html>`
 
-  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
   let dirSpy = sinon.stub(Utils, 'getWorkDir').returns('.')
   let mdHelperSpy = sinon.stub(MdHelper, 'mdRender').returns(renderHtml)
   // let consoleSpy = sinon.stub(console, 'log')

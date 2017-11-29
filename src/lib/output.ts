@@ -2,8 +2,9 @@ import Utils from './utils'
 import CSVBuilder from './output/CSVBuilder'
 import JSONBuilder from './output/JSONBuilder'
 import HtmlBuilder from './output/HtmlBuilder'
+import Config from './Config'
 
-let path = Utils.getSavePath()
+let path = Config.getSavePath()
 
 export function output (type: string): string {
   let workDir = Utils.getWorkDir()

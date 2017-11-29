@@ -5,6 +5,7 @@ import { test } from 'ava'
 import ADR from 'adr'
 
 let Utils = ADR.Utils
+let Config = ADR.Config
 
 let adrTemplate = `# 1. 编写完整的单元测试
 
@@ -23,7 +24,7 @@ let adrOptions = JSON.stringify({
 })
 
 test('ADR: list', t => {
-  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
   let i18nSpy = sinon.stub(Utils, 'getI18n').returns({
     decision: '决策',
     modifiedDate: '上次修改时间',

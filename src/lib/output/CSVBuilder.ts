@@ -4,6 +4,7 @@ let moment = require('moment')
 import { AbstractOutput } from './AbstractOutput'
 import Status from '../status'
 import Utils from '../utils'
+import Config from '../Config'
 import { GenerateBuilder } from '../base/GenerateBuilder'
 
 let savePath
@@ -26,7 +27,7 @@ class CSVBuilder implements AbstractOutput {
 
   }
   buildContent () {
-    let path = Utils.getSavePath()
+    let path = Config.getSavePath()
     let i18n = Utils.getI18n()
     let graphGenerate = new GenerateBuilder(path)
     let startString = `Index, ${i18n.decision}, ${i18n.modifiedDate}, ${i18n.lastStatus}\n`

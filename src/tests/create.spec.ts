@@ -6,7 +6,7 @@ let walkSync = require('walk-sync')
 import { test } from 'ava'
 
 import ADR from 'adr'
-let Utils = ADR.Utils
+let Config = ADR.Config
 
 let adrTemplate = `# {NUMBER}. {TITLE}
 
@@ -44,7 +44,7 @@ test('ADR: create', t => {
     .onCall(3).returns(JSON.stringify(adrOptions))
     .onCall(4).returns(JSON.stringify(adrOptions))
     .onCall(5).returns(adrTemplate)
-  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
 
   ADR.create('create')
   // create
@@ -52,7 +52,7 @@ test('ADR: create', t => {
   // TOC
   t.deepEqual(fsWriteSyncSpy.calledWith('./README.md'), true)
 
-  t.deepEqual(fsReadSpy.callCount, 5)
+  t.deepEqual(fsReadSpy.callCount, 3)
   t.deepEqual(mkdirpSync.callCount, 1)
 
   fsWriteSyncSpy.restore()

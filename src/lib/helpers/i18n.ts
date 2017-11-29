@@ -1,7 +1,7 @@
-import Utils from '../utils'
+import Config from '../Config'
 
 export function getI18n () {
-  let language = Utils.getLanguage()
+  let language = Config.getLanguage()
   let I18N = {
     en: {
       decision: 'Decision',

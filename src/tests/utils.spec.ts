@@ -1,11 +1,11 @@
 let sinon = require('sinon')
 let fs = require('fs')
 let walkSync = require('walk-sync')
-
 import { test } from 'ava'
 import ADR from 'adr'
 
 let Utils = ADR.Utils
+let Config = ADR.Config
 
 test('generateFileName: test for Chinese utf-8', t => {
   let str = Utils.generateFileName('你無可奈何asd fsadf')
@@ -38,7 +38,7 @@ test('getSavePath: when no exist config file', t => {
     path: 'some'
   }))
 
-  let dir = Utils.getSavePath() ? Utils.getSavePath() : ''
+  let dir = Config.getSavePath() ? Config.getSavePath() : ''
   if (!dir) dir = ''
   t.deepEqual(dir.includes('/doc/adr/'), true)
   fsExistSpy.restore()
@@ -51,7 +51,7 @@ test('getSavePath: when exist config file', t => {
     path: 'some-path'
   }))
 
-  let dir = Utils.getSavePath() ? Utils.getSavePath() : ''
+  let dir = Config.getSavePath() ? Config.getSavePath() : ''
   if (!dir) dir = ''
   t.deepEqual(dir.indexOf('some-path') > -1, true)
   fsExistSpy.restore()
@@ -119,7 +119,7 @@ test('getLanguage: should enable get language', t => {
     language: 'test'
   }))
 
-  let language = Utils.getLanguage() ? Utils.getLanguage() : ''
+  let language = Config.getLanguage() ? Config.getLanguage() : ''
   if (!language) language = ''
   t.deepEqual(language, 'test')
   fsExistSpy.restore()

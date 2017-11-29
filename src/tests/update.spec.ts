@@ -6,7 +6,7 @@ import { test } from 'ava'
 
 import ADR from 'adr'
 
-let Utils = ADR.Utils
+let Config = ADR.Config
 
 let mdTemplate = `# 1. 更友好的 CLI
 
@@ -20,7 +20,7 @@ let mdTemplate = `# 1. 更友好的 CLI
 `
 
 test('ADR: init in chinese', t => {
-  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
   let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
   let consoleSpy = sinon.stub(console, 'log')
   let renameSpy = sinon.stub(fs, 'renameSync')

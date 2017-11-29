@@ -5,7 +5,7 @@ let moment = require('moment')
 
 import { AbstractOutput } from './AbstractOutput'
 import Status from '../status'
-import Utils from '../utils'
+import Config from '../Config'
 
 let savePath
 
@@ -32,7 +32,7 @@ class JSONBuilder implements AbstractOutput {
   }
 
   buildContent () {
-    let path = Utils.getSavePath()
+    let path = Config.getSavePath()
     let graphGenerate = new JsonGenerateBuilder(path)
     let results = graphGenerate
       .setBody(this.buildFunc)

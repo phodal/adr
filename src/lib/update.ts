@@ -4,8 +4,9 @@ let fs = require('fs')
 
 import Utils from './utils'
 import { generate } from './generate'
+import Config from './Config'
 
-let savePath = Utils.getSavePath()
+let savePath = Config.getSavePath()
 
 function generateNewFileName (newIndex: number, title: string | any) {
   let indexString = Utils.createIndexByNumber(newIndex)

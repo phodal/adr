@@ -8,6 +8,7 @@ import { logs } from './lib/logs'
 import { output } from './lib/output'
 import { htmlRender } from './lib/helpers/htmlRender'
 import Status from './lib/status'
+import Config from './lib/Config'
 import { GenerateBuilder } from './lib/base/GenerateBuilder'
 import MdHelper from './lib/helpers/MdHelper'
 import CSVBuilder from './lib/output/CSVBuilder'
@@ -28,6 +29,7 @@ export default {
   htmlRender: htmlRender,
   HtmlBuilder: HtmlBuilder,
   MdHelper: MdHelper,
+  Config: Config,
   GenerateClass: GenerateBuilder,
   Status: Status
 }

@@ -1,7 +1,6 @@
 import { getI18n } from './helpers/i18n'
-import { init } from './init'
+import Config from './Config'
 
-let fs = require('fs')
 let moment = require('moment')
 let walkSync = require('walk-sync')
 
@@ -9,38 +8,6 @@ let DEFAULT_DIGITS = 4
 
 function getWorkDir () {
   return process.cwd()
-}
-
-function getConfig (defaultValue: string) {
-  if (!fs.existsSync(getWorkDir() + '/.adr.json')) {
-    return 'en'
-  }
-  let config = fs.readFileSync(getWorkDir() + '/.adr.json', 'utf8')
-  try {
-    let adrConfig = JSON.parse(config)
-    return adrConfig
-  } catch (e) {
-    console.error(e)
-    return defaultValue
-  }
-}
-
-function getLanguage () {
-  let config = getConfig('en')
-  if (config && config.language) {
-    return config.language
-  }
-  console.log('no exist .adr.json file, a example: {"path":"doc/adr/","language":"en"}')
-  return 'en'
-}
-
-function getSavePath (): string {
-  let defaultPath = getWorkDir() + '/doc/adr/'
-  let config = getConfig(defaultPath)
-  if (config && config.path) {
-    return config.path
-  }
-  return defaultPath
 }
 
 function createIndexByNumber (num): string {
@@ -67,7 +34,7 @@ function getMaxIndex (files: {relativePath: string}[]) {
 }
 
 function getLatestIndex (): number {
-  let path = getSavePath()
+  let path = Config.getSavePath()
   let files = walkSync.entries(path, {globs: ['**/*.md']})
 
   if (!(files && files.length > 0)) {
@@ -112,11 +79,9 @@ function createDateString (): string {
 
 export default {
   DEFAULT_DIGITS: DEFAULT_DIGITS,
-  getSavePath: getSavePath,
   getNewIndexString: getNewIndexString,
   getLatestIndex: getLatestIndex,
   createIndexByNumber: createIndexByNumber,
-  getLanguage: getLanguage,
   generateFileName: generateFileName,
   getWorkDir: getWorkDir,
   getI18n: getI18n,

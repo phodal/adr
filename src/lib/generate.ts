@@ -1,5 +1,7 @@
 import { GenerateBuilder } from './base/GenerateBuilder'
+
 import Utils from './utils'
+import Config from './Config'
 
 function buildGraphBuildFun (index, decision, file, bodyString, filesLength): string[] {
   bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
@@ -15,7 +17,7 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
 }
 
 function generateToc (options?: {output: boolean}) {
-  let path = Utils.getSavePath()
+  let path = Config.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
   let header = '# Architecture Decision Records\n'
   let results = graphGenerate
@@ -31,7 +33,7 @@ function generateToc (options?: {output: boolean}) {
 }
 
 function generateGraph () {
-  let path = Utils.getSavePath()
+  let path = Config.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
   let header = 'digraph {\n  node [shape=plaintext];'
   let results = graphGenerate
