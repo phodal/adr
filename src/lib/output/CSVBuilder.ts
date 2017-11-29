@@ -1,10 +1,10 @@
 let fs = require('fs')
 let moment = require('moment')
 
-import {AbstractOutput} from '../base/AbstractOutput'
+import { AbstractOutput } from './AbstractOutput'
 import Status from '../status'
 import Utils from '../utils'
-import {GenerateBuilder} from '../base/GenerateBuilder'
+import { GenerateBuilder } from '../base/GenerateBuilder'
 
 let savePath
 

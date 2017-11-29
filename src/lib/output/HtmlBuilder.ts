@@ -2,7 +2,7 @@ let walkSync = require('walk-sync')
 let fs = require('fs')
 
 import MdHelper from '../helpers/MdHelper'
-import { AbstractOutput } from '../base/AbstractOutput'
+import { AbstractOutput } from './AbstractOutput'
 
 let savePath
 

@@ -3,7 +3,7 @@ import { JsonGenerateBuilder } from '../base/JsonGenerateBuilder'
 let fs = require('fs')
 let moment = require('moment')
 
-import { AbstractOutput } from '../base/AbstractOutput'
+import { AbstractOutput } from './AbstractOutput'
 import Status from '../status'
 import Utils from '../utils'
 
