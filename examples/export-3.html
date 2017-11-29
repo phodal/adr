@@ -1,0 +1,727 @@
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADR Documents</title>
+
+  <style type="text/css">
+    html {
+      color: #333;
+      background: #fff;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      text-rendering: optimizelegibility;
+    }
+
+    /* 如果你的项目仅支持 IE9+ | Chrome | Firefox 等，推荐在 <html> 中添加 .borderbox 这个 class */
+    html.borderbox *, html.borderbox *:before, html.borderbox *:after {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    /* 内外边距通常让各个浏览器样式的表现位置不同 */
+    body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+    article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+      display: block;
+    }
+
+    /* HTML5 媒体文件跟 img 保持一致 */
+    audio, canvas, video {
+      display: inline-block;
+    }
+
+    /* 要注意表单元素并不继承父级 font 的问题 */
+    body, button, input, select, textarea {
+      font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    }
+
+    button::-moz-focus-inner,
+    input::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    /* 去掉各Table cell 的边距并让其边重合 */
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /* 去除默认边框 */
+    fieldset, img {
+      border: 0;
+    }
+
+    /* 块/段落引用 */
+    blockquote {
+      position: relative;
+      color: #999;
+      font-weight: 400;
+      border-left: 1px solid #1abc9c;
+      padding-left: 1em;
+      margin: 1em 3em 1em 2em;
+    }
+
+    @media only screen and ( max-width: 640px ) {
+      blockquote {
+        margin: 1em 0;
+      }
+    }
+
+    /* Firefox 以外，元素没有下划线，需添加 */
+    acronym, abbr {
+      border-bottom: 1px dotted;
+      font-variant: normal;
+    }
+
+    /* 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌） */
+    abbr {
+      cursor: help;
+    }
+
+    /* 一致的 del 样式 */
+    del {
+      text-decoration: line-through;
+    }
+
+    address, caption, cite, code, dfn, em, th, var {
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    /* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
+    ul, ol {
+      list-style: none;
+    }
+
+    /* 对齐是排版最重要的因素, 别让什么都居中 */
+    caption, th {
+      text-align: left;
+    }
+
+    q:before, q:after {
+      content: '';
+    }
+
+    /* 统一上标和下标 */
+    sub, sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+    }
+
+    :root sub, :root sup {
+      vertical-align: baseline; /* for ie9 and other modern browsers */
+    }
+
+    sup {
+      top: -0.5em;
+    }
+
+    sub {
+      bottom: -0.25em;
+    }
+
+    /* 让链接在 hover 状态下显示下划线 */
+    a {
+      color: #1abc9c;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .typo a {
+      border-bottom: 1px solid #1abc9c;
+    }
+
+    .typo a:hover {
+      border-bottom-color: #555;
+      color: #555;
+      text-decoration: none;
+    }
+
+    /* 默认不显示下划线，保持页面简洁 */
+    ins, a {
+      text-decoration: none;
+    }
+
+    /* 专名号：虽然 u 已经重回 html5 Draft，但在所有浏览器中都是可以使用的，
+     * 要做到更好，向后兼容的话，添加 class="typo-u" 来显示专名号
+     * 关于 <u> 标签：http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-u-element
+     * 被放弃的是 4，之前一直搞错 http://www.w3.org/TR/html401/appendix/changes.html#idx-deprecated
+     * 一篇关于 <u> 标签的很好文章：http://html5doctor.com/u-element/
+     */
+    u, .typo-u {
+      text-decoration: underline;
+    }
+
+    /* 标记，类似于手写的荧光笔的作用 */
+    mark {
+      background: #fffdd1;
+      border-bottom: 1px solid #ffedce;
+      padding: 2px;
+      margin: 0 5px;
+    }
+
+    /* 代码片断 */
+    pre, code, pre tt {
+      font-family: Courier, 'Courier New', monospace;
+    }
+
+    pre {
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      padding: 1em 1.5em;
+      display: block;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* 一致化 horizontal rule */
+    hr {
+      border: none;
+      border-bottom: 1px solid #cfcfcf;
+      margin-bottom: 0.8em;
+      height: 10px;
+    }
+
+    /* 底部印刷体、版本等标记 */
+    small, .typo-small,
+      /* 图片说明 */
+    figcaption {
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    strong, b {
+      font-weight: bold;
+      color: #000;
+    }
+
+    /* 可拖动文件添加拖动手势 */
+    [draggable] {
+      cursor: move;
+    }
+
+    .clearfix:before, .clearfix:after {
+      content: "";
+      display: table;
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    .clearfix {
+      zoom: 1;
+    }
+
+    /* 强制文本换行 */
+    .textwrap, .textwrap td, .textwrap th {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .textwrap-table {
+      table-layout: fixed;
+    }
+
+    /* 提供 serif 版本的字体设置: iOS 下中文自动 fallback 到 sans-serif */
+    .serif {
+      font-family: Palatino, Optima, Georgia, serif;
+    }
+
+    /* 保证块/段落之间的空白隔行 */
+    .typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
+    .typo-p, .typo-pre, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote {
+      margin-bottom: 1.2em
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+      font-weight: 100;
+      color: #000;
+      line-height: 1.35;
+    }
+
+    /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
+    .typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6,
+    .typo-h1, .typo-h2, .typo-h3, .typo-h4, .typo-h5, .typo-h6 {
+      margin-top: 1.2em;
+      margin-bottom: 0.6em;
+      line-height: 1.35;
+    }
+
+    .typo h1, .typo-h1 {
+      font-size: 2em;
+    }
+
+    .typo h2, .typo-h2 {
+      font-size: 1.8em;
+    }
+
+    .typo h3, .typo-h3 {
+      font-size: 1.6em;
+    }
+
+    .typo h4, .typo-h4 {
+      font-size: 1.4em;
+    }
+
+    .typo h5, .typo h6, .typo-h5, .typo-h6 {
+      font-size: 1.2em;
+    }
+
+    /* 在文章中，应该还原 ul 和 ol 的样式 */
+    .typo ul, .typo-ul {
+      margin-left: 1.3em;
+      list-style: disc;
+    }
+
+    .typo ol, .typo-ol {
+      list-style: decimal;
+      margin-left: 1.9em;
+    }
+
+    .typo li ul, .typo li ol, .typo-ul ul, .typo-ul ol, .typo-ol ul, .typo-ol ol {
+      margin-bottom: 0.8em;
+      margin-left: 2em;
+    }
+
+    .typo li ul, .typo-ul ul, .typo-ol ul {
+      list-style: circle;
+    }
+
+    /* 同 ul/ol，在文章中应用 table 基本格式 */
+    .typo table th, .typo table td, .typo-table th, .typo-table td, .typo table caption {
+      border: 1px solid #ddd;
+      padding: 0.5em 1em;
+      color: #666;
+    }
+
+    .typo table th, .typo-table th {
+      background: #fbfbfb;
+    }
+
+    .typo table thead th, .typo-table thead th {
+      background: #f1f1f1;
+    }
+
+    .typo table caption {
+      border-bottom: none;
+    }
+
+    /* 去除 webkit 中 input 和 textarea 的默认样式  */
+    .typo-input, .typo-textarea {
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .typo-em, .typo em, legend, caption {
+      color: #000;
+      font-weight: inherit;
+    }
+
+    /* 着重号，只能在少量（少于100个字符）且全是全角字符的情况下使用 */
+    .typo-em {
+      position: relative;
+    }
+
+    .typo-em:after {
+      position: absolute;
+      top: 0.65em;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      content: "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・";
+    }
+
+    /* Responsive images */
+    .typo img {
+      max-width: 100%;
+    }
+
+    header {
+      position: fixed;
+      z-index: 2;
+      z-index: 1024;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #fff;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      text-transform: uppercase;
+      font-size: 20px
+    }
+
+    header .logo {
+      display: inline-block;
+      padding-left: 37px;
+      float: left;
+      text-decoration: none;
+      color: #333;
+      line-height: 60px;
+      background-repeat: no-repeat;
+      background-position: left center
+    }
+
+    header nav {
+      text-align: right;
+      font-size: 0
+    }
+
+    header nav ul {
+      display: inline-block;
+      padding: 0;
+      list-style: none
+    }
+
+    header nav li {
+      display: inline
+    }
+
+    header nav a {
+      display: inline-block;
+      padding: 0 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 20px;
+      line-height: 60px;
+      transition: opacity .2s
+    }
+
+    header nav a.current {
+      color: #9600ff
+    }
+
+    header nav a:hover {
+      opacity: .75
+    }
+    .content {
+      padding-top: 100px;
+    }
+
+    #toc {
+      width: 30%;
+      max-width: 420px;
+      max-height: 85%;
+      float: left;
+      margin: 25px 0px 20px 0px;
+      position: fixed !important;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overflow-scrolling: touch;
+      box-sizing: border-box;
+      z-index: 1;
+      left: 0;
+      top: 40px;
+      bottom: 0;
+      padding: 20px;
+    }
+
+    #toc > ul {
+      list-style: none;
+      padding: 20px 40px 0 40px;
+      margin: 0;
+      border-bottom: 1px solid #eee
+    }
+
+    #toc > ul > li > ul {
+      padding-left: 40px;
+    }
+
+    #toc a {
+      display: block;
+      padding: 10px 0;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      transition: opacity .2s
+    }
+
+    #toc a.current {
+      color: #9600ff
+    }
+
+    #toc a:hover {
+      opacity: .75
+    }
+
+    .main {
+      width: 70%;
+      max-width: 980px;
+      float: left;
+      padding-left: 30%;
+      top: 160px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <a href="https://github.com/phodal/adr" class="logo">ADR</a>
+    <nav>
+      <ul>
+        <li><a href="https://github.com/phodal/adr">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="content">
+  <div id="toc" class="tocify">
+    <ul>
+<li><a href="#1-record-architecture-decisions">1. Record architecture decisions</a>
+<ul>
+<li><a href="#status">Status</a></li>
+<li><a href="#context">Context</a></li>
+<li><a href="#decision">Decision</a></li>
+<li><a href="#consequences">Consequences</a></li>
+</ul></li>
+<li><a href="#2-implement-as-shell-scripts">2. Implement as shell scripts</a>
+<ul>
+<li><a href="#status-1">Status</a></li>
+<li><a href="#context-1">Context</a></li>
+<li><a href="#decision-1">Decision</a></li>
+<li><a href="#consequences-1">Consequences</a></li>
+</ul></li>
+<li><a href="#3-single-command-with-subcommands">3. Single command with subcommands</a>
+<ul>
+<li><a href="#status-2">Status</a></li>
+<li><a href="#context-2">Context</a></li>
+<li><a href="#decision-2">Decision</a></li>
+<li><a href="#consequences-2">Consequences</a></li>
+</ul></li>
+<li><a href="#4-markdown-format">4. Markdown format</a>
+<ul>
+<li><a href="#status-3">Status</a></li>
+<li><a href="#context-3">Context</a></li>
+<li><a href="#decision-3">Decision</a></li>
+<li><a href="#consequences-3">Consequences</a></li>
+</ul></li>
+<li><a href="#5-help-comments">5. Help comments</a>
+<ul>
+<li><a href="#status-4">Status</a></li>
+<li><a href="#context-4">Context</a></li>
+<li><a href="#decision-4">Decision</a></li>
+<li><a href="#consequences-4">Consequences</a></li>
+</ul></li>
+<li><a href="#6-packaging-and-distribution-in-other-version-control-repositories">6. Packaging and distribution in other version control repositories</a>
+<ul>
+<li><a href="#status-5">Status</a></li>
+<li><a href="#context-5">Context</a></li>
+<li><a href="#decision-5">Decision</a></li>
+<li><a href="#consequences-5">Consequences</a></li>
+</ul></li>
+<li><a href="#7-invoke-adr-config-executable-to-get-configuration">7. Invoke adr-config executable to get configuration</a>
+<ul>
+<li><a href="#status-6">Status</a></li>
+<li><a href="#context-6">Context</a></li>
+<li><a href="#decision-6">Decision</a></li>
+<li><a href="#consequences-6">Consequences</a></li>
+</ul></li>
+<li><a href="#8-use-iso-8601-format-for-dates">8. Use ISO 8601 Format for Dates</a>
+<ul>
+<li><a href="#status-7">Status</a></li>
+<li><a href="#context-7">Context</a></li>
+<li><a href="#decision-7">Decision</a></li>
+<li><a href="#consequences-7">Consequences</a></li>
+</ul></li>
+</ul>
+
+  </div>
+  <div class="main typo">
+    <h1 id=1-record-architecture-decisions>1. Record architecture decisions</h1>
+<p>Date: 12/02/2016</p>
+<h2 id=status-0>Status</h2>
+<p>Accepted</p>
+<h2 id=context-0>Context</h2>
+<p>We need to record the architectural decisions made on this project.</p>
+<h2 id=decision-0>Decision</h2>
+<p>We will use Architecture Decision Records, as described by Michael Nygard in this article: http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions</p>
+<h2 id=consequences-0>Consequences</h2>
+<p>See Michael Nygard's article, linked above.</p>
+<h1 id=2-implement-as-shell-scripts>2. Implement as shell scripts</h1>
+<p>Date: 12/02/2016</p>
+<h2 id=status-1>Status</h2>
+<p>Accepted</p>
+<h2 id=context-1>Context</h2>
+<p>ADRs are plain text files stored in a subdirectory of the project.</p>
+<p>The tool needs to create new files and apply small edits to
+the Status section of existing files.</p>
+<h2 id=decision-1>Decision</h2>
+<p>The tool is implemented as shell scripts that use standard Unix
+tools -- grep, sed, awk, etc.</p>
+<h2 id=consequences-1>Consequences</h2>
+<p>The tool won't support Windows. Being plain text files, ADRs can
+be created by hand and edited in any text editor.  This tool just
+makes the process more convenient.</p>
+<p>Development will have to cope with differences between Unix
+variants, particularly Linux and MacOS X.</p>
+<h1 id=3-single-command-with-subcommands>3. Single command with subcommands</h1>
+<p>Date: 12/02/2016</p>
+<h2 id=status-2>Status</h2>
+<p>Accepted</p>
+<h2 id=context-2>Context</h2>
+<p>The tool provides a number of related commands to create
+and manipulate architecture decision records.</p>
+<p>How can the user find out about the commands that are available?</p>
+<h2 id=decision-2>Decision</h2>
+<p>The tool defines a single command, called <code>adr</code>.</p>
+<p>The first argument to <code>adr</code> (the subcommand) specifies the
+action to perform.  Further arguments are interpreted by the
+subcommand.</p>
+<p>Running <code>adr</code> without any arguments lists the available
+subcommands.</p>
+<p>Subcommands are implemented as scripts in the same
+directory as the <code>adr</code> script.  E.g. the subcommand <code>new</code> is
+implemented as the script <code>adr-new</code>, the subcommand <code>help</code>
+as the script <code>adr-help</code> and so on.</p>
+<p>Helper scripts that are part of the implementation but not
+subcommands follow a different naming convention, so that
+subcommands can be listed by filtering and transforming script
+file names.</p>
+<h2 id=consequences-2>Consequences</h2>
+<p>Users can more easily explore the capabilities of the tool.</p>
+<p>Users are already used to this style of command-line tool.  For
+example, Git works this way.</p>
+<p>Each subcommand can be implemented in the most appropriate
+language.</p>
+<h1 id=4-markdown-format>4. Markdown format</h1>
+<p>Date: 12/02/2016</p>
+<h2 id=status-3>Status</h2>
+<p>Accepted</p>
+<h2 id=context-3>Context</h2>
+<p>The decision records must be stored in a plain text format:</p>
+<ul>
+<li><p>This works well with version control systems.</p></li>
+<li><p>It allows the tool to modify the status of records and insert
+hyperlinks when one decision supercedes another.</p></li>
+<li><p>Decisions can be read in the terminal, IDE, version control
+browser, etc.</p></li>
+</ul>
+<p>People will want to use some formatting: lists, code examples,
+and so on.</p>
+<p>People will want to view the decision records in a more readable
+format than plain text, and maybe print them out.</p>
+<h2 id=decision-3>Decision</h2>
+<p>Record architecture decisions in <a href="https://daringfireball.net/projects/markdown/">Markdown format</a>.</p>
+<h2 id=consequences-3>Consequences</h2>
+<p>Decisions can be read in the terminal.</p>
+<p>Decisions will be formatted nicely and hyperlinked by the
+browsers of project hosting sites like GitHub and Bitbucket.</p>
+<p>Tools like <a href="http://pandoc.org/">Pandoc</a> can be used to convert
+the decision records into HTML or PDF.</p>
+<h1 id=5-help-comments>5. Help comments</h1>
+<p>Date: 13/02/2016</p>
+<h2 id=status-4>Status</h2>
+<p>Accepted</p>
+<h2 id=context-4>Context</h2>
+<p>The tool will have a <code>help</code> subcommand to provide documentation
+for users.</p>
+<p>It's nice to have usage documentation in the script files
+themselves, in comments.  When reading the code, that's the first
+place to look for information about how to run a script.</p>
+<h2 id=decision-4>Decision</h2>
+<p>Write usage documentation in comments in the source file.</p>
+<p>Distinguish between documentation comments and normal comments.
+Documentation comments have two hash characters at the start of
+the line.</p>
+<p>The <code>adr help</code> command can parse comments out from the script
+using the standard Unix tools <code>grep</code> and <code>cut</code>.</p>
+<h2 id=consequences-4>Consequences</h2>
+<p>No need to maintain help text in a separate file.</p>
+<p>Help text can easily be kept up to date as the script is edited.</p>
+<p>There's no automated check that the help text is up to date.  The
+tests do not work well as documentation for users, and the help
+text is not easily cross-checked against the code.</p>
+<p>This won't work if any subcommands are not implemented as scripts
+that use '#' as a comment character.</p>
+<h1 id=6-packaging-and-distribution-in-other-version-control-repositories>6. Packaging and distribution in other version control repositories</h1>
+<p>Date: 16/02/2016</p>
+<h2 id=status-5>Status</h2>
+<p>Accepted</p>
+<h2 id=context-5>Context</h2>
+<p>Users want to install adr-tools with their preferred package
+manager.  For example, Ubuntu users use <code>apt</code>, RedHat users use
+<code>yum</code> and Mac OS X users use <a href="http://brew.sh">Homebrew</a>.</p>
+<p>The developers of <code>adr-tools</code> don't know how, nor have permissions,
+to use all these packaging and distribution systems. Therefore packaging
+and distribution must be done by &quot;downstream&quot; parties.</p>
+<p>The developers of the tool should not favour any one particular
+packaging and distribution solution.</p>
+<h2 id=decision-5>Decision</h2>
+<p>The <code>adr-tools</code> project will not contain any packaging or
+distribution scripts and config.</p>
+<p>Packaging and distribution will be managed by other projects in
+separate version control repositories.</p>
+<h2 id=consequences-5>Consequences</h2>
+<p>The git repo of this project will be simpler.</p>
+<p>Eventually, users will not have to use Git to get the software.</p>
+<p>We will have to tag releases in the <code>adr-tools</code> repository so that
+packaging projects know what can be published and how it should be
+identified.</p>
+<p>We will document how users can install the software in this
+project's README file.</p>
+<h1 id=7-invoke-adr-config-executable-to-get-configuration>7. Invoke adr-config executable to get configuration</h1>
+<p>Date: 17/12/2016</p>
+<h2 id=status-6>Status</h2>
+<p>Accepted</p>
+<h2 id=context-6>Context</h2>
+<p>Packagers (e.g. Homebrew developers) want to configure adr-tools to match the conventions of their installation.</p>
+<p>Currently, this is done by sourcing a file <code>config.sh</code>, which should sit beside the <code>adr</code> executable.</p>
+<p>This name is too common.</p>
+<p>The <code>config.sh</code> file is not executable, and so doesn't belong in a bin directory.</p>
+<h2 id=decision-6>Decision</h2>
+<p>Replace <code>config.sh</code> with an executable, named <code>adr-config</code> that outputs configuration.</p>
+<p>Each script in ADR Tools will eval the output of <code>adr-config</code> to configure itself.</p>
+<h2 id=consequences-6>Consequences</h2>
+<p>Configuration within ADR Tools is a little more complicated.</p>
+<p>Packagers can write their own implementation of <code>adr-config</code> that outputs configuration that matches the platform's installation conventions, and deploy it next to the <code>adr</code> script.</p>
+<p>To make development easier, the implementation of <code>adr-config</code> in the project's src/ directory will output configuration that lets the tool to run from the src/ directory without any installation step. (Packagers should not include this script in a deployable package.)</p>
+<h1 id=8-use-iso-8601-format-for-dates>8. Use ISO 8601 Format for Dates</h1>
+<p>Date: 21/02/2017</p>
+<h2 id=status-7>Status</h2>
+<p>Accepted</p>
+<h2 id=context-7>Context</h2>
+<p><code>adr-tools</code> seeks to communicate the history of architectural decisions of a
+project.  An important component of the history is the time at which a decision
+was made.</p>
+<p>To communicate effectively, <code>adr-tools</code> should present information as
+unambiguously as possible.  That means that culture-neutral data formats should
+be preferred over culture-specific formats.</p>
+<p>Existing <code>adr-tools</code> deployments format  dates as <code>dd/mm/yyyy</code> by default.  That
+formatting is common formatting in the United Kingdom (where the <code>adr-tools</code>
+project was originally written), but is easily confused with the <code>mm/dd/yyyy</code>
+format preferred in the United States.</p>
+<p>The default date format may be overridden by setting <code>ADR_DATE</code> in <code>config.sh</code>.</p>
+<h2 id=decision-7>Decision</h2>
+<p><code>adr-tools</code> will use the ISO 8601 format for dates:  <code>yyyy-mm-dd</code></p>
+<h2 id=consequences-7>Consequences</h2>
+<p>Dates are displayed in a standard, culture-neutral format.</p>
+<p>The UK-style and ISO 8601 formats can be distinguished by their separator
+character.  The UK-style dates used a slash (<code>/</code>), while the ISO dates use a
+hyphen (<code>-</code>).</p>
+<p>Prior to this decision, <code>adr-tools</code> was deployed using the UK format for dates.
+After adopting the ISO 8601 format, existing deployments of <code>adr-tools</code> must do
+one of the following:</p>
+<ul>
+<li>Accept mixed formatting of dates within their documentation library.</li>
+<li>Update existing documents to use ISO 8601 dates by running <code>adr upgrade-repository</code></li>
+</ul>
+
+  </div>
+</div>
+</body>
+</html>

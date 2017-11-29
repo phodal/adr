@@ -1,0 +1,2790 @@
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADR Documents</title>
+
+  <style type="text/css">
+    html {
+      color: #333;
+      background: #fff;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      text-rendering: optimizelegibility;
+    }
+
+    /* 如果你的项目仅支持 IE9+ | Chrome | Firefox 等，推荐在 <html> 中添加 .borderbox 这个 class */
+    html.borderbox *, html.borderbox *:before, html.borderbox *:after {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    /* 内外边距通常让各个浏览器样式的表现位置不同 */
+    body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+    article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+      display: block;
+    }
+
+    /* HTML5 媒体文件跟 img 保持一致 */
+    audio, canvas, video {
+      display: inline-block;
+    }
+
+    /* 要注意表单元素并不继承父级 font 的问题 */
+    body, button, input, select, textarea {
+      font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    }
+
+    button::-moz-focus-inner,
+    input::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    /* 去掉各Table cell 的边距并让其边重合 */
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /* 去除默认边框 */
+    fieldset, img {
+      border: 0;
+    }
+
+    /* 块/段落引用 */
+    blockquote {
+      position: relative;
+      color: #999;
+      font-weight: 400;
+      border-left: 1px solid #1abc9c;
+      padding-left: 1em;
+      margin: 1em 3em 1em 2em;
+    }
+
+    @media only screen and ( max-width: 640px ) {
+      blockquote {
+        margin: 1em 0;
+      }
+    }
+
+    /* Firefox 以外，元素没有下划线，需添加 */
+    acronym, abbr {
+      border-bottom: 1px dotted;
+      font-variant: normal;
+    }
+
+    /* 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌） */
+    abbr {
+      cursor: help;
+    }
+
+    /* 一致的 del 样式 */
+    del {
+      text-decoration: line-through;
+    }
+
+    address, caption, cite, code, dfn, em, th, var {
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    /* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
+    ul, ol {
+      list-style: none;
+    }
+
+    /* 对齐是排版最重要的因素, 别让什么都居中 */
+    caption, th {
+      text-align: left;
+    }
+
+    q:before, q:after {
+      content: '';
+    }
+
+    /* 统一上标和下标 */
+    sub, sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+    }
+
+    :root sub, :root sup {
+      vertical-align: baseline; /* for ie9 and other modern browsers */
+    }
+
+    sup {
+      top: -0.5em;
+    }
+
+    sub {
+      bottom: -0.25em;
+    }
+
+    /* 让链接在 hover 状态下显示下划线 */
+    a {
+      color: #1abc9c;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .typo a {
+      border-bottom: 1px solid #1abc9c;
+    }
+
+    .typo a:hover {
+      border-bottom-color: #555;
+      color: #555;
+      text-decoration: none;
+    }
+
+    /* 默认不显示下划线，保持页面简洁 */
+    ins, a {
+      text-decoration: none;
+    }
+
+    /* 专名号：虽然 u 已经重回 html5 Draft，但在所有浏览器中都是可以使用的，
+     * 要做到更好，向后兼容的话，添加 class="typo-u" 来显示专名号
+     * 关于 <u> 标签：http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-u-element
+     * 被放弃的是 4，之前一直搞错 http://www.w3.org/TR/html401/appendix/changes.html#idx-deprecated
+     * 一篇关于 <u> 标签的很好文章：http://html5doctor.com/u-element/
+     */
+    u, .typo-u {
+      text-decoration: underline;
+    }
+
+    /* 标记，类似于手写的荧光笔的作用 */
+    mark {
+      background: #fffdd1;
+      border-bottom: 1px solid #ffedce;
+      padding: 2px;
+      margin: 0 5px;
+    }
+
+    /* 代码片断 */
+    pre, code, pre tt {
+      font-family: Courier, 'Courier New', monospace;
+    }
+
+    pre {
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      padding: 1em 1.5em;
+      display: block;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* 一致化 horizontal rule */
+    hr {
+      border: none;
+      border-bottom: 1px solid #cfcfcf;
+      margin-bottom: 0.8em;
+      height: 10px;
+    }
+
+    /* 底部印刷体、版本等标记 */
+    small, .typo-small,
+      /* 图片说明 */
+    figcaption {
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    strong, b {
+      font-weight: bold;
+      color: #000;
+    }
+
+    /* 可拖动文件添加拖动手势 */
+    [draggable] {
+      cursor: move;
+    }
+
+    .clearfix:before, .clearfix:after {
+      content: "";
+      display: table;
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    .clearfix {
+      zoom: 1;
+    }
+
+    /* 强制文本换行 */
+    .textwrap, .textwrap td, .textwrap th {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .textwrap-table {
+      table-layout: fixed;
+    }
+
+    /* 提供 serif 版本的字体设置: iOS 下中文自动 fallback 到 sans-serif */
+    .serif {
+      font-family: Palatino, Optima, Georgia, serif;
+    }
+
+    /* 保证块/段落之间的空白隔行 */
+    .typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
+    .typo-p, .typo-pre, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote {
+      margin-bottom: 1.2em
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+      font-weight: 100;
+      color: #000;
+      line-height: 1.35;
+    }
+
+    /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
+    .typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6,
+    .typo-h1, .typo-h2, .typo-h3, .typo-h4, .typo-h5, .typo-h6 {
+      margin-top: 1.2em;
+      margin-bottom: 0.6em;
+      line-height: 1.35;
+    }
+
+    .typo h1, .typo-h1 {
+      font-size: 2em;
+    }
+
+    .typo h2, .typo-h2 {
+      font-size: 1.8em;
+    }
+
+    .typo h3, .typo-h3 {
+      font-size: 1.6em;
+    }
+
+    .typo h4, .typo-h4 {
+      font-size: 1.4em;
+    }
+
+    .typo h5, .typo h6, .typo-h5, .typo-h6 {
+      font-size: 1.2em;
+    }
+
+    /* 在文章中，应该还原 ul 和 ol 的样式 */
+    .typo ul, .typo-ul {
+      margin-left: 1.3em;
+      list-style: disc;
+    }
+
+    .typo ol, .typo-ol {
+      list-style: decimal;
+      margin-left: 1.9em;
+    }
+
+    .typo li ul, .typo li ol, .typo-ul ul, .typo-ul ol, .typo-ol ul, .typo-ol ol {
+      margin-bottom: 0.8em;
+      margin-left: 2em;
+    }
+
+    .typo li ul, .typo-ul ul, .typo-ol ul {
+      list-style: circle;
+    }
+
+    /* 同 ul/ol，在文章中应用 table 基本格式 */
+    .typo table th, .typo table td, .typo-table th, .typo-table td, .typo table caption {
+      border: 1px solid #ddd;
+      padding: 0.5em 1em;
+      color: #666;
+    }
+
+    .typo table th, .typo-table th {
+      background: #fbfbfb;
+    }
+
+    .typo table thead th, .typo-table thead th {
+      background: #f1f1f1;
+    }
+
+    .typo table caption {
+      border-bottom: none;
+    }
+
+    /* 去除 webkit 中 input 和 textarea 的默认样式  */
+    .typo-input, .typo-textarea {
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .typo-em, .typo em, legend, caption {
+      color: #000;
+      font-weight: inherit;
+    }
+
+    /* 着重号，只能在少量（少于100个字符）且全是全角字符的情况下使用 */
+    .typo-em {
+      position: relative;
+    }
+
+    .typo-em:after {
+      position: absolute;
+      top: 0.65em;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      content: "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・";
+    }
+
+    /* Responsive images */
+    .typo img {
+      max-width: 100%;
+    }
+
+    header {
+      position: fixed;
+      z-index: 2;
+      z-index: 1024;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #fff;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      text-transform: uppercase;
+      font-size: 20px
+    }
+
+    header .logo {
+      display: inline-block;
+      padding-left: 37px;
+      float: left;
+      text-decoration: none;
+      color: #333;
+      line-height: 60px;
+      background-repeat: no-repeat;
+      background-position: left center
+    }
+
+    header nav {
+      text-align: right;
+      font-size: 0
+    }
+
+    header nav ul {
+      display: inline-block;
+      padding: 0;
+      list-style: none
+    }
+
+    header nav li {
+      display: inline
+    }
+
+    header nav a {
+      display: inline-block;
+      padding: 0 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 20px;
+      line-height: 60px;
+      transition: opacity .2s
+    }
+
+    header nav a.current {
+      color: #9600ff
+    }
+
+    header nav a:hover {
+      opacity: .75
+    }
+    .content {
+      padding-top: 100px;
+    }
+
+    #toc {
+      width: 30%;
+      max-width: 420px;
+      max-height: 85%;
+      float: left;
+      margin: 25px 0px 20px 0px;
+      position: fixed !important;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overflow-scrolling: touch;
+      box-sizing: border-box;
+      z-index: 1;
+      left: 0;
+      top: 40px;
+      bottom: 0;
+      padding: 20px;
+    }
+
+    #toc > ul {
+      list-style: none;
+      padding: 20px 40px 0 40px;
+      margin: 0;
+      border-bottom: 1px solid #eee
+    }
+
+    #toc > ul > li > ul {
+      padding-left: 40px;
+    }
+
+    #toc a {
+      display: block;
+      padding: 10px 0;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      transition: opacity .2s
+    }
+
+    #toc a.current {
+      color: #9600ff
+    }
+
+    #toc a:hover {
+      opacity: .75
+    }
+
+    .main {
+      width: 70%;
+      max-width: 980px;
+      float: left;
+      padding-left: 30%;
+      top: 160px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <a href="https://github.com/phodal/adr" class="logo">ADR</a>
+    <nav>
+      <ul>
+        <li><a href="https://github.com/phodal/adr">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="content">
+  <div id="toc" class="tocify">
+    <ul>
+<li><a href="#1-record-architecture-decisions">1. Record architecture decisions</a>
+<ul>
+<li><a href="#status">Status</a></li>
+<li><a href="#context">Context</a></li>
+<li><a href="#decision">Decision</a></li>
+<li><a href="#consequences">Consequences</a></li>
+</ul></li>
+<li><a href="#2-%E5%9B%A2%E9%98%9F%E4%B8%AD%E7%9A%84%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86">2. 团队中的密码管理</a>
+<ul>
+<li><a href="#status-1">Status</a></li>
+<li><a href="#context-1">Context</a></li>
+<li><a href="#decision-1">Decision</a></li>
+<li><a href="#consequences-1">Consequences</a></li>
+</ul></li>
+<li><a href="#3-%E4%BD%BF%E7%94%A8-ssh-key-%E6%9B%BF%E6%8D%A2%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81%E6%96%B9%E5%BC%8F%E7%99%BB%E5%BD%95">3. 使用 ssh key 替换用户名密码方式登录</a>
+<ul>
+<li><a href="#status-2">Status</a></li>
+<li><a href="#context-2">Context</a>
+<ul>
+<li><a href="#refs">Refs:</a></li>
+</ul></li>
+<li><a href="#decision-2">Decision</a></li>
+<li><a href="#consequences-2">Consequences</a></li>
+</ul></li>
+<li><a href="#4-ubuntu-vs-centos">4. Ubuntu vs CentOS</a>
+<ul>
+<li><a href="#status-3">Status</a></li>
+<li><a href="#context-3">Context</a></li>
+<li><a href="#decision-3">Decision</a></li>
+<li><a href="#consequences-3">Consequences</a></li>
+</ul></li>
+<li><a href="#5-%E4%BD%BF%E7%94%A8-slack-%E6%9B%BF%E4%BB%A3%E5%BE%AE%E4%BF%A1%E9%82%AE%E4%BB%B6%E5%92%8C%E7%9F%AD%E4%BF%A1">5. 使用 Slack 替代微信、邮件和短信</a>
+<ul>
+<li><a href="#status-4">Status</a></li>
+<li><a href="#context-4">Context</a></li>
+<li><a href="#decision-4">Decision</a>
+<ul>
+<li><a href="#slack-%E6%94%AF%E6%8C%81%E7%9A%84%E5%8A%9F%E8%83%BD">Slack 支持的功能</a></li>
+<li><a href="#%E7%A0%94%E5%8F%91%E9%83%A8%E9%A2%91%E9%81%93%E8%AE%BE%E8%AE%A1">研发部频道设计</a></li>
+<li><a href="#%E6%88%91%E4%BB%AC%E7%94%A8%E4%BA%86%E5%A6%82%E4%B8%8B%E7%AC%AC%E4%B8%89%E6%96%B9%E8%BD%AF%E4%BB%B6">我们用了如下第三方软件</a></li>
+<li><a href="#slack-vs-bearychat">Slack vs BearyChat</a></li>
+</ul></li>
+<li><a href="#consequences-4">Consequences</a></li>
+</ul></li>
+<li><a href="#6-%E4%BD%BF%E7%94%A8-git-%E6%9B%BF%E6%8D%A2-svn">6. 使用 Git 替换 SVN</a>
+<ul>
+<li><a href="#status-5">Status</a></li>
+<li><a href="#context-5">Context</a></li>
+<li><a href="#decision-5">Decision</a></li>
+<li><a href="#consequences-5">Consequences</a></li>
+</ul></li>
+<li><a href="#7-%E4%BD%BF%E7%94%A8-passpack-%E8%BF%9B%E8%A1%8C%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86">7. 使用 PassPack 进行密码管理</a>
+<ul>
+<li><a href="#status-6">Status</a></li>
+<li><a href="#context-6">Context</a></li>
+<li><a href="#decision-6">Decision</a></li>
+<li><a href="#consequences-6">Consequences</a></li>
+</ul></li>
+<li><a href="#8-%E4%BD%BF%E7%94%A8%E5%A0%A1%E5%9E%92%E6%9C%BA%E5%8A%A0%E5%BC%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8">8. 使用堡垒机加强服务器安全</a>
+<ul>
+<li><a href="#status-7">Status</a></li>
+<li><a href="#context-7">Context</a></li>
+<li><a href="#decision-7">Decision</a></li>
+<li><a href="#consequences-7">Consequences</a></li>
+</ul></li>
+<li><a href="#9-%E7%BB%93%E6%9E%84%E5%8C%96-django-%E9%A1%B9%E7%9B%AE">9. 结构化 Django 项目</a>
+<ul>
+<li><a href="#status-8">Status</a></li>
+<li><a href="#context-8">Context</a></li>
+<li><a href="#decision-8">Decision</a></li>
+<li><a href="#consequences-8">Consequences</a></li>
+</ul></li>
+<li><a href="#10-git-%E5%9F%BA%E7%A1%80%E5%8F%8A%E9%A3%8E%E6%A0%BC%E6%8C%87%E5%8D%97">10. Git 基础及风格指南</a>
+<ul>
+<li><a href="#status-9">Status</a></li>
+<li><a href="#context-9">Context</a></li>
+<li><a href="#decision-9">Decision</a>
+<ul>
+<li><a href="#git-basics">git basics</a></li>
+<li><a href="#git-style-guide">git style guide</a>
+<ul>
+<li><a href="#branches">Branches</a></li>
+<li><a href="#commits">Commits</a></li>
+<li><a href="#messages">Messages</a></li>
+</ul></li>
+<li><a href="#refs">Refs</a></li>
+</ul></li>
+<li><a href="#consequences-9">Consequences</a></li>
+</ul></li>
+<li><a href="#11-apply-github-workflow-to-our-team">11. Apply Github workflow to our team</a>
+<ul>
+<li><a href="#status-10">Status</a></li>
+<li><a href="#context-10">Context</a></li>
+<li><a href="#decision-10">Decision</a>
+<ul>
+<li><a href="#github-workflow">Github workflow</a></li>
+</ul></li>
+<li><a href="#consequences-10">Consequences</a></li>
+</ul></li>
+<li><a href="#12-think-about-micro-service">12. Think about micro service</a>
+<ul>
+<li><a href="#status-11">Status</a></li>
+<li><a href="#context-11">Context</a></li>
+<li><a href="#decision-11">Decision</a></li>
+<li><a href="#consequences-11">Consequences</a></li>
+<li><a href="#refs-1">Refs</a>
+<ul>
+<li><a href="#why">Why</a></li>
+<li><a href="#how">How</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C">服务注册</a></li>
+<li><a href="#rest-api-vs-rpc">REST API vs RPC</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#13-the-sense-of-done">13. The sense of Done</a>
+<ul>
+<li><a href="#status-12">Status</a></li>
+<li><a href="#context-12">Context</a></li>
+<li><a href="#decision-12">Decision</a></li>
+<li><a href="#consequences-12">Consequences</a></li>
+</ul></li>
+<li><a href="#14-how-to-restart-a-server">14. How to restart a server</a>
+<ul>
+<li><a href="#status-13">Status</a></li>
+<li><a href="#context-13">Context</a></li>
+<li><a href="#decision-13">Decision</a></li>
+<li><a href="#consequences-13">Consequences</a></li>
+</ul></li>
+<li><a href="#15-case-how-to-find-the-root-reason-of-high-load">15. Case: How to find the root reason of high load</a>
+<ul>
+<li><a href="#status-14">Status</a></li>
+<li><a href="#context-14">Context</a></li>
+<li><a href="#decision-14">Decision</a></li>
+<li><a href="#consequences-14">Consequences</a></li>
+</ul></li>
+<li><a href="#16-%E6%95%85%E9%9A%9C%E8%AE%B0%E5%BD%95%E6%8A%A5%E5%91%8A">16. 故障记录报告</a>
+<ul>
+<li><a href="#status-15">Status</a></li>
+<li><a href="#context-15">Context</a></li>
+<li><a href="#decision-15">Decision</a></li>
+<li><a href="#consequences-15">Consequences</a>
+<ul>
+<li><a href="#%E6%95%85%E9%9A%9C%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF">故障报告模板</a>
+<ul>
+<li><a href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0">问题描述</a></li>
+<li><a href="#%E6%97%B6%E9%97%B4%E7%BA%BF">时间线</a></li>
+<li><a href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90">原因分析</a></li>
+<li><a href="#%E5%81%9A%E9%94%99%E7%9A%84%E4%BA%8B%E6%83%85">做错的事情</a></li>
+<li><a href="#%E5%81%9A%E5%AF%B9%E7%9A%84%E4%BA%8B%E6%83%85">做对的事情</a></li>
+<li><a href="#%E5%B0%86%E6%9D%A5%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%AD%A4%E7%B1%BB%E4%BA%8B%E6%83%85%E5%86%8D%E6%AC%A1%E5%8F%91%E7%94%9F">将来如何避免此类事情再次发生</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#17-incident-classify-and-recovery">17. Incident classify and recovery</a>
+<ul>
+<li><a href="#status-16">Status</a></li>
+<li><a href="#context-16">Context</a></li>
+<li><a href="#decision-16">Decision</a></li>
+<li><a href="#consequences-16">Consequences</a>
+<ul>
+<li><a href="#%E8%87%AA%E7%84%B6%E7%81%BE%E5%AE%B3">自然灾害</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E8%BF%90%E8%90%A5%E5%95%86">服务运营商</a>
+<ul>
+<li><a href="#dns-%E8%A7%A3%E6%9E%90%E9%97%AE%E9%A2%98">DNS 解析问题</a></li>
+<li><a href="#aliyun-%E5%86%85%E9%83%A8%E9%97%AE%E9%A2%98">Aliyun 内部问题</a></li>
+<li><a href="#cdn-%E8%BF%90%E8%90%A5%E5%95%86">CDN 运营商</a></li>
+</ul></li>
+<li><a href="#%E5%A4%96%E9%83%A8%E4%BA%BA%E4%B8%BA">外部人为</a>
+<ul>
+<li><a href="#%E4%BA%BA%E4%B8%BA%E6%94%BB%E5%87%BB">人为攻击</a></li>
+<li><a href="#%E6%AD%A3%E5%B8%B8%E8%AF%B7%E6%B1%82">正常请求</a></li>
+</ul></li>
+<li><a href="#%E6%9E%B6%E6%9E%84%E5%86%85%E9%83%A8">架构内部</a>
+<ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BA%A7%E6%95%85%E9%9A%9C">数据库级故障</a></li>
+<li><a href="#%E5%86%85%E9%83%A8%E7%BD%91%E7%BB%9C%E7%BA%A7%E5%88%AB">内部网络级别</a></li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E7%BA%A7%E5%88%AB%E6%95%85%E9%9A%9C">系统级别故障</a></li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1%E7%BA%A7%E5%88%AB%E6%95%85%E9%9A%9C">系统服务级别故障</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E7%BA%A7%E5%88%AB%E6%95%85%E9%9A%9C">应用服务级别故障</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%BA%A7%E5%88%AB%E6%95%85%E9%9A%9C">应用虚拟环境级别故障</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8%E4%BB%A3%E7%A0%81%E7%BA%A7%E5%88%AB%E6%95%85%E9%9A%9C">应用代码级别故障</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#18-ios-%E6%8C%81%E7%BB%AD%E5%8F%91%E5%B8%83">18. iOS 持续发布</a>
+<ul>
+<li><a href="#status-17">Status</a></li>
+<li><a href="#context-17">Context</a></li>
+<li><a href="#decision-17">Decision</a></li>
+<li><a href="#consequences-17">Consequences</a></li>
+</ul></li>
+<li><a href="#19-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%94%B3%E8%AF%B7%E4%B8%8E%E5%8D%87%E7%BA%A7---%E5%AE%B9%E9%87%8F%E8%AF%84%E4%BC%B0">19. 服务器申请与升级 - 容量评估</a>
+<ul>
+<li><a href="#status-18">Status</a></li>
+<li><a href="#context-18">Context</a></li>
+<li><a href="#decision-18">Decision</a></li>
+<li><a href="#consequences-18">Consequences</a></li>
+</ul></li>
+<li><a href="#20-%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86">20. 日志管理</a>
+<ul>
+<li><a href="#status-19">Status</a></li>
+<li><a href="#context-19">Context</a></li>
+<li><a href="#decision-19">Decision</a></li>
+<li><a href="#consequences-19">Consequences</a></li>
+</ul></li>
+<li><a href="#21-redis-%E4%BD%BF%E7%94%A8%E6%8C%89%E4%B8%9A%E5%8A%A1%E5%88%86%E7%A6%BB%E5%B9%B6%E4%B8%8A%E4%BA%91">21. Redis 使用按业务分离并上云</a>
+<ul>
+<li><a href="#status-20">Status</a></li>
+<li><a href="#context-20">Context</a></li>
+<li><a href="#decision-20">Decision</a></li>
+<li><a href="#consequences-20">Consequences</a></li>
+</ul></li>
+<li><a href="#22-%E9%98%B2-ddos-%E6%94%BB%E5%87%BB">22. 防 DDOS 攻击</a>
+<ul>
+<li><a href="#status-21">Status</a></li>
+<li><a href="#context-21">Context</a></li>
+<li><a href="#decision-21">Decision</a></li>
+<li><a href="#consequences-21">Consequences</a></li>
+</ul></li>
+<li><a href="#23-%E5%BA%94%E7%94%A8%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7">23. 应用性能监控</a>
+<ul>
+<li><a href="#status-22">Status</a></li>
+<li><a href="#context-22">Context</a></li>
+<li><a href="#decision-22">Decision</a></li>
+<li><a href="#consequences-22">Consequences</a></li>
+</ul></li>
+<li><a href="#24-%E5%AE%9E%E6%97%B6%E9%94%99%E8%AF%AF%E8%B7%9F%E8%B8%AA">24. 实时错误跟踪</a>
+<ul>
+<li><a href="#status-23">Status</a></li>
+<li><a href="#context-23">Context</a></li>
+<li><a href="#decision-23">Decision</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8-sentry-%E5%AF%B9%E6%88%91%E4%BB%AC%E7%BA%BF%E4%B8%8A%E4%B8%BB%E8%A6%81%E4%B8%9A%E5%8A%A1%E5%81%9A%E5%BC%82%E5%B8%B8%E7%9B%91%E6%8E%A7">使用 Sentry 对我们线上主要业务做异常监控。</a></li>
+<li><a href="#%E8%A7%84%E8%8C%83%E5%8C%96%E5%BC%82%E5%B8%B8">规范化异常</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%BC%82%E5%B8%B8%E7%9A%84%E4%BC%98%E5%8A%BF">使用异常的优势</a></li>
+<li><a href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%AE%9E%E8%B7%B5%E5%8E%9F%E5%88%99">异常处理实践原则</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#consequences-23">Consequences</a></li>
+</ul></li>
+<li><a href="#25-%E6%8C%89-restful-%E9%A3%8E%E6%A0%BC%E8%AE%BE%E8%AE%A1%E6%9B%B4%E6%96%B0%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3">25. 按 RESTful 风格设计更新服务接口</a>
+<ul>
+<li><a href="#status-24">Status</a></li>
+<li><a href="#context-24">Context</a></li>
+<li><a href="#decision-24">Decision</a></li>
+<li><a href="#consequences-24">Consequences</a></li>
+</ul></li>
+<li><a href="#26-%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E4%B8%8E%E4%B8%9A%E5%8A%A1%E6%9C%8D%E5%8A%A1%E9%9A%94%E7%A6%BB">26. 文件服务与业务服务隔离</a>
+<ul>
+<li><a href="#status-25">Status</a></li>
+<li><a href="#context-25">Context</a></li>
+<li><a href="#decision-25">Decision</a></li>
+<li><a href="#consequences-25">Consequences</a></li>
+</ul></li>
+<li><a href="#27-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97">27. 消息队列</a>
+<ul>
+<li><a href="#status-26">Status</a></li>
+<li><a href="#context-26">Context</a></li>
+<li><a href="#decision-26">Decision</a></li>
+<li><a href="#consequences-26">Consequences</a></li>
+</ul></li>
+<li><a href="#28-what-should-we-do-when-we-setup-a-new-server">28. What should we do when we setup a new server</a>
+<ul>
+<li><a href="#status-27">Status</a></li>
+<li><a href="#context-27">Context</a></li>
+<li><a href="#decision-27">Decision</a></li>
+<li><a href="#consequences-27">Consequences</a></li>
+</ul></li>
+<li><a href="#29-%E6%9C%AC%E5%9C%B0-hosts-%E7%AE%A1%E7%90%86">29. 本地 hosts 管理</a>
+<ul>
+<li><a href="#status-28">Status</a></li>
+<li><a href="#context-28">Context</a></li>
+<li><a href="#decision-28">Decision</a></li>
+<li><a href="#consequences-28">Consequences</a></li>
+</ul></li>
+<li><a href="#30-%E5%AE%B9%E9%87%8F%E8%AF%84%E4%BC%B0---%E5%AD%98%E5%82%A8">30. 容量评估 - 存储</a>
+<ul>
+<li><a href="#status-29">Status</a></li>
+<li><a href="#context-29">Context</a></li>
+<li><a href="#decision-29">Decision</a></li>
+<li><a href="#consequences-29">Consequences</a></li>
+</ul></li>
+<li><a href="#31-%E5%AE%B9%E9%87%8F%E8%AF%84%E4%BC%B0---%E5%86%85%E5%AD%98">31. 容量评估 - 内存</a>
+<ul>
+<li><a href="#status-30">Status</a></li>
+<li><a href="#context-30">Context</a></li>
+<li><a href="#decision-30">Decision</a></li>
+<li><a href="#consequences-30">Consequences</a></li>
+</ul></li>
+<li><a href="#32-tcp-%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%AB%98%E5%8F%AF%E7%94%A8">32. TCP 长连接高可用</a>
+<ul>
+<li><a href="#status-31">Status</a></li>
+<li><a href="#context-31">Context</a></li>
+<li><a href="#decision-31">Decision</a></li>
+<li><a href="#consequences-31">Consequences</a></li>
+</ul></li>
+<li><a href="#33-%E5%AE%B9%E9%87%8F%E8%AF%84%E4%BC%B0---mysql">33. 容量评估 - MySQL</a>
+<ul>
+<li><a href="#status-32">Status</a></li>
+<li><a href="#context-32">Context</a></li>
+<li><a href="#decision-32">Decision</a>
+<ul>
+<li><a href="#%E5%92%8C-mysql-%E6%80%A7%E8%83%BD%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E6%8C%87%E6%A0%87">和 MySQL 性能相关的几个指标</a></li>
+<li><a href="#%E5%BD%B1%E5%93%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9A%84%E5%9B%A0%E7%B4%A0%E5%8F%8A%E5%BA%94%E5%AF%B9%E6%96%B9%E5%BC%8F">影响数据库性能的因素及应对方式</a></li>
+</ul></li>
+<li><a href="#consequences-32">Consequences</a></li>
+</ul></li>
+<li><a href="#34-dns-%E7%AC%94%E8%AE%B0">34. DNS 笔记</a>
+<ul>
+<li><a href="#status-33">Status</a></li>
+<li><a href="#context-33">Context</a></li>
+<li><a href="#decision-33">Decision</a></li>
+<li><a href="#consequences-33">Consequences</a></li>
+</ul></li>
+<li><a href="#35-%E5%85%B3%E4%BA%8E%E7%81%BE%E9%9A%BE%E6%81%A2%E5%A4%8D">35. 关于灾难恢复</a>
+<ul>
+<li><a href="#status-34">Status</a></li>
+<li><a href="#context-34">Context</a>
+<ul>
+<li><a href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5">基础概念</a></li>
+<li><a href="#%E7%81%BE%E5%A4%87%E7%9A%84%E4%B8%A4%E9%A1%B9%E6%8C%87%E6%A0%87">灾备的两项指标</a></li>
+<li><a href="#%E4%B8%A4%E5%9C%B0%E4%B8%89%E4%B8%AD%E5%BF%83">两地三中心</a></li>
+</ul></li>
+<li><a href="#decision-34">Decision</a></li>
+<li><a href="#consequences-34">Consequences</a></li>
+</ul></li>
+<li><a href="#36-%E5%85%B3%E4%BA%8E-mysql-%E9%AB%98%E5%8F%AF%E7%94%A8">36. 关于 MySQL 高可用</a>
+<ul>
+<li><a href="#status-35">Status</a></li>
+<li><a href="#context-35">Context</a></li>
+<li><a href="#decision-35">Decision</a></li>
+<li><a href="#consequences-35">Consequences</a></li>
+</ul></li>
+<li><a href="#37-%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E8%A7%A3%E5%86%B3%E7%99%BD%E5%90%8D%E5%8D%95%E9%97%AE%E9%A2%98">37. 通过代理解决白名单问题</a>
+<ul>
+<li><a href="#status-36">Status</a></li>
+<li><a href="#context-36">Context</a></li>
+<li><a href="#decision-36">Decision</a></li>
+<li><a href="#consequences-36">Consequences</a></li>
+</ul></li>
+<li><a href="#38-%E6%95%B0%E6%8D%AE%E8%84%B1%E6%95%8F">38. 数据脱敏</a>
+<ul>
+<li><a href="#status-37">Status</a></li>
+<li><a href="#context-37">Context</a></li>
+<li><a href="#decision-37">Decision</a></li>
+<li><a href="#consequences-37">Consequences</a></li>
+</ul></li>
+<li><a href="#39-%E7%A7%98%E9%92%A5%E7%AE%A1%E7%90%86">39. 秘钥管理</a>
+<ul>
+<li><a href="#status-38">Status</a></li>
+<li><a href="#context-38">Context</a></li>
+<li><a href="#decision-38">Decision</a></li>
+<li><a href="#consequences-38">Consequences</a></li>
+</ul></li>
+<li><a href="#40-agile---daily-standup-meeting">40. Agile - Daily standup meeting</a>
+<ul>
+<li><a href="#status-39">Status</a></li>
+<li><a href="#context-39">Context</a></li>
+<li><a href="#decision-39">Decision</a>
+<ul>
+<li><a href="#keynotes">Keynotes</a></li>
+</ul></li>
+<li><a href="#consequences-39">Consequences</a></li>
+</ul></li>
+<li><a href="#41-mysql-%E8%BF%81%E7%A7%BB-rds-%E6%80%BB%E7%BB%93">41. MySQL 迁移 RDS 总结</a>
+<ul>
+<li><a href="#status-40">Status</a></li>
+<li><a href="#context-40">Context</a></li>
+<li><a href="#decision-40">Decision</a></li>
+<li><a href="#consequences-40">Consequences</a></li>
+</ul></li>
+<li><a href="#42-agile---retrospective-meeting">42. Agile - Retrospective meeting</a>
+<ul>
+<li><a href="#status-41">Status</a></li>
+<li><a href="#context-41">Context</a></li>
+<li><a href="#decision-41">Decision</a>
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#preparation">Preparation</a></li>
+<li><a href="#process">Process</a></li>
+<li><a href="#notice">Notice</a></li>
+</ul></li>
+<li><a href="#consequences-41">Consequences</a></li>
+</ul></li>
+<li><a href="#43-%E6%94%AF%E6%8C%81%E8%BF%87%E6%BB%A4%E7%9A%84%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97">43. 支持过滤的消息队列</a>
+<ul>
+<li><a href="#status-42">Status</a></li>
+<li><a href="#context-42">Context</a></li>
+<li><a href="#decision-42">Decision</a></li>
+<li><a href="#consequences-42">Consequences</a></li>
+</ul></li>
+<li><a href="#44-%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90">44. 泛域名解析</a>
+<ul>
+<li><a href="#status-43">Status</a></li>
+<li><a href="#context-43">Context</a></li>
+<li><a href="#decision-43">Decision</a></li>
+<li><a href="#consequences-43">Consequences</a></li>
+</ul></li>
+</ul>
+
+  </div>
+  <div class="main typo">
+    <h1 id=1-record-architecture-decisions>1. Record architecture decisions</h1>
+<p>Date: 30/03/2017</p>
+<h2 id=status-0>Status</h2>
+<p>Accepted</p>
+<h2 id=context-0>Context</h2>
+<p>We need to record the architectural decisions made on this project.</p>
+<h2 id=decision-0>Decision</h2>
+<p>We will use Architecture Decision Records, as described by Michael Nygard in this article: <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions</a></p>
+<p>Architecture Decisions, what are they ?: <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html</a></p>
+<p>Architecture Decisions: Demystifying Architecture: <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf</a></p>
+<p>We will use adr-tools, as this file generated by <a href="https://github.com/npryce/adr-tools">https://github.com/npryce/adr-tools</a></p>
+<h2 id=consequences-0>Consequences</h2>
+<p>See Michael Nygard's article, linked above.</p>
+<h1 id=2-团队中的密码管理>2. 团队中的密码管理</h1>
+<p>Date: 30/03/2017</p>
+<h2 id=status-1>Status</h2>
+<p>Accepted</p>
+<h2 id=context-1>Context</h2>
+<p><img src="files/password-manage.png" alt=""></p>
+<p>视频链接：<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://v.youku.com/v_show/id_XMjk5ODQ3NzA3Mg==.html</a></p>
+<p>我们工作中使用的密码有 100 + 左右，其中包括
+服务器，数据库，测试账号，第三方服务（阿里云，Dnspod，邮箱，等）</p>
+<p>我们所有的密码都是分散的管理着，每个人都自行对这 20 到 100 个密码进行管理，并且方式各种各样。</p>
+<p>当前存在以下问题：</p>
+<ol>
+<li>使用容易记但很不安全的密码，例如，<code>123456</code>；</li>
+<li>在每一个服务上使用相同的非安全密码；</li>
+<li>当团队成员有变动时，密码没有改变；</li>
+<li>无加密的将密码存在本地文件或是云笔记中；</li>
+<li>通过邮箱或是微信进行密码分享。</li>
+</ol>
+<p>我们需要一个工具管理我们的密码，包括如下功能：</p>
+<ol>
+<li>生成复杂密码；</li>
+<li>密码被加密后保存；</li>
+<li>分发方式安全；</li>
+<li>使用起来简单方便；</li>
+<li>支持团队分组管理。</li>
+</ol>
+<p>Refs:</p>
+<p>How to Manage Passwords in a Team: <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://medium.com/altcademy/how-to-manage-passwords-in-a-team-3ed010bc3ccf</a></p>
+<h2 id=decision-1>Decision</h2>
+<p>LastPass(功能繁杂，使用人数最多，费用 1450 USD / 50 users)
+PassPack(功能简单，小众，不支持附件，费用 144 USD / 80 users)
+1Password(功能简单，使用方式友好，费用 7200 USD / 50 users)</p>
+<h2 id=consequences-1>Consequences</h2>
+<ol>
+<li>需要考虑兼容性，Win/Mac/Linux;</li>
+<li>费用需要考虑；</li>
+<li>需要可存储附件（比如，ssh 公私钥）。</li>
+</ol>
+<h1 id=3-使用-ssh-key-替换用户名密码方式登录>3. 使用 ssh key 替换用户名密码方式登录</h1>
+<p>Date: 30/03/2017</p>
+<h2 id=status-2>Status</h2>
+<p>Accepted</p>
+<h2 id=context-2>Context</h2>
+<p>当前我们使用的是用户名、密码方式进行服务器登录，存在以下问题</p>
+<ol>
+<li>安全性问题，密码面临被破解的风险；</li>
+<li>易用性问题，无法使用 config 记录密码，可以使用第三方软件解决，如，SecureCRT，ZOC7；</li>
+<li>无法充分使用 local terminal，如 iTerm2；</li>
+</ol>
+<h3 id=refs-2>Refs:</h3>
+<ul>
+<li>SSH: passwords or keys? <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://lwn.net/Articles/369703/</a></li>
+<li>Why is SSH key authentication better than password authentication? <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://superuser.com/questions/303358/why-is-ssh-key-authentication-better-than-password-authentication</a></li>
+<li>Why is using an SSH key more secure than using passwords? <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://security.stackexchange.com/questions/69407/why-is-using-an-ssh-key-more-secure-than-using-passwords</a></li>
+</ul>
+<h2 id=decision-2>Decision</h2>
+<p>禁用用户名、密码登录，使用 ssh key 进行登录</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<h2 id=consequences-2>Consequences</h2>
+<ol>
+<li>团队成员使用新方式需要适应；</li>
+<li>key 的管理需要统一（需要引入堡垒机）。</li>
+</ol>
+<h1 id=4-ubuntu-vs-centos>4. Ubuntu vs CentOS</h1>
+<p>Date: 30/03/2017</p>
+<h2 id=status-3>Status</h2>
+<p>Accepted</p>
+<h2 id=context-3>Context</h2>
+<p>我们的服务器用的都是阿里云的 ECS，历史原因多数操作系统是 centos(6.5)，内部得到的信息是稳定，当然目前阿里云已不提供此版本镜像。</p>
+<p>从个人使用经历看，自 10 年那会起，我所经历的公司选用的都是 ubuntu，当然我们应该知其所以然，而不是盲目的接受。</p>
+<ol>
+<li>centos 系统初始化，软件安装基本都走的是手动编译，效率低，但这点往往被大家作为稳定性的佐证；</li>
+<li>centos 系统之上的所有软件都过于老旧，想装第三方软件的最新稳定版，很困难（难道一定要手动编译才好）；</li>
+<li>从开始使用 ubuntu，就看重他的简单易用，当然当时业界的看法是，不专业，不稳定；</li>
+<li>ubuntu 的社区比 centos 更活跃，网上的资料也比 centos 多；</li>
+<li>ubuntu 相关的问题很容易在网上找到解决方案，但 centos 不是。</li>
+</ol>
+<p>这些都是自己的使用体验</p>
+<p>从主机市场分析数据（<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://www.digitalocean.com/community/questions/whats-is-better-and-why-linux-centos-or-ubuntu?answer=30514</a>）看，Simple Hosting, VPS, Dedicated &amp; Clouds 这三个领域，centos 占有率均低于 ubuntu。尤其在云市场，centos 只有 ubuntu 的 1/20（<a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://thecloudmarket.com/stats#/by_platform_definition</a>）。</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<p>更多的对比信息请查看：</p>
+<ul>
+<li>CentOS vs Ubuntu: Which one is better for a server <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://thishosting.rocks/centos-vs-ubuntu-server/</a></li>
+<li>What Linux server should I go for: Ubuntu or CentOS? <a href="https://github.com/npryce/adr-tools">https://www.quora.com/What-Linux-server-should-I-go-for-Ubuntu-or-CentOS</a></li>
+</ul>
+<h2 id=decision-3>Decision</h2>
+<p>逐步将系统从 centos 切换至 ubuntu，保证系统的一致，为后期的运维自动化做准备。</p>
+<h2 id=consequences-3>Consequences</h2>
+<ul>
+<li>手动的编译软件改为 apt-get 安装；</li>
+<li>如果没有对旧系统，旧软件的某些特性有依赖，最好升级为各个软件的最新稳定版，这对性能和安全都大有好处。</li>
+</ul>
+<h1 id=5-使用-slack-替代微信邮件和短信>5. 使用 Slack 替代微信、邮件和短信</h1>
+<p>Date: 31/03/2017</p>
+<h2 id=status-4>Status</h2>
+<p>Accepted</p>
+<h2 id=context-4>Context</h2>
+<ol>
+<li>当前使用微信、邮件作为工作中的沟通工具，工作与生活混合；</li>
+<li>各种告警信息需分别查看邮件、短信或是监控平台；</li>
+<li>随着任务管理平台、Bug 管理平台、wiki、文档分享网站、聊天工具的流行，邮件的使用场景越来越小，并且邮件信息并不及时；</li>
+<li>通过微信进行沟通，新人无法了解历史信息，经常需要把发过的内容重复发送。</li>
+</ol>
+<h2 id=decision-4>Decision</h2>
+<h3 id=slack-支持的功能-4>Slack 支持的功能</h3>
+<ol>
+<li><strong>公开与私有的频道，频道可随时加入或退出</strong>；
+<ol>
+<li>按项目，project-crm, project-sms, 等；</li>
+<li>按技术话题，tech-restful-api, tech-queue 等；</li>
+<li>可以邀请相关人，任何人也可随意加入。</li>
+</ol></li>
+<li><strong>消息支持表情快速回复</strong>；
+<ol>
+<li>表情是附加在消息上的，上下文内聚很高。</li>
+</ol></li>
+<li>消息支持收藏；
+<ol>
+<li>一些不错的重要信息，可以收藏起来随时查看。</li>
+</ol></li>
+<li>支持各种文件的分享；
+<ol>
+<li>pdf 等文件均可预览。</li>
+</ol></li>
+<li><strong>分享的链接支持预览</strong>；
+<ol>
+<li>分享的链接，不用点开也知道大体内容。</li>
+</ol></li>
+<li>搜索功能强大，可通过快捷方式，搜索同事，消息记录，文件等；</li>
+<li>多种程序代码支持高亮；
+<ol>
+<li>代码高亮预览，自动折叠，不影响整体效果。</li>
+</ol></li>
+<li><strong>强大的第三方集成，将所有消息、通知汇聚在一处</strong>，例如，Trello，Github，NewRelic, Sentry，Jenkins 等；</li>
+<li><strong>新加入者可查看群组历史信息</strong>。
+<ol>
+<li>信息再也不用重复发了。</li>
+</ol></li>
+<li>开放性非常好
+<ol>
+<li>任何人都可以方便申请开发者 KEY，建立自己的机器人。</li>
+</ol></li>
+</ol>
+<h3 id=研发部频道设计-4>研发部频道设计</h3>
+<ol>
+<li>CI/CD - 用于接收测试、部署结果，测试覆盖率，PR 等信息，也用于发起测试、部署等；</li>
+<li>NewRelic - 用于接收应用性能报警等信息；</li>
+<li>Sentry - 线上实时错误信息，可根据项目单独拆出来；</li>
+<li>Team-X - 用于组内沟通，一个 Scrum 组，包括研发，产品及测试；</li>
+<li>Knowledge - 用于所有研发人员进行沟通与分享；</li>
+<li>Product - 用于跨 Team 的产品进行沟通与分享；</li>
+<li>Backend - 用于所有后端人员进行问题咨询及分享；</li>
+<li>Leads(私密) - 用于所有 leader 进行沟通、安排周会等；</li>
+<li>Frontend, UI, Mobile, Devops, QA etc</li>
+</ol>
+<h3 id=我们用了如下第三方软件-4>我们用了如下第三方软件</h3>
+<ul>
+<li>Sentry</li>
+<li>NewRelic</li>
+<li>RedMine</li>
+<li>Teambition</li>
+<li>Confluence</li>
+<li>Github</li>
+<li>Bugly</li>
+<li>FIR.im</li>
+<li>Jenkins</li>
+<li>etc</li>
+</ul>
+<h3 id=slack-vs-bearychat-4>Slack vs BearyChat</h3>
+<ul>
+<li>Slack 优缺点：
+<ul>
+<li>鼻祖</li>
+<li>几乎所有常用软件(国外)都有集成</li>
+<li>功能完善健壮，公司可信</li>
+<li>网络不稳定</li>
+<li>国内应用集成很少</li>
+</ul></li>
+<li>BearChat 优缺点：
+<ul>
+<li>基本有 Slack 的核心功能</li>
+<li>数据的隐私无法保证</li>
+<li>服务的可用性无法保证</li>
+<li>第三方集成太少（must-read, Simple Poll, etc 都没有），倒是集成了国内的 Teambiton, 监控宝等</li>
+</ul></li>
+</ul>
+<p>最终，我们给国产软件(服务)一个机会。</p>
+<p>经过两周的 BearyChat 试用，目前已准备转用 Slack - 2017-08-03</p>
+<ol>
+<li>BearyChat 的 Teambition 集成失败，沟通后说是 TB 的接口调整；</li>
+<li>集成数的限制，都是 10 个，但同一个第三方多次集成，Slack 算一个，BearyChat 算多个，比如 Github, Sentry；</li>
+<li>经过对各个国内公司的了解，发现使用中 Slack 的国内稳定性还好。</li>
+</ol>
+<h2 id=consequences-4>Consequences</h2>
+<ul>
+<li>大家已习惯使用 Wechat，引入一个新的沟通平台有学习成本。</li>
+</ul>
+<h1 id=6-使用-git-替换-svn>6. 使用 Git 替换 SVN</h1>
+<p>Date: 06/04/2017</p>
+<h2 id=status-5>Status</h2>
+<p>Accepted</p>
+<h2 id=context-5>Context</h2>
+<p>当前我们用的是 SVN 做代码、产品文档、UI 设计图的管理
+我们在此只说其中的代码管理</p>
+<ol>
+<li>代码仓库过大，新分支，新Tag 代码都是一份完整的拷贝;</li>
+<li>必须联网提交；</li>
+<li>SVN 代码合并方式低效，目前使用 Beyond Compare 做代码合并，分支使用方式落后；</li>
+<li>无法很好的做 code review（只能 patch 或第三方工具）；</li>
+<li>面试者看到是这么落后，以此类别其他技术栈，综合理解就是，我能学到啥。</li>
+</ol>
+<h2 id=decision-5>Decision</h2>
+<p>使用全球最流行的分布式管理工具 Git 及平台 Github
+分布式，目录结构简单，代码无冗余，可 review with PR。</p>
+<p>Refs:</p>
+<p>https://help.github.com/articles/what-are-the-differences-between-subversion-and-git/
+http://stackoverflow.com/questions/871/why-is-git-better-than-subversion</p>
+<h2 id=consequences-5>Consequences</h2>
+<p>方式一：</p>
+<p>git svn clone <code>svn project url</code> -T trunk
+将 SVN 项目的 trunk 转为 git 项目的 master，仅保留了 trunk 分支的提交记录，此方式适用于所有代码都规整到了一个分支，并且不需要其他分支的提交记录。</p>
+<p>方式二：</p>
+<p>使用命令 https://github.com/nirvdrum/svn2git ，它可以保留所有branch, tags，以及所有分支的提交历史。
+svn2git http://svn.example.com/path/to/repo --trunk trunk --tags tag --branches branch
+git push --all origin
+git push --tags</p>
+<p>use <code>--revision number</code> to reduce the commit history.</p>
+<p>目前生产环境使用的 centos 版本过低，导致 git 也无法升级的处理方法：
+yum install http://opensource.wandisco.com/centos/6/git/x86_64/wandisco-git-release-6-1.noarch.rpm
+yum update git</p>
+<p>Refs:
+<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://www.atlassian.com/git/tutorials/migrating-overview</a>
+<a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration</a>
+<a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://www.git-tower.com/learn/git/ebook/cn/command-line/appendix/from-subversion-to-git</a>
+<a href="https://github.com/npryce/adr-tools">https://tecadmin.net/how-to-upgrade-git-version-1-7-10-on-centos-6/</a></p>
+<h1 id=7-使用-passpack-进行密码管理>7. 使用 PassPack 进行密码管理</h1>
+<p>Date: 07/04/2017</p>
+<h2 id=status-6>Status</h2>
+<p>Accepted</p>
+<h2 id=context-6>Context</h2>
+<p>step zero:
+管理员以 company-name 注册付费管理员账号</p>
+<p>step one:
+公司成员在 https://www.passpack.com/ 使用公司邮箱注册免费账号，用户名统一：company-name-username</p>
+<p>step two:
+点击 <code>People</code> tab 激活自己的账号，使用相同的用户名</p>
+<p>step three:
+邀请管理员账号</p>
+<p>step four:
+创建或导入自己管理的所有用户名密码，批量 transfer 给 company-name(个人密码也可以用它管理，就无需 transfer 给管理员了)</p>
+<p>PassPack 使用介绍：https://www.passpack.com/getting-started/PasspackGettingStarted_Admin_EN.pdf</p>
+<h2 id=decision-6>Decision</h2>
+<p>鉴于管理员一人处理非常琐碎，下放权限至 group owner 可编辑相应密码</p>
+<p>用户名命名规范：公司名简称-姓名
+Name 命名规范：简单描述所用的服务，用于搜索，层级间使用冒号<code>:</code>隔开，例如，<code>aliyun:oss:contract-doc:ak</code></p>
+<h2 id=consequences-6>Consequences</h2>
+<ol>
+<li>推动各个 team leader 使用并管理；</li>
+<li>向 team member 分发密码走这个渠道；</li>
+<li>列入新人入职注册项。</li>
+</ol>
+<h1 id=8-使用堡垒机加强服务器安全>8. 使用堡垒机加强服务器安全</h1>
+<p>Date: 08/04/2017</p>
+<h2 id=status-7>Status</h2>
+<p>Accepted</p>
+<h2 id=context-7>Context</h2>
+<ol>
+<li>旧文写了为了禁止外网暴力破解，我们将用户名、密码登录方式改为了 ssh key 登录；</li>
+<li>为了管理方便，当时只区分了生产 key 和测试 key，内部大家共用 key, 并且有 sudo 权限，导致存在内部风险，而针对每个人手动生成 ssh key 又会有管理上的问题；</li>
+<li>每个人需要对所有机器配置 ssh config，使用不方便；</li>
+<li>当前成员行为无法区分，有成员在系统上执行了 vim 大文件操作导致系统负载急剧升高，也有成员将系统配置改动导致其他项目运行出现问题，当然也存在数据安全上的问题。</li>
+</ol>
+<p>未使用堡垒机时：</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<h2 id=decision-7>Decision</h2>
+<p>目标：简化并统一管理线上服务器的登录并审计操作日志</p>
+<p>结构图：</p>
+<p><img src="files/bastion.png" alt=""></p>
+<p>Refs:</p>
+<ul>
+<li><a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://skyportblog.com/2015/08/27/the-jump-boxjump-server-is-not-dead-it-is-more-necessary-than-ever/</a></li>
+<li><a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://www.quora.com/What-is-the-difference-between-a-bastion-host-and-a-VPN-host</a></li>
+</ul>
+<p>经过多个堡垒机项目的调研，我们最终选择了 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://github.com/jumpserver/jumpserver</a>，源于使用人数多，并且项目活跃度高。</p>
+<p>Jumpserver v0.4.0 新版本预览 <a href="https://github.com/npryce/adr-tools">https://github.com/jumpserver/jumpserver/issues/350</a></p>
+<h2 id=consequences-7>Consequences</h2>
+<ul>
+<li>0.3 版本的一些弊端导致我们激进的选择了 0.4 版本，此版本处于开发中，存在很多未知问题，并且我们已在之上做二次开发</li>
+<li>文件下载不方便</li>
+<li>内网之间文件同步不方便</li>
+</ul>
+<h1 id=9-结构化-django-项目>9. 结构化 Django 项目</h1>
+<p>Date: 10/04/2017</p>
+<h2 id=status-8>Status</h2>
+<p>Accepted</p>
+<h2 id=context-8>Context</h2>
+<p>We have 20+ projects which based on Django, but we don’t have the same structure which make our project hard to read.</p>
+<p>We need handle those things:</p>
+<ol>
+<li>store all apps in one place;</li>
+<li>support different environments;</li>
+<li>store project related configs.</li>
+</ol>
+<h2 id=decision-8>Decision</h2>
+<p>make a skeleton for django: <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://github.com/huifenqi/django-project-skeleton</a></p>
+<h2 id=consequences-8>Consequences</h2>
+<ol>
+<li>make all new projects with this skeleton;</li>
+<li>apply this structure to the old projects when refactoring.</li>
+</ol>
+<h1 id=10-git-基础及风格指南>10. Git 基础及风格指南</h1>
+<p>Date: 11/04/2017</p>
+<h2 id=status-9>Status</h2>
+<p>Accepted</p>
+<h2 id=context-9>Context</h2>
+<p>We use git and GitHub in different ways, it’s emergency to teach team members with the git basics and style guide we will use.</p>
+<h2 id=decision-9>Decision</h2>
+<h3 id=git-basics-9>git basics</h3>
+<ol>
+<li>setup ssh keys (<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://github.com/settings/keys</a>) or GUI;</li>
+<li>clone repo into local system: <code>git clone git@github.com:huifenqi/django-project-skeleton.git</code>;</li>
+<li>files store in three stages:
+<img src="files/password-manage.png" alt="">
+<ol>
+<li><code>Working Directory</code>: holds the actual files;</li>
+<li><code>Index</code>: staging area which store your changed files;</li>
+<li><code>HEAD</code>: points to the last commit you've made.</li>
+</ol></li>
+<li><code>Working Directory</code> -&gt; <code>Index</code>: <code>git add &lt;filename&gt;</code> or <code>git add *</code>;</li>
+<li><code>Index</code> -&gt; <code>HEAD</code>: <code>git commit -m &quot;Commit message&quot;</code>;</li>
+<li>push updates to Github: <code>git push origin master</code>;</li>
+<li>create branch: <code>git checkout -b feature/x</code>
+<img src="files/branches.png" alt=""></li>
+<li>push branch to Github and others can see: <code>git push origin &lt;branch_name&gt;</code>;</li>
+<li>sync local with Github: <code>git pull</code>;</li>
+<li>make a new tag: <code>git tag &lt;tag_name&gt;</code>;</li>
+<li>show history: <code>git log</code>;</li>
+<li>show changes: <code>git diff &lt;previous_commit_hash&gt;</code>;</li>
+<li>others: <code>git status</code>, <code>git branch</code>, <code>git tag</code>, etc.</li>
+</ol>
+<h3 id=git-style-guide-9>git style guide</h3>
+<h4 id=branches-9>Branches</h4>
+<ul>
+<li>Choose short and descriptive names: <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://github.com/agis-/git-style-guide#branches</a>;</li>
+<li>Use dashes to separate words.</li>
+</ul>
+<h4 id=commits-9>Commits</h4>
+<ul>
+<li>Each commit should be a single logical change. Don't make several logical changes in one commit;</li>
+</ul>
+<h4 id=messages-9>Messages</h4>
+<ul>
+<li>when writing a commit message, think about what you would need to know if you run across the commit in a year from now.</li>
+</ul>
+<h3 id=refs-9>Refs</h3>
+<ul>
+<li><a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">http://rogerdudler.github.io/git-guide/index.html</a></li>
+<li><a href="https://github.com/npryce/adr-tools">https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html</a></li>
+<li><a href="https://github.com/agis-/git-style-guide">https://github.com/agis-/git-style-guide</a></li>
+</ul>
+<h2 id=consequences-9>Consequences</h2>
+<p>Make sure everyone follow the guide, check the Github feeds often.</p>
+<h1 id=11-apply-github-workflow-to-our-team>11. Apply Github workflow to our team</h1>
+<p>Date: 11/04/2017</p>
+<h2 id=status-10>Status</h2>
+<p>Accepted</p>
+<h2 id=context-10>Context</h2>
+<p>Context here...</p>
+<h2 id=decision-10>Decision</h2>
+<h3 id=github-workflow-10>Github workflow</h3>
+<p>There are various workflows and each one has its strengths and weaknesses. Whether a workflow fits your case, depends on the team, the project and your development procedures.</p>
+<p>TBD</p>
+<h2 id=consequences-10>Consequences</h2>
+<p>TBD</p>
+<h1 id=12-think-about-micro-service>12. Think about micro service</h1>
+<p>Date: 13/04/2017</p>
+<h2 id=status-11>Status</h2>
+<p>Proposed</p>
+<h2 id=context-11>Context</h2>
+<ol>
+<li>已拆分为各种服务（1. 接口不统一、无监控、无统一日志管理）；</li>
+<li>API 文档管理不够；</li>
+<li>服务的部署纯手动；</li>
+</ol>
+<h2 id=decision-11>Decision</h2>
+<p>Decision here...</p>
+<h2 id=consequences-11>Consequences</h2>
+<ol>
+<li>跨语言；</li>
+<li>提供 server 和 client 端；</li>
+<li>统一上线过程：独立部署、运行、升级；</li>
+<li>统一日志记录与审计：第三方日志服务；</li>
+<li>统一风格：REST API or RPC;</li>
+<li>统一认证和鉴权：权限管理、安全策略；</li>
+<li>统一服务测试：调度方式、访问入口；</li>
+<li>资源管理（虚拟机、物理机、网络）；</li>
+<li>负载均衡：客户端 or 服务端；</li>
+<li>注册发现：中心话注册 or hardcode；</li>
+<li>监控告警；</li>
+</ol>
+<h2 id=refs-11>Refs</h2>
+<h3 id=why-11>Why</h3>
+<ul>
+<li>先把平台做扎实，再来微服务吧 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://www.infoq.com/cn/articles/how-to-understand-microservice-architecture</a></li>
+<li>Microservices – Please, don’t <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://basho.com/posts/technical/microservices-please-dont/</a></li>
+<li>SOA和微服务架构的区别？ <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://www.zhihu.com/question/37808426/answer/93335393</a></li>
+</ul>
+<h3 id=how-11>How</h3>
+<ul>
+<li>一个完整的微服务系统，应该包含哪些功能？<a href="https://github.com/npryce/adr-tools">http://www.infoq.com/cn/articles/what-complete-micro-service-system-should-include</a></li>
+<li>构建高性能微服务架构 <a href="https://github.com/agis-/git-style-guide">http://www.infoq.com/cn/articles/building-a-high-performance-micro-service-architecture</a></li>
+<li>服务化框架技术选型与京东JSF解密 <a href="http://zhuanlan.51cto.com/art/201612/525719.htm">http://zhuanlan.51cto.com/art/201612/525719.htm</a></li>
+<li>微服务实战：从架构到发布（一）<a href="https://segmentfault.com/a/1190000004634172">https://segmentfault.com/a/1190000004634172</a></li>
+<li>微服务架构的基础框架选择：Spring Cloud还是Dubbo？ <a href="http://blog.didispace.com/microservice-framework/">http://blog.didispace.com/microservice-framework/</a></li>
+<li>分布式服务框架之服务化最佳实践 <a href="http://www.infoq.com/cn/articles/servitization-best-practice">http://www.infoq.com/cn/articles/servitization-best-practice</a></li>
+<li>You need to be this tall to use <a href="">micro</a> services: <a href="https://news.ycombinator.com/item?id=12508655">https://news.ycombinator.com/item?id=12508655</a></li>
+</ul>
+<h3 id=服务注册-11>服务注册</h3>
+<ul>
+<li>分布式服务治理的设计问题？ <a href="https://www.zhihu.com/question/51436292/answer/126128311">https://www.zhihu.com/question/51436292/answer/126128311</a></li>
+</ul>
+<h3 id=rest-api-vs-rpc-11>REST API vs RPC</h3>
+<ul>
+<li>Do you really know why you prefer REST over RPC? <a href="https://apihandyman.io/do-you-really-know-why-you-prefer-rest-over-rpc/">https://apihandyman.io/do-you-really-know-why-you-prefer-rest-over-rpc/</a></li>
+<li>REST vs JSON-RPC? <a href="http://stackoverflow.com/questions/15056878/rest-vs-json-rpc">http://stackoverflow.com/questions/15056878/rest-vs-json-rpc</a></li>
+<li>What differentiates a REST web service from a RPC-like one? <a href="http://stackoverflow.com/questions/7410040/what-differentiates-a-rest-web-service-from-a-rpc-like-one">http://stackoverflow.com/questions/7410040/what-differentiates-a-rest-web-service-from-a-rpc-like-one</a></li>
+</ul>
+<h1 id=13-the-sense-of-done>13. The sense of Done</h1>
+<p>Date: 14/04/2017</p>
+<h2 id=status-12>Status</h2>
+<p>Proposed</p>
+<h2 id=context-12>Context</h2>
+<p>We face this situation very often?</p>
+<ol>
+<li>I’m already fixed this, it’s in testing;</li>
+<li>I’m already add this monitoring plugin in the repo, it’s deployed on staging, let’s watch for a few days, then deploy on production;</li>
+<li>I’m already move this service to new machine, I will clean the old machine later.</li>
+</ol>
+<p>Sounds familiar? Yes, very often.</p>
+<p>Is that all done? No, it doesn’t.</p>
+<h2 id=decision-12>Decision</h2>
+<ol>
+<li>talk this all the time, let team member have this sense;</li>
+<li>make specifications for each domain.</li>
+</ol>
+<h2 id=consequences-12>Consequences</h2>
+<p>Create specifications from our experience.</p>
+<p>An Done-Done example with <code>User Story</code>:</p>
+<ol>
+<li>stories and AC reviewed (DEV);</li>
+<li>All AC implemented (DEV);</li>
+<li>Code reviewed (Dev);</li>
+<li>Tests passed (Dev+QA+CI);</li>
+<li>No bugs left (QA);</li>
+<li>Deployed to production (Dev);</li>
+<li>Accepted (PM).</li>
+</ol>
+<p>Refs:</p>
+<ul>
+<li>What is Done Done? <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://chrislema.com/what-is-done-done/</a></li>
+<li>Agile Principle 7: Done Means DONE! <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://www.allaboutagile.com/agile-principle-7-done-means-done/</a></li>
+<li>The Definition of READY <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">http://blog.xebia.com/the-definition-of-ready/</a></li>
+<li>What is the Definition of Done (DoD) in Agile? <a href="https://github.com/npryce/adr-tools">http://www.solutionsiq.com/what-is-the-definition-of-done-dod-in-agile/</a></li>
+<li>Scrum Crash Course <a href="https://github.com/agis-/git-style-guide">https://www.slideshare.net/beITconference/infragistics-scrum-crashcoursebeit2014</a></li>
+</ul>
+<h1 id=14-how-to-restart-a-server>14. How to restart a server</h1>
+<p>Date: 19/04/2017</p>
+<h2 id=status-13>Status</h2>
+<p>Accepted</p>
+<h2 id=context-13>Context</h2>
+<p>Context here...</p>
+<h2 id=decision-13>Decision</h2>
+<p>Decision here...</p>
+<h2 id=consequences-13>Consequences</h2>
+<p>Consequences here...</p>
+<h1 id=15-case-how-to-find-the-root-reason-of-high-load>15. Case: How to find the root reason of high load</h1>
+<p>Date: 20/04/2017</p>
+<h2 id=status-14>Status</h2>
+<p>Accepted</p>
+<h2 id=context-14>Context</h2>
+<p>Context here...</p>
+<h2 id=decision-14>Decision</h2>
+<p>Decision here...</p>
+<h2 id=consequences-14>Consequences</h2>
+<p>Consequences here...</p>
+<h1 id=16-故障记录报告>16. 故障记录报告</h1>
+<p>Date: 20/04/2017</p>
+<h2 id=status-15>Status</h2>
+<p>Accepted</p>
+<h2 id=context-15>Context</h2>
+<p>事故频发，处理速度慢，流程不清晰，并且一直未做记录，导致同样的问题会再次复现。</p>
+<h2 id=decision-15>Decision</h2>
+<p>定义故障报告模板：</p>
+<ol>
+<li>对故障进行描述，以便查询并对我们的系统稳定性做评估；</li>
+<li>对故障做分析，便于未来可快速处理同样问题；</li>
+<li>加监控，以便问题出现前就做处理；</li>
+<li>解决并升级方案，完全避免此类问题。</li>
+</ol>
+<h2 id=consequences-15>Consequences</h2>
+<h3 id=故障报告模板-15>故障报告模板</h3>
+<h4 id=问题描述-15>问题描述</h4>
+<ul>
+<li>简单的故障描述（三句话即可）</li>
+<li>故障出现及恢复时间</li>
+<li>影响范围</li>
+<li>根本原因</li>
+</ul>
+<h4 id=时间线-15>时间线</h4>
+<ul>
+<li>故障通知时间</li>
+<li>各种为了恢复服务的操作时间（注意顺序）</li>
+</ul>
+<h4 id=原因分析-15>原因分析</h4>
+<ul>
+<li>详细的故障描述</li>
+<li>客观，不要添加粉饰性的内容</li>
+</ul>
+<h4 id=做错的事情-15>做错的事情</h4>
+<h4 id=做对的事情-15>做对的事情</h4>
+<h4 id=将来如何避免此类事情再次发生-15>将来如何避免此类事情再次发生</h4>
+<ul>
+<li>监控</li>
+<li>规范</li>
+<li>预估</li>
+</ul>
+<p>Refs:
+Outage Post-Mortem – June 14 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://www.pagerduty.com/blog/outage-post-mortem-june-14/</a>
+How to write an Incident Report / Postmortem <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://sysadmincasts.com/episodes/20-how-to-write-an-incident-report-postmortem</a></p>
+<h1 id=17-incident-classify-and-recovery>17. Incident classify and recovery</h1>
+<p>Date: 20/04/2017</p>
+<h2 id=status-16>Status</h2>
+<p>Proposed</p>
+<h2 id=context-16>Context</h2>
+<p>对服务的可用等级不清晰，处理问题的优先级不足，临时分析现象及寻找解决方案，耗时过长</p>
+<h2 id=decision-16>Decision</h2>
+<p>划分服务等级，做好预案</p>
+<h2 id=consequences-16>Consequences</h2>
+<p>故障分类和预案</p>
+<h3 id=自然灾害-16>自然灾害</h3>
+<ol>
+<li>灾备，常见的有，两地三中心；</li>
+</ol>
+<h3 id=服务运营商-16>服务运营商</h3>
+<h4 id=dns-解析问题-16>DNS 解析问题</h4>
+<ol>
+<li>联系 DNS 提供商，确定故障恢复的时间；</li>
+<li>所需恢复时间大于 TTL，实施切换 DNS 运营商的预案（DnsPod to Aliyun etc）。</li>
+</ol>
+<h4 id=aliyun-内部问题-16>Aliyun 内部问题</h4>
+<h4 id=cdn-运营商-16>CDN 运营商</h4>
+<h3 id=外部人为-16>外部人为</h3>
+<h4 id=人为攻击-16>人为攻击</h4>
+<ul>
+<li>DDOS</li>
+<li>CC</li>
+<li>SQL 注入</li>
+<li>XSS</li>
+</ul>
+<h4 id=正常请求-16>正常请求</h4>
+<ul>
+<li>流量</li>
+</ul>
+<h3 id=架构内部-16>架构内部</h3>
+<h4 id=数据库级故障-16>数据库级故障</h4>
+<h4 id=内部网络级别-16>内部网络级别</h4>
+<ul>
+<li>Aliyun 内部</li>
+<li>网络、防火配置</li>
+</ul>
+<h4 id=系统级别故障-16>系统级别故障</h4>
+<ul>
+<li>单系统内部</li>
+<li>系统间通信</li>
+</ul>
+<h4 id=系统服务级别故障-16>系统服务级别故障</h4>
+<h4 id=应用服务级别故障-16>应用服务级别故障</h4>
+<h4 id=应用虚拟环境级别故障-16>应用虚拟环境级别故障</h4>
+<h4 id=应用代码级别故障-16>应用代码级别故障</h4>
+<h1 id=18-ios-持续发布>18. iOS 持续发布</h1>
+<p>Date: 20/04/2017</p>
+<h2 id=status-17>Status</h2>
+<p>Accepted</p>
+<h2 id=context-17>Context</h2>
+<p>目前使用测试同学的工作电脑做 iOS 的打包与分发，对测试同学有一定的影响。</p>
+<h2 id=decision-17>Decision</h2>
+<p><img src="files/password-manage.png" alt=""></p>
+<p>基本流程不变，将打包工作交由第三方服务 buddybuild 处理并分发。
+buddybuild 本可以直接分发，但由于其分发网络在国内比较慢，所以继续使用 fir.im 进行分发</p>
+<h2 id=consequences-17>Consequences</h2>
+<p>免费版单次打包过程限制在 20 分钟内，无限次打包但会优先打包付费用的的应用，未来长期的高频次使用需要购买付费版。</p>
+<p>Refs:</p>
+<p>Custom Build Steps: <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://docs.buddybuild.com/docs/custom-prebuild-and-postbuild-steps</a></p>
+<h1 id=19-服务器申请与升级---容量评估>19. 服务器申请与升级 - 容量评估</h1>
+<p>Date: 21/04/2017</p>
+<h2 id=status-18>Status</h2>
+<p>Accepted</p>
+<h2 id=context-18>Context</h2>
+<ol>
+<li>部分机器的 CPU，内存，硬盘，使用率均在 90% 左右，另一些机器各项指标使用率在 1% 左右；</li>
+<li>部分机器的 CPU，内存，硬盘搭配不合理，CPU 使用率 1%，但内存使用率在 90% 左右；</li>
+<li>一些对磁盘读写要求高的服务，使用的是普通云盘，比如，数据库，SVN等；</li>
+<li>申请机器时，无法提出配置要求，基本靠拍脑门决定；</li>
+<li>对服务的发展没有思考，配置要了 12 个月后才能使用到的配置。</li>
+</ol>
+<h2 id=decision-18>Decision</h2>
+<ol>
+<li>压力测试；</li>
+<li>分析业务各个指标的使用情况，CPU 密集型，内存密集型还是有其他的特点；</li>
+<li>鉴于 Aliyun ECS 随时可以扩展，可以先用低配机器，根据使用情况，进行单指标垂直升级；</li>
+<li>水平扩展，即提升了服务的处理能力又做了高可用；</li>
+<li>对于不合理的内存使用，要分析自己程序中是否有内存泄漏或大数据加载。</li>
+</ol>
+<h2 id=consequences-18>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li>互联网性能与容量评估的方法论和典型案例 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://www.jianshu.com/p/fbf56ccb4ebe</a></li>
+<li>携程网基于应用的自动化容量管理与评估 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://zhuanlan.zhihu.com/p/25341948</a></li>
+<li>大促活动前团购系统流量预算和容量评估 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">http://tech.meituan.com/stress-test-before-promotion.html</a></li>
+<li>10个互联网团队应对高压的容量评估与高可用体系:私董会1期 <a href="https://github.com/npryce/adr-tools">http://weibo.com/ttarticle/p/show?id=2309403998916147312333</a></li>
+<li>mysql 性能容量评估 <a href="https://github.com/agis-/git-style-guide">http://www.cnblogs.com/Aiapple/p/5697912.html</a></li>
+</ul>
+<h1 id=20-日志管理>20. 日志管理</h1>
+<p>Date: 24/04/2017</p>
+<h2 id=status-19>Status</h2>
+<p>Accepted</p>
+<h2 id=context-19>Context</h2>
+<ol>
+<li>记录位置混乱，有系统默认路径，有自定义路径；</li>
+<li>日志未切割，日志一直记录在一个文件中，导致文件巨大；</li>
+<li>记录方式有问题，一个请求量不大的服务，每日存在 1G 的日志数据，发现存在将整个 html 写入日志的问题；</li>
+<li>日志记录格式不统一，涉及日志规范有 nginx, python 和 java；</li>
+<li>不容易访问，需要给开发者提供对应机器的登录与日志查看权限；</li>
+<li>使用 grep 等查询方式，上下文使用不方便，查询效率低；</li>
+<li>临时的统计需要写一次性的脚本；</li>
+<li>无法对异常日志做监控与报警；</li>
+<li>归档日志太多，需要定时清理。</li>
+</ol>
+<p>附加需求：</p>
+<ol>
+<li>日志根据项目区分查看权限；</li>
+<li>可报警；</li>
+<li>可产生图表。</li>
+</ol>
+<h2 id=decision-19>Decision</h2>
+<ol>
+<li>日志记录统一至 /data/logs 目录下，针对每个服务创建日志目录(包括系统服务)，如 nginx;</li>
+<li>所有需要文件切割的地方，我们使用系统的 <code>/etc/logrotate.d</code>, copy <code>/etc/logrotate.d/nginx</code> 的设置进行改动即可。(系统的默认切割时间各个系统不一致，所以我们删除 <code>/etc/cron.daily/logrotate</code>，改为在 <code>/etc/crontab</code> 加入 <code>59 23 * * * root /usr/sbin/logrotate /etc/logrotate.conf</code>(使用日志服务后无需此步));</li>
+<li>针对大日志文件进行调研，查看日志内容的必要性；</li>
+<li>规范化日志记录格式及内容，格式可以参考 Aliyun 采集方式及常见配置示例 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/document_detail/28981.html</a></li>
+<li>使用日志管理服务可用解决如上 5 - 9 的问题。</li>
+</ol>
+<p>可选的日志服务：</p>
+<ol>
+<li>Aliyun 日志服务 (功能强大(复杂)，价格计算复杂，阿里云体系内速度应该快些，服务提供没多久，可用性待验证，展示效果很一般，价格适中)；</li>
+<li>sumologic (查询功能强大，上下文展示方便，费用高)；</li>
+<li>logentries (使用很方便，展示效果很棒，上下文展示一般，费用高)；</li>
+</ol>
+<p>综合考虑后，选用 Aliyun 日志服务</p>
+<p>整体功能强大</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<p>查询功能够用，虽然界面一般</p>
+<p><img src="files/branches.png" alt=""></p>
+<h2 id=consequences-19>Consequences</h2>
+<p>创建一个项目，然后创建各自服务的日志库，如下</p>
+<ul>
+<li>nginx: nginx-access, nginx-error</li>
+<li>service1: service1-access, service1-log</li>
+</ul>
+<p>未来需处理好 Aliyun 子账号与日志的权限关系</p>
+<p>Refs:</p>
+<ul>
+<li>How To Configure Logging and Log Rotation in Nginx on an Ubuntu VPS <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://www.digitalocean.com/community/tutorials/how-to-configure-logging-and-log-rotation-in-nginx-on-an-ubuntu-vps</a></li>
+</ul>
+<h1 id=21-redis-使用按业务分离并上云>21. Redis 使用按业务分离并上云</h1>
+<p>Date: 26/04/2017</p>
+<h2 id=status-20>Status</h2>
+<p>Accepted</p>
+<h2 id=context-20>Context</h2>
+<ol>
+<li>redis server 部署在业务机上，业务与数据存储耦合；</li>
+<li>所有业务的数据存在一个 db 0 中，业务之间很容易产生 key 冲突，业务扩展时需顾虑其他业务数据；</li>
+<li>单点，业务中存有流程数据，风险比较大；</li>
+<li>如果切到独立的机器，资源利用率不高。</li>
+</ol>
+<h2 id=decision-20>Decision</h2>
+<ol>
+<li>将自建 redis server 迁移至 aliyun redis 中；</li>
+<li>理清业务对 redis 的使用情况，按业务划分指定 redis db index 或 独立 redis 实例；</li>
+<li>aliyun redis 做了高可用；</li>
+<li>aliyun 目前可选的范围很多，最小实例是 256M，价格也合理。</li>
+</ol>
+<p>使用 aliyun redis 后，额外得到一个数据管理与监控功能功能，如图</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<h2 id=consequences-20>Consequences</h2>
+<ol>
+<li><p>针对缓存数据：</p>
+<p>我们无需做数据迁移，直接指定预分配的 aliyun redis db index 即可；</p></li>
+<li><p>对于存在需要迁移的数据：</p>
+<p>测试 -&gt; 更新连接配置 -&gt; 暂停业务服务 -&gt; 导入数据(AOF) -&gt; 启动业务服务</p>
+<p><code>redis-cli -h xxx.redis.rds.aliyuncs.com -p 6379 -a xx--pipe &lt; appendonly.aof</code></p>
+<ol>
+<li>确保 AOF 已打开（未打开的话，需更新配置及使用 bgrewriteaof 手动触发）；</li>
+<li>当前使用的版本（3.0.4）不支持单 db 导入及 db swap，所以只能将整个 instance 数据导入（对于按 db index 区分的业务，需要注意数据不被搞乱）。</li>
+</ol></li>
+</ol>
+<p>Refs:</p>
+<ul>
+<li>持久化（persistence）<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://redisdoc.com/topic/persistence.html</a></li>
+<li>How To Back Up and Restore Your Redis Data on Ubuntu 14.04 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://www.digitalocean.com/community/tutorials/how-to-back-up-and-restore-your-redis-data-on-ubuntu-14-04</a></li>
+<li>SWAPDB Redis command <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://news.ycombinator.com/item?id=12707973</a></li>
+<li>Storing Data with Redis <a href="https://github.com/npryce/adr-tools">http://www.mikeperham.com/2015/09/24/storing-data-with-redis/</a></li>
+</ul>
+<h1 id=22-防-ddos-攻击>22. 防 DDOS 攻击</h1>
+<p>Date: 28/04/2017</p>
+<h2 id=status-21>Status</h2>
+<p>Accepted</p>
+<h2 id=context-21>Context</h2>
+<ol>
+<li>DDOS 导致业务全线中断，购买高防 IP ，仍然需要重启机器进行 IP 更换（nginx 和业务系统在同一台机器上）；</li>
+<li>入口过多，针对 DDOS，需要多线解决；</li>
+<li>机器出问题，业务中断，单点；</li>
+<li>新功能部署，业务中断，没有对多实例进行管理，每次都是杀掉所有，然后重新启动。</li>
+</ol>
+<h2 id=decision-21>Decision</h2>
+<ul>
+<li>入口收敛，保证对外只有一个域名；</li>
+<li>做业务服务的高可用；</li>
+<li>使用 slb + nginx 做高可用，并且在遭遇 DDOS 攻击时，可以通过切换 slb 低成本的解决 DDOS；</li>
+<li>使用 supervisor 进行任务管理，可逐步进行服务实例的重启。</li>
+</ul>
+<h2 id=consequences-21>Consequences</h2>
+<p>需要保证所有业务机器都是无状态的，即无数据库（mysql, redis, mongodb 等服务在此机器运行），没有用这台机器存储业务用的文件等。</p>
+<p>Refs:</p>
+<ul>
+<li>防 DDOS 攻击 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://baike.baidu.com/item/防DDOS攻击</a></li>
+<li>负载均衡（SLB）使用最佳实践 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://yq.aliyun.com/articles/80055</a></li>
+<li>Denial of Service Attack Mitigation on AWS <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://aws.amazon.com/cn/answers/networking/aws-ddos-attack-mitigation/</a></li>
+<li>How to Help Prepare for DDoS Attacks by Reducing Your Attack Surface <a href="https://github.com/npryce/adr-tools">https://aws.amazon.com/cn/blogs/security/how-to-help-prepare-for-ddos-attacks-by-reducing-your-attack-surface/</a></li>
+<li>Comparing Load Balancing Options: Nginx vs. HAProxy vs. AWS ELB <a href="https://github.com/agis-/git-style-guide">http://www.mervine.net/comparing-load-balancing</a></li>
+</ul>
+<h1 id=23-应用性能监控>23. 应用性能监控</h1>
+<p>Date: 28/04/2017</p>
+<h2 id=status-22>Status</h2>
+<p>Accepted</p>
+<h2 id=context-22>Context</h2>
+<ol>
+<li>服务 A，用户访问搜索页面时，请求了 10 分钟，还没返回内容；</li>
+<li>服务 B，这个页面请求怎么有 1000 次数据库查询；</li>
+<li>服务 C，这条数据库查询怎么耗时 5 分钟。</li>
+<li>我们的这个项目做了半年，使用效果如何呀，哦，页面平均响应时间是 5 秒，啊！；</li>
+<li>用户反馈平均需要需要 1 天以上的时间；</li>
+<li>测试很难将所有边界场景测试到。</li>
+</ol>
+<h2 id=decision-22>Decision</h2>
+<p>使用 Newrelic 对我们线上主要业务做性能监控，包括响应时长、吞吐量、错误率，慢查询，查询分析等，他可以做到实时定位和通知，并指出具体的代码行及 SQL 语句。</p>
+<h2 id=consequences-22>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li>New Relic <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://newrelic.com/application-monitoring/features</a></li>
+<li>应用性能监控方法一览 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://www.infoq.com/cn/news/2015/08/monitoring-applications-category</a></li>
+</ul>
+<h1 id=24-实时错误跟踪>24. 实时错误跟踪</h1>
+<p>Date: 28/04/2017</p>
+<h2 id=status-23>Status</h2>
+<p>Accepted</p>
+<h2 id=context-23>Context</h2>
+<ol>
+<li>用户 A 使用功能 B，咦，出错了，怎么办呢，再试，还是不行，算了，不用了；又或者我报告一下吧，写邮件？；</li>
+<li>项目 A 昨晚上线后出现了很多问题，怎么办呢，回滚还是赶快去解决呢？</li>
+<li>用户发邮件说使用我们应用时出现错误了，错误描述不清晰，我们和用户沟通下吧，1小时过去了，还是重现不了，那我们去看看日志吧，翻出很久之前的日志，使用二分法慢慢查询，3 个小时过去了，终于定位出错误行啦，但是没有上下文及当时的环境变量等信息；</li>
+<li>异常使用不规范。</li>
+</ol>
+<h2 id=decision-23>Decision</h2>
+<h3 id=使用-sentry-对我们线上主要业务做异常监控-23>使用 Sentry 对我们线上主要业务做异常监控。</h3>
+<p><img src="files/password-manage.png" alt=""></p>
+<ul>
+<li><p>实时通知（sms, email, chat），推荐使用 slack；</p></li>
+<li><p>可定位具体的代码，包括错误栈信息；</p></li>
+<li><p>包含异常的环境变量信息。</p></li>
+<li><p>可主动上报信息；</p></li>
+<li><p>异常信息会聚合，了解当前异常优先级，避免被异常信息淹没；</p></li>
+<li><p>支持所有主流语言及对应的框架；</p>
+<p><img src="files/branches.png" alt=""></p></li>
+<li><p>配置非常简单，如，<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">Django 集成</a>；</p></li>
+<li><p>价格合理，并且有每月1万条的免费限额。</p></li>
+</ul>
+<h3 id=规范化异常-23>规范化异常</h3>
+<h4 id=使用异常的优势-23>使用异常的优势</h4>
+<ol>
+<li>隔离错误处理代码和常规代码；</li>
+<li>在调用栈中向上传播错误；</li>
+<li>归类和区分错误类型。</li>
+</ol>
+<h4 id=异常处理实践原则-23>异常处理实践原则</h4>
+<ol>
+<li>使用异常，而不使用返回码；</li>
+<li>利用运行时异常设定方法使用规则；</li>
+<li>消除运行时异常；</li>
+<li>正确处理检查异常；</li>
+<li>使主流程代码保持整洁；</li>
+<li>尽量处理最具体的异常，不能处理的异常请抛出来；</li>
+<li>无法处理的异常却不能抛出时，通过日志记录详细异常栈，并返回给调用方友好的错误信息。</li>
+</ol>
+<h2 id=consequences-23>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li><a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">使用异常的优势</a>;</li>
+<li><a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">如何正确使用Java异常处理机制</a>;</li>
+<li><a href="https://github.com/npryce/adr-tools">Java编码中异常的使用建议</a>;</li>
+<li><a href="https://github.com/agis-/git-style-guide">Write Cleaner Python: Use Exceptions</a>;</li>
+<li><a href="http://zhuanlan.51cto.com/art/201612/525719.htm">The definitive guide to Python exceptions</a>;</li>
+</ul>
+<h1 id=25-按-restful-风格设计更新服务接口>25. 按 RESTful 风格设计更新服务接口</h1>
+<p>Date: 04/05/2017</p>
+<h2 id=status-24>Status</h2>
+<p>Accepted</p>
+<h2 id=context-24>Context</h2>
+<ol>
+<li>当前 URL 定义类似这样，<code>add_message</code>, <code>report_exception</code>, <code>check_pwd</code> 等，函数式定义，导致接口数量增长过快，管理麻烦；</li>
+<li>所有的请求都走 POST 方法；</li>
+<li>所有请求返回状态都是 200，使用晦涩难懂的自定义状态码；</li>
+<li>函数式编程，代码重用度不高；</li>
+<li>自定义接口文档，无法及时更新；</li>
+<li>返回结构差异化大，过滤，排序和分页各式各样，无统一的规范；</li>
+<li>无 API 控制台可供测试；</li>
+<li>更多。</li>
+</ol>
+<h2 id=decision-24>Decision</h2>
+<ol>
+<li>URL的设计应使用资源集合的概念；
+<ul>
+<li>每种资源有两类网址（接口）：
+<ul>
+<li>资源集合（例如，/orders）；</li>
+<li>集合中的单个资源（例如，/orders/{orderId}）。</li>
+</ul></li>
+<li>使用复数形式 (使用 ‘orders’ 而不是 ‘order’)；</li>
+<li>资源名称和 ID 组合可以作为一个网址的节点（例如，/orders/{orderId}/items/{itemId}）；</li>
+<li>尽可能的让网址越短越好，单个网址最好不超过三个节点。</li>
+</ul></li>
+<li>使用名词作为资源名称 (例如，不要在网址中使用动词)；</li>
+<li>使用有意义的资源描述；
+<ul>
+<li>“禁止单纯的使用 ID!” 响应信息中不应该存在单纯的 ID，应使用链接或是引用的对象；</li>
+<li>设计资源的描述信息，而不是简简单单的做数据库表的映射；</li>
+<li>合并描述信息，不要通过两个 ID 直接表示两个表的关系；</li>
+</ul></li>
+<li>资源的集合应支持过滤，排序和分页；</li>
+<li>支持通过链接扩展关系，允许客户端通过添加链接扩展响应中的数据；</li>
+<li>支持资源的字段裁剪，运行客户端减少响应中返回的字段数量；</li>
+<li>使用 HTTP 方法名来表示对应的行为：
+<ul>
+<li>POST - 创建资源，非幂等性操作；</li>
+<li>PUT - 更新资源（替换）；</li>
+<li>PATCH - 更新资源（部分更新）；</li>
+<li>GET - 获取单个资源或资源集合；</li>
+<li>DELETE - 删除单个资源或资源集合；</li>
+</ul></li>
+<li>合理使用 HTTP 状态码；
+<ul>
+<li>200 - 成功；</li>
+<li>201 - 创建成功，成功创建一个新资源时返回。 返回信息中将包含一个 'Location' 报头，他通过一个链接指向新创建的资源地址；</li>
+<li>400 - 错误的请求，数据问题，如不正确的 JSON 等；</li>
+<li>404 - 未找到，通过 GET 请求未找到对应的资源；</li>
+<li>409 - 冲突，将出现重复的数据或是无效的数据状态。</li>
+</ul></li>
+<li>使用 ISO 8601 时间戳格式来表示日期；</li>
+<li>确保你的 GET，PUT，DELETE 请求是<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">幂等的</a>，这些请求多次操作不应该有副作用。</li>
+<li>PUT、POST、PATCH 请求参数通过 <code>application/json</code> 传递；</li>
+<li>正确返回格式：
+<ul>
+<li>单个资源：{field1: value1, …}</li>
+<li>资源集合：[{field1: value1, …}]</li>
+<li>资源集合（带分页）：</li>
+</ul></li>
+</ol>
+<pre><code class="language-json">{
+ &quot;count&quot;: 0,
+ &quot;next&quot;: null,
+ &quot;previous&quot;: null,
+ &quot;results&quot;: [{&quot;field1&quot;: &quot;value1&quot;, …}]
+}
+</code></pre>
+<ol start="13">
+<li>错误返回格式：
+<ul>
+<li>非特定字段错误</li>
+</ul></li>
+</ol>
+<pre><code class="language-json">{
+ &quot;non_field_errors&quot;: [
+  &quot;该手机号码未注册！&quot;
+ ]
+}
+</code></pre>
+<ul>
+<li>特定字段错误</li>
+</ul>
+<pre><code class="language-json">{
+ &quot;phone_number&quot;: [
+  &quot;该字段不能为空。&quot;
+ ],
+ &quot;address&quot;: [
+  &quot;该字段不能为空。&quot;
+ ]
+}
+</code></pre>
+<ol start="14">
+<li>使用  swagger  做 API 展示 与调试。
+<img src="files/password-manage.png" alt=""></li>
+</ol>
+<h2 id=consequences-24>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li>API 设计参考手册 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://github.com/iamsk/api-cheat-sheet/blob/master/README-zh-Hans.md</a></li>
+<li>Best Practices for Designing a Pragmatic RESTful API <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api</a></li>
+<li>REST API Quick Tips <a href="https://github.com/npryce/adr-tools">http://www.restapitutorial.com/lessons/restquicktips.html</a></li>
+<li>Django REST framework <a href="https://github.com/agis-/git-style-guide">http://www.django-rest-framework.org/</a></li>
+</ul>
+<h1 id=26-文件服务与业务服务隔离>26. 文件服务与业务服务隔离</h1>
+<p>Date: 06/05/2017</p>
+<h2 id=status-25>Status</h2>
+<p>Accepted</p>
+<h2 id=context-25>Context</h2>
+<ol>
+<li>当前存储方案有 3 种（FastDFS, nginx static, OSS），各自分别维护，人力成本高，都是单点，资源有效性无法保障；</li>
+<li>文件存储和业务服务共享服务器资源（CPU, 内存，带宽，磁盘 IO），服务器资源使用不合理，文件服务会占用大量内存和磁盘 IO 及网络 IO，影响业务，并且业务服务无法做高可用，遇到 DDOS 只能傻眼；</li>
+<li>面向用户的资源无法做加速；</li>
+<li>所有文件都是公开可访问，存在严重的安全问题（用户身份证照片、合同及报表数据的泄露）。</li>
+<li>所有敏感信息可被任何人全网下载；</li>
+</ol>
+<h2 id=decision-25>Decision</h2>
+<ol>
+<li>将所有文件存储和业务机器分离，将 FastDFS 配置单独机器提供服务；</li>
+<li>所有静态文件集中上云，录音，电子合同等静态文件上云；</li>
+<li>文件分权限访问，分配临时 token 去获取文件；</li>
+<li>css/js/images 等上云并配置 CDN，加速用户端访问。</li>
+</ol>
+<h2 id=consequences-25>Consequences</h2>
+<p>综合考虑了 Aliyun OSS 及七牛云，最终选择 OSS 是因为我们的服务都是基于 Aliyun ECS 的，使用 OSS 内网数据同步速度会快很多，并且内网通讯不收费。</p>
+<ol>
+<li>本地文件迁移至 Aliyun OSS （使用 ossimport2）注意事项：
+<ul>
+<li>宿主机内存消耗量大，磁盘读 IO 很高；</li>
+<li>需要写脚本进行文件比对，确认所有文件都同步成功。</li>
+</ul></li>
+<li>FastDFS 迁移注意事项：
+<ul>
+<li>同过配置多节点来进行新机器得同步；</li>
+<li>新机器需要 IO 优化的磁盘，否则整个数据同步瓶颈将在写磁盘操作上。</li>
+</ul></li>
+</ol>
+<p>Refs:</p>
+<ul>
+<li>ossimport2 Linux平台使用说明 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/document_detail/32201.html?spm=5176.doc44075.2.11.I53UPo</a></li>
+</ul>
+<h1 id=27-消息队列>27. 消息队列</h1>
+<p>Date: 10/05/2017</p>
+<h2 id=status-26>Status</h2>
+<p>Accepted</p>
+<h2 id=context-26>Context</h2>
+<ol>
+<li>我们的很多业务都有这个需要，当前的一些定时任务已导致机器的产生瓶颈，很多业务之间的耦合性也很高；</li>
+<li>当前只有少量的业务在使用消息队列服务（activeMQ）；</li>
+<li>activeMQ 对非 java 语言的支持并不友好；</li>
+<li>自己需要维护队列服务，做监控，高可用等。</li>
+</ol>
+<h2 id=decision-26>Decision</h2>
+<p>我们急需一个多语言支持且可靠的服务可以解决如上问题，即</p>
+<ul>
+<li>异步解耦</li>
+<li>削峰填谷</li>
+</ul>
+<p>Aliyun 的 MNS 和 ONS 功能的重合导致选择起来很困难，最终选择 MNS 源于以下几点。</p>
+<ol>
+<li>支持消息优先级；</li>
+<li>可靠性更高；</li>
+<li>文档更完善；</li>
+<li>服务更成熟；</li>
+<li>使用起来简单方便，定时消息不支持这点比较遗憾；</li>
+<li>ONS 使用起来有些复杂，监控方面的功能确实强大许多，但多数在开发与公测中；</li>
+<li>不好的点是各自都加了一些私活，MNS 加了自家的短信服务，ONS 加入了 MQTT 物联网套件，让 Q 看起来不单纯。</li>
+</ol>
+<h2 id=consequences-26>Consequences</h2>
+<p>使用 MNS 时需要确认以下几点：</p>
+<ul>
+<li><p>确认队列模型（支持一对一发送和接收消息）还是主题模型（支持一对多发布和订阅消息，并且支持多种消息推送方式）</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<p><img src="files/branches.png" alt=""></p></li>
+<li><p>队列模型，需关注</p>
+<ol>
+<li>消息接收长轮询等待时间(0-30s)；</li>
+<li>消息最大长度(1K-64K);</li>
+<li>消息存活时间(1min-15day);</li>
+<li>消息延时(0-7day);</li>
+<li>取出消息隐藏时长(1s-12hour);</li>
+</ol></li>
+<li><p>主题模型，需关注</p>
+<ol>
+<li>消息最大长度(1K-64K);</li>
+<li>消息可以加过滤标签；</li>
+</ol></li>
+</ul>
+<p>Refs:</p>
+<ul>
+<li>MNS 产品概述 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/document_detail/27414.html?spm=5176.doc51077.6.539.XIqAPd</a></li>
+<li>消息服务MNS和消息队列ONS产品对比 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://help.aliyun.com/document_detail/27437.html?spm=5176.doc27475.6.655.piX01s</a></li>
+<li>SDK 下载地址：<a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://help.aliyun.com/document_detail/32305.html</a></li>
+<li>Python 队列使用手册 <a href="https://github.com/npryce/adr-tools">https://help.aliyun.com/document_detail/32295.html?spm=5176.doc32305.6.667.mnHdf4</a></li>
+<li>Java 队列使用手册 <a href="https://github.com/agis-/git-style-guide">https://help.aliyun.com/document_detail/32449.html?spm=5176.doc32295.6.659.vWCLgJ</a></li>
+</ul>
+<h1 id=28-what-should-we-do-when-we-setup-a-new-server>28. What should we do when we setup a new server</h1>
+<p>Date: 11/05/2017</p>
+<h2 id=status-27>Status</h2>
+<p>Accepted</p>
+<h2 id=context-27>Context</h2>
+<p>Context here...</p>
+<h2 id=decision-27>Decision</h2>
+<p>Decision here...</p>
+<h2 id=consequences-27>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li>云服务器 ECS Linux SWAP 配置概要说明 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/knowledge_detail/42534.html</a></li>
+<li>How To Add Swap on Ubuntu 14.04 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04</a></li>
+</ul>
+<h1 id=29-本地-hosts-管理>29. 本地 hosts 管理</h1>
+<p>Date: 18/05/2017</p>
+<h2 id=status-28>Status</h2>
+<p>Accepted</p>
+<h2 id=context-28>Context</h2>
+<ol>
+<li>我们有多个测试环境（开发、测试、预发布及线上）；</li>
+<li>我们的客户端为了避免针对不同环境做多次打包，使用了和线上一致的域名，所以当我们的 QA 需要测试不同环境时，需要手动更新每个 QA 的本地 hosts 文件；</li>
+<li>由于服务器及对应服务的调整，无法实时做到 hosts 的及时更新，也没法保证每个测试人员都做了更新（当前无通知，出问题后主要依靠问其他 QA 成员或咨询 Dev）；</li>
+<li>部分线上服务未配置外网域名，比如 Boss 系统、Wiki 等，需要包括运营人员在内的所有人各自去配置本地 hosts。</li>
+</ol>
+<h2 id=decision-28>Decision</h2>
+<ol>
+<li>方案一：使用 SwitchHosts（Chosen）
+<ul>
+<li>可快速切换 hosts；</li>
+<li>支持集中式的 hosts 管理（在线）；</li>
+<li>支持多 hosts 合并；</li>
+<li>支持多客户端。</li>
+</ul></li>
+</ol>
+<p>主界面如下，默认会将旧的 hosts 文件保存为 backup</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<p>可以新建 hosts，比如测试环境一</p>
+<p><img src="files/branches.png" alt=""></p>
+<p>可以使用远程集中式管理的 hosts</p>
+<p><img src="files/bastion.png" alt=""></p>
+<p>最重要的是这些 hosts 可以通过同时打开各自开关将其合并使用。</p>
+<ol start="2">
+<li>方案二：使用路由器
+<ul>
+<li>只需切换不同的路由器即可进行不同环境的测试；</li>
+<li>配置办公网络路由器，需要 IT 人员来维护(暂无)；</li>
+<li>只能办公室内进行访问。</li>
+</ul></li>
+</ol>
+<h2 id=consequences-28>Consequences</h2>
+<p>软件基于 Electron 开发，跨平台，Windows/Mac/Linus 客户端下载地址: <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://pan.baidu.com/share/link?shareid=150951&amp;uk=3607385901#list/path=%2Fshare%2FSwitchHosts!&amp;parentPath=%2Fshare</a></p>
+<p>Refs:</p>
+<p>SwitchHosts Github: <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://github.com/oldj/SwitchHosts</a></p>
+<h1 id=30-容量评估---存储>30. 容量评估 - 存储</h1>
+<p>Date: 2017-05-25</p>
+<h2 id=status-29>Status</h2>
+<p>Accepted</p>
+<h2 id=context-29>Context</h2>
+<ol>
+<li>一些需要高 IOPS 的服务，磁盘使用的是普通云盘，如，数据库，备份服务，图片服务等。</li>
+</ol>
+<h2 id=decision-29>Decision</h2>
+<ol>
+<li>明确存储的使用场景；</li>
+<li>关注吞吐量，IOPS和数据首次获取时间。</li>
+</ol>
+<p>我们的存储都是基于 Aliyun 的，他有以下类别及特点：</p>
+<ul>
+<li>nas(文件存储)
+<ul>
+<li>使用场景
+<ul>
+<li>负载均衡共享存储和高可用</li>
+<li>企业办公文件共享(<strong>不支持本地挂载</strong>)</li>
+<li>数据备份</li>
+<li>服务器日志共享</li>
+</ul></li>
+<li>价格及吞吐能力
+<ul>
+<li>2/G/M SSD性能型 60M/s</li>
+<li><strong>0.65/G/M 容量型 30M/s</strong></li>
+</ul></li>
+</ul></li>
+<li>disk(块存储、云盘)
+<ul>
+<li>使用场景
+<ul>
+<li>普通云盘
+<ul>
+<li>不被经常访问或者低 I/O 负载的应用场景</li>
+</ul></li>
+<li>高效云盘
+<ul>
+<li>中小型数据库</li>
+<li>大型开发测试</li>
+<li>Web 服务器日志</li>
+</ul></li>
+<li>SSD 云盘
+<ul>
+<li>I/O 密集型应用</li>
+<li>中大型关系型数据库</li>
+<li>NoSQL 数据库</li>
+</ul></li>
+</ul></li>
+<li>价格
+<ul>
+<li>普通云盘 0.3/G/M</li>
+<li>高效云盘 0.35/G/M</li>
+<li>SSD 云盘 1/G/M</li>
+</ul></li>
+<li>吞吐量
+<ul>
+<li>普通云盘 30MBps</li>
+<li>高效云盘 <strong>80MBps</strong></li>
+<li>SSD 云盘 256MBps</li>
+</ul></li>
+<li>IOPS
+<ul>
+<li>普通云盘 数百</li>
+<li>高效云盘 3000</li>
+<li>SSD 云盘 20000</li>
+</ul></li>
+<li>访问延迟
+<ul>
+<li>普通云盘 5 - 10 ms</li>
+<li>高效云盘 1 - 3 ms</li>
+<li>SSD 云盘 0.5 - 2 ms</li>
+</ul></li>
+</ul></li>
+<li>oss(对象存储)
+<ul>
+<li>使用场景
+<ul>
+<li>图片和音视频等应用的海量存储</li>
+<li>网页或者移动应用的静态和动态资源分离</li>
+<li>云端数据处理</li>
+</ul></li>
+<li>价格及吞吐能力
+<ul>
+<li><strong>0.148/G/M 标准型 吞吐量大，热点文件、需要频繁访问的业务场景</strong> 大概 50M/s，类似高效云盘</li>
+<li><strong>0.08/G/M 低频访问型 数据访问实时，读取频率较低的业务场景</strong> Object 存储最低 30 天</li>
+<li>0.06/G/M 归档型 数据恢复有等待时间，数据有存储时长要求 Object 存储最低 30 天</li>
+</ul></li>
+</ul></li>
+<li>oas(归档存储)
+<ul>
+<li>使用场景
+<ul>
+<li>低成本备份</li>
+<li>数据归档</li>
+<li>取代磁带</li>
+</ul></li>
+<li>价格及吞吐能力
+<ul>
+<li>0.07/G/M 用户提取数据时能够容忍0-4小时的时间延迟</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id=consequences-29>Consequences</h2>
+<ol>
+<li>加粗的信息可以重点查看下，同类别里比较推荐；</li>
+<li>我们选择时还要考虑价格及存储时长要求。</li>
+</ol>
+<p>Refs:</p>
+<ul>
+<li><a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">Server request and upgrade: capacity evaluation</a></li>
+<li>云盘参数和性能测试方法：<a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://help.aliyun.com/document_detail/25382.html</a></li>
+</ul>
+<h1 id=31-容量评估---内存>31. 容量评估 - 内存</h1>
+<p>Date: 2017-05-25</p>
+<h2 id=status-30>Status</h2>
+<p>Accepted</p>
+<h2 id=context-30>Context</h2>
+<ol>
+<li>机器内存太小了，需要升级一下；</li>
+<li>我们之前公司服务需要用多少多少；</li>
+<li>Java 程序最大最小堆的指定无标准。</li>
+</ol>
+<h2 id=decision-30>Decision</h2>
+<ul>
+<li>分析业务场景，明确我们到底需要多少内存，合理的预留1-2倍内存都没有问题；</li>
+<li>我们的业务目前分别由两种语言实现 Python 及 Java，Java 程序对内存的使用量非常大且监控不直观，为了合理分配内存，我们采取了以下分析方法。
+<ul>
+<li>分配的最大内存用完后，GC 频率高且特定时间内无法做到垃圾回收，将会导致 <code>java.lang.OutOfMemoryError</code>；</li>
+<li>OOF，GC 频率及 GC 时间是确定 heap 参数的一个指标；</li>
+<li>线上不可能等到 OOF 时，才做升级，这样直接影响了系统的可用性，所以针对 Java 程序，一定要做好压力测试或对 JVM 做好监控（通过 Java VisualVM or JConsole），鉴于我们已用 Newrelic 栈，将有其通知我们服务的状况，Memory Analyzer 可以做更详细的变量级别内存使用查看；</li>
+</ul></li>
+<li>内存的不合理使用有：将大文件完整加载至内存，将整个表的数据读取至内存；</li>
+<li>内存泄漏：微观的有对象的引用问题，宏观的有连接未释放等；</li>
+<li>Xmx 设置后，对系统来说是已使用的，所以我们需要同时关注系统级别和 JVM 级别的内存使用情况。</li>
+</ul>
+<p><img src="files/password-manage.png" alt=""></p>
+<h2 id=consequences-30>Consequences</h2>
+<p>这篇文章的缘起是因为我们的一个同事发现自己使用的测试环境内存不够用，导致其他服务无法启动，并要求升级机器配置。当时的测试环境配置是：2核4G。出现问题前的操作是将 Xmx 由 1G 调整为 2G，通过分析发现是程序中加载了一个 7万条数据的大表导致，调整批量加载数据将以原先一半的内存解决此问题。</p>
+<p>Refs:</p>
+<ul>
+<li><a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">Server request and upgrade: capacity evaluation</a></li>
+<li>Spring Boot Memory Performance: <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://spring.io/blog/2015/12/10/spring-boot-memory-performance</a></li>
+<li>How to control Java heap size (memory) allocation (xmx, xms)：<a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">http://alvinalexander.com/blog/post/java/java-xmx-xms-memory-heap-size-control</a></li>
+<li>What are the Xms and Xmx parameters when starting JVMs?：<a href="https://github.com/npryce/adr-tools">https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvms</a></li>
+<li>JVM Tuning: Heapsize, Stacksize and Garbage Collection Fundamental：<a href="https://github.com/agis-/git-style-guide">https://crunchify.com/jvm-tuning-heapsize-stacksize-garbage-collection-fundamental/</a></li>
+<li>云监控内存使用率与Linux系统内存占用差异的原因：<a href="http://zhuanlan.51cto.com/art/201612/525719.htm">https://help.aliyun.com/knowledge_detail/38849.html</a></li>
+</ul>
+<h1 id=32-tcp-长连接高可用>32. TCP 长连接高可用</h1>
+<p>Date: 2017-05-25</p>
+<h2 id=status-31>Status</h2>
+<p>Accepted</p>
+<h2 id=context-31>Context</h2>
+<ol>
+<li>我们的一些智能设备，通过 TCP 和后端进行通信，上报数据及接收指令；</li>
+<li>智能设备由第三方提供，我们实现后端服务，当前支持域名和 IP 请求；</li>
+<li>随着未来设备数量的增长，我们的单台服务预计将无法满足；</li>
+<li>原方案是针对不同批次的智能设备，我们绑定不同的域名，已做客户的负载；</li>
+<li>存在设备使用的不可控引起服务端的使用率会存在问题；</li>
+<li>服务器出问题后服务的恢复时间受限于 DNS 更新的时间（切换新机器）。</li>
+</ol>
+<h2 id=decision-31>Decision</h2>
+<p><img src="files/password-manage.png" alt=""></p>
+<h2 id=consequences-31>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li>Aliyun 负载均衡 产品概述：<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/document_detail/27539.html</a></li>
+<li>Aliyun 负载均衡 基础架构：<a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://help.aliyun.com/document_detail/27544.html</a></li>
+<li>Aliyun 负载均衡 技术原理浅析：<a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://help.aliyun.com/knowledge_detail/39444.html</a></li>
+<li>负载均衡服务TCP端口健康检查成功后返回RST包导致出现大量业务错误日志：<a href="https://github.com/npryce/adr-tools">https://help.aliyun.com/knowledge_detail/39464.html</a></li>
+<li>为什么不均衡：<a href="https://github.com/agis-/git-style-guide">https://help.aliyun.com/document_detail/27656.html</a></li>
+<li><a href="http://zhuanlan.51cto.com/art/201612/525719.htm">TCP接入层的负载均衡、高可用、扩展性架构</a></li>
+</ul>
+<h1 id=33-容量评估---mysql>33. 容量评估 - MySQL</h1>
+<p>Date: 2017-05-25</p>
+<h2 id=status-32>Status</h2>
+<p>Accepted</p>
+<h2 id=context-32>Context</h2>
+<p>QPS: 每秒钟查询量。如果每秒钟能处理 100 条查询 SQL 语句，那么 QPS 就约等于 100
+TPS: 每秒钟事务处理的数量</p>
+<h2 id=decision-32>Decision</h2>
+<h3 id=和-mysql-性能相关的几个指标-32>和 MySQL 性能相关的几个指标</h3>
+<ul>
+<li>CPU
+<ul>
+<li>对于 CPU 密集型的应用，我们需要加快 SQL 语句的处理速度。由于MySQL 的 SQL 语句处理是单线程的，因此我们需要更好的 CPU，而不是更多的cpu</li>
+<li>一个 CPU 同时只能处理一条 SQL 语句。所以高并发量的情况下，就需要更多的 CPU 而不是更快的 CPU。</li>
+</ul></li>
+<li>内存
+<ul>
+<li>把数据缓存到内存中读取，可以大大提高性能。常用的 MySQL 引擎中，MyISAM 把索引缓存到内存，数据不缓存。而InnoDB 同时缓存数据和索引</li>
+</ul></li>
+<li>磁盘
+<ul>
+<li>MySQL 对磁盘 IO 的要求比较高，推荐高性能磁盘设备，比如，Aliyun 就推荐使用其 SSD，而不是普通云盘和高效云盘，当然 SSD 这个介质的可靠性，我们也需要考虑</li>
+<li>MySQL 实例应该独享，尤其不能和其他磁盘 IO 密集型任务放在一起</li>
+</ul></li>
+<li>网络
+<ul>
+<li>一般数据库服务都部署在内网，带宽影响不大，避免使用外网连接数据库</li>
+<li>外网查询，尤其避免使用 <code>select *</code> 进行查询</li>
+<li>从库如果跨地域，走外网，则尽量减少从库数量。</li>
+</ul></li>
+</ul>
+<h3 id=影响数据库性能的因素及应对方式-32>影响数据库性能的因素及应对方式</h3>
+<ul>
+<li>高并发
+<ul>
+<li>数据库连接数被占满</li>
+<li>对于数据库而言，所能建立的连接数是有限的，MySQL 中<code>max_connections</code> 参数默认值是 100</li>
+</ul></li>
+<li>大表
+<ul>
+<li>记录行数巨大，单表超过千万行</li>
+<li>表数据文件巨大，表数据文件超过10G</li>
+<li>影响
+<ul>
+<li>慢查询：很难在一定的时间内过滤出所需要的数据</li>
+<li>DDL 操作、建立索引需要很长的时间：MySQL 版本 &lt;5.5 建立索引会锁表，&gt;=5.5 虽然不会锁表但会引起主从延迟</li>
+<li>修改表结构需要很长时间锁表：会造成长时间的主从延迟；影响正常的数据操作</li>
+</ul></li>
+<li>处理
+<ul>
+<li>分库分表</li>
+<li>历史数据归档</li>
+</ul></li>
+</ul></li>
+<li>大事务
+<ul>
+<li>运行时间比较长，操作数据比较多的事务</li>
+<li>影响
+<ul>
+<li>锁定太多数据，造成大量的阻塞和锁超时</li>
+<li>回滚时需要的时间比较长</li>
+<li>执行时间长，容易造成主从延迟</li>
+</ul></li>
+<li>处理
+<ul>
+<li>避免一次处理太多的数据</li>
+<li>移出不必要在事务中的select操作</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id=consequences-32>Consequences</h2>
+<p>鉴于我们使用了 Aliyun MySQL，他有完善的监控项，CPU、内存、磁盘、连接数及网络流量，关注各个指标并针对其做好报警策略即可</p>
+<p>Refs:</p>
+<ul>
+<li>什么影响了MySQL性能 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://blog.csdn.net/u011118321/article/details/54694262</a></li>
+<li>哪些因素影响了数据库性能 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://blog.csdn.net/u011118321/article/details/54692454</a></li>
+<li>Aliyun RDS 产品概述 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://help.aliyun.com/document_detail/26092.html</a></li>
+<li>使用RDS不得不知的注意事项 <a href="https://github.com/npryce/adr-tools">https://help.aliyun.com/knowledge_detail/41872.html</a></li>
+<li>阿里云RDS上的一些概念性记录 <a href="https://github.com/agis-/git-style-guide">http://www.cnblogs.com/olinux/p/5563584.html</a></li>
+</ul>
+<h1 id=34-dns-笔记>34. DNS 笔记</h1>
+<p>Date: 2017-06-03</p>
+<h2 id=status-33>Status</h2>
+<p>Accepted</p>
+<h2 id=context-33>Context</h2>
+<ol>
+<li>网站被 DDOS 需要考虑切换 DNS 解析；</li>
+<li>负载均衡服务切换服务器，需要更新 DNS 解析；</li>
+<li>新加子域名，需要配置 DNS 解析。</li>
+</ol>
+<h2 id=decision-33>Decision</h2>
+<p>DNS 解析的同步需要时间，涉及以下几点：</p>
+<ol>
+<li>DNSPod 生效时间，一般在 30s 以内；</li>
+<li>各个 ISP DNS 服务器刷新时间；</li>
+<li>域名 TTL (用户本地缓存时间）。</li>
+</ol>
+<p>针对全球性业务，保险起见，我们等待一天以上。DNSPod 给出的说法是，域名解析通常需 24 小时至 72 小时才能全球完全同步。大多数业务正常情况以 TTL 为依据即可。</p>
+<h2 id=consequences-33>Consequences</h2>
+<p>一种域名解析更新策略是，现将旧的域名解析 TTL 设为最小值，等待一天，确保解析都已完全同步，这个完全不影响现有业务。将 DNS 解析更新到新的记录，这个时候 DNS 服务器将以最快的速度进行同步更新；确认都更新完毕后，我们将 TTL 设为较长时间，确保 DNS 解析的稳定性。</p>
+<p>Refs:</p>
+<ul>
+<li>有关DNSPod常见问题汇总: <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://www.douban.com/group/topic/26842738/</a></li>
+<li>DNS解析过程及DNS TTL值: <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://www.xiaoxiaozi.com/2013/04/23/2409/</a></li>
+</ul>
+<h1 id=35-关于灾难恢复>35. 关于灾难恢复</h1>
+<p>Date: 2017-06-05</p>
+<h2 id=status-34>Status</h2>
+<p>Proposed</p>
+<h2 id=context-34>Context</h2>
+<p>当前我们使用的是华北2可用区A机房（即北京昌平区的一个机房）部署了所有服务，存在以下几个问题，出现概率逐级减少：</p>
+<ol>
+<li>服务本身部署在单台机器，单机的故障会导致服务的不可用，这个我们的业务服务频频出现；</li>
+<li>所有服务部署于一个机房，机房电力，网络出现故障，将导致服务完全不可用，这个 2016 年中旬我们使用的 Aliyun 机房网络设备出现过一次问题，导致服务停服 1 小时左右（官方），实际对我们的影响在 12 个小时左右；</li>
+<li>北京发生各种灾害，殃及所有机房，导致服务不可用。</li>
+</ol>
+<h3 id=基础概念-34>基础概念</h3>
+<p>灾难恢复（Disaster recovery，也称灾备），指自然或人为灾害后，重新启用信息系统的数据、硬件及软体设备，恢复正常商业运作的过程。灾难恢复规划是涵盖面更广的业务连续规划的一部分，其核心即对企业或机构的灾难性风险做出评估、防范，特别是对关键性业务数据、流程予以及时记录、备份、保护。</p>
+<p>地域，即城市，不同的地域可以做到自然灾害级别的灾备，之间延迟较高</p>
+<p>可用区，即机房，不同的可用区可以做到电力和网络设备互相独立，之间有少量延迟</p>
+<p>两地三中心，业界目前最可靠的解决方案，即在两个城市共三个机房中部署服务</p>
+<h3 id=灾备的两项指标-34>灾备的两项指标</h3>
+<p>RTO - Recovery Time Objective，它是指灾难发生后，从 IT 系统宕机导致业务停顿之时开始，到 IT 系统恢复至可以支持各部门运作、恢复运营之时，此两点之间的时间段称为 RTO</p>
+<p>RPO - Recovery Point Objective,是指从系统和应用数据而言，要实现能够恢复至可以支持各部门业务运作，系统及生产数据应恢复到怎样的更新程度，这种更新程度可以是上一周的备份数据，也可以是上一次交易的实时数据</p>
+<h3 id=两地三中心-34>两地三中心</h3>
+<p><img src="files/password-manage.png" alt=""></p>
+<ul>
+<li>主系统
+<ul>
+<li>即当前对外提供服务的机房</li>
+<li>首先要做到自身的高可用，所有服务不因单机故障导致服务不可用</li>
+<li>无资源浪费，多一些部署和维护成本</li>
+</ul></li>
+<li>同城灾备
+<ul>
+<li>单个城市多个机房，解决单机房电力或网络故障导致的服务不可用</li>
+<li>主备的方式会有一半的资源浪费，双活的方式对服务有一定的延迟</li>
+<li>有一定的部署和维护成本</li>
+</ul></li>
+<li>异地灾备
+<ul>
+<li>即跨城市部署服务，解决自然灾害等引起的服务不可用</li>
+<li>由于延迟的原因，这部分资源属于备用服务，仅在发生灾害是激活</li>
+<li>平时资源都是浪费，并且有较高的部署和维护成本</li>
+</ul></li>
+</ul>
+<h2 id=decision-34>Decision</h2>
+<ol>
+<li>同机房的服务高可用（进行中），这个是目前最高优先级；</li>
+<li>同城双活（提议中），可以解决大部分我们遇到的机房问题；</li>
+<li>异地灾备（暂不考虑），针对支付业务，当涉及合规性时，我们得考虑下；</li>
+<li>明确我们各个服务的重要程度，分服务针对性的做高可用及灾备策略。</li>
+</ol>
+<h2 id=consequences-34>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li>灾难恢复 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://zh.wikipedia.org/wiki/%E7%81%BE%E9%9A%BE%E6%81%A2%E5%A4%8D</a></li>
+<li>Aliyun 地域和可用区 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://help.aliyun.com/knowledge_detail/40654.html</a></li>
+<li>阿里云华北2区网络故障导致业务中断1小时 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">http://www.sohu.com/a/101817812_401503</a></li>
+<li>因电缆井被烧，京津宁骨干网中断 <a href="https://github.com/npryce/adr-tools">http://www.sohu.com/a/131579749_465914</a></li>
+<li>经历不可抗力是一种什么体验 <a href="https://github.com/agis-/git-style-guide">https://zhuanlan.zhihu.com/p/26855422</a></li>
+<li>金融云特性 <a href="http://zhuanlan.51cto.com/art/201612/525719.htm">https://help.aliyun.com/document_detail/29851.html</a></li>
+<li>云上场景：众安保险，两地三中心容灾部署实践 <a href="https://segmentfault.com/a/1190000004634172">https://yq.aliyun.com/articles/6633</a></li>
+</ul>
+<h1 id=36-关于-mysql-高可用>36. 关于 MySQL 高可用</h1>
+<p>Date: 2017-06-06</p>
+<h2 id=status-35>Status</h2>
+<p>Proposed</p>
+<h2 id=context-35>Context</h2>
+<ol>
+<li>数据库版本 5.1，太旧，性能，安全，主从复制都存在问题；</li>
+<li>数据库部署在 ECS 上，但磁盘使用的是普通云盘，IOPS 已到阈值（优先级最高）；</li>
+<li>数据库一主两从，但无高可用；</li>
+<li>业务端使用 IP 连接主数据库。</li>
+</ol>
+<h2 id=decision-35>Decision</h2>
+<ol>
+<li>提交 Aliyun 工单，尝试是否能申请下 5.1 版本的 MySQL，迁移数据至 RDS，解决 2，3，4 问题（沟通后，5.1 版本已不再提供，PASS）；</li>
+<li>将部分数据库迁移出，缓解当前 MySQL 服务器压力，维护多个数据库实例（并未解决实际问题，PASS，当前压力最终确认是慢查询原因）；</li>
+<li>ECS 上自建 HA，并启用新的实例磁盘为 SSD，切换新实例为 Master，停掉旧实例（根本问题未解决，技术债一直存在，自行维护仍然存在风险点）；</li>
+<li>调研 5.5 和 5.1 的差异，直接迁移自建数据库至 Aliyun RDS MySQL 5.5。</li>
+</ol>
+<p>鉴于查看文档后， 5.1 到 5.5 的差异性影响不大，Aliyun 官方也支持直接 5.1 到 5.5 的迁移，所以计划直接迁移至 RDS 的 5.5 版本。</p>
+<p>为了杜绝风险：</p>
+<ol>
+<li>按业务分数据库分别迁移；</li>
+<li>所有迁移先走测试数据库，由 QA 做完整的测试。</li>
+</ol>
+<p>ECS self built MySQL 5.1 to RDS 5.5 with DTS 迁移流程：</p>
+<ol>
+<li>在 RDS 中创建原 MySQL 数据库对应的账号(各个项目账号独立)；</li>
+<li>更新白名单：添加项目所部署的服务器；</li>
+<li>明确数据规模，对同步时间做个预期；</li>
+<li>同步（全量 or 增量），明确无延迟状态；</li>
+<li>更新数据库连接配置文件；</li>
+<li>明确无延迟状态，停服；</li>
+<li>确定数据量一致（由预先写好的脚本判断）(1min)；</li>
+<li>关闭迁移服务(10s)；</li>
+<li>重启服务器（10s）。</li>
+</ol>
+<p>6 至 9 步决定我们的停服时间。</p>
+<p>鉴于我们使用从库作为迁移的数据源，需更新如下配置：</p>
+<ul>
+<li>log-slave-updates=1</li>
+<li>binlog-format=row</li>
+</ul>
+<h2 id=consequences-35>Consequences</h2>
+<p>同步过程中出现如下问题，请周知：</p>
+<ol>
+<li>判断脚本出问题，未准备好脚本命令；</li>
+<li>终端出问题，更改命令麻烦；</li>
+<li>配置信息直接在生产环境更改，应走 github 提交；</li>
+<li>停服那步影响其他业务；</li>
+<li>从库使用者是否受影响，如数据组。</li>
+</ol>
+<p>Refs:</p>
+<ul>
+<li>MySQL upgrade from MySQL 5.1 to MySQL 5.5 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://www.ineedwebhosting.co.uk/blog/mysql-upgrade-from-mysql-5-1-to-mysql-5-5/</a></li>
+<li>Mysql时间字段格式如何选择，TIMESTAMP，DATETIME，INT？<a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://segmentfault.com/q/1010000000121702</a></li>
+<li>Changes Affecting Upgrades to MySQL 5.5 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://dev.mysql.com/doc/refman/5.5/en/upgrading-from-previous-series.html</a></li>
+<li>Aliyun RDS 访问控制 <a href="https://github.com/npryce/adr-tools">https://help.aliyun.com/document_detail/53617.html</a></li>
+<li>Mysql log_slave_updates 参数 <a href="https://github.com/agis-/git-style-guide">http://www.cnblogs.com/zejin2008/p/4656251.html</a></li>
+<li>Mysql数据库主从心得整理 <a href="http://zhuanlan.51cto.com/art/201612/525719.htm">http://blog.sae.sina.com.cn/archives/4666</a></li>
+<li>即使删了全库，保证半小时恢复: <a href="https://segmentfault.com/a/1190000004634172">http://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959694&amp;idx=1&amp;sn=4ac53b797fca64229901373e793f860a</a></li>
+</ul>
+<h1 id=37-通过代理解决白名单问题>37. 通过代理解决白名单问题</h1>
+<p>Date: 2017-06-07</p>
+<h2 id=status-36>Status</h2>
+<p>Accepted</p>
+<h2 id=context-36>Context</h2>
+<ol>
+<li>我们的支付及财务业务，需要向第三方金融机构发起请求，第三方机构出于安全性考虑，需要将我们的服务器 IP 地址进行报备；</li>
+<li>第三方机构较多，针对服务器扩容，更换，报备一次比较麻烦；</li>
+<li>第三方机构审核时间不定，1 天到多天不定，关键时刻影响业务。</li>
+</ol>
+<h2 id=decision-36>Decision</h2>
+<p>正向代理是一个位于客户端和目标服务器之间的代理服务器(中间服务器)。为了从原始服务器取得内容，客户端向代理服务器发送一个请求，并且指定目标服务器，之后代理向目标服务器转交并且将获得的内容返回给客户端。正向代理的情况下客户端必须要进行一些特别的设置才能使用。</p>
+<p>常见场景：</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<p>反向代理正好相反。对于客户端来说，反向代理就好像目标服务器。并且客户端不需要进行任何设置。客户端向反向代理发送请求，接着反向代理判断请求走向何处，并将请求转交给客户端，使得这些内容就好似他自己一样，一次客户端并不会感知到反向代理后面的服务，也因此不需要客户端做任何设置，只需要把反向代理服务器当成真正的服务器就好了。</p>
+<p>常见场景：</p>
+<p><img src="files/branches.png" alt=""></p>
+<p>方案：</p>
+<ol>
+<li>使用正向代理；
+<ul>
+<li>这个场景最容易想到的方案，使用起来直观，易懂；</li>
+<li>需要每个客户端进行配置，或是在应用中对单个请求做代理配置；</li>
+<li>需要维护一个高可用的代理服务，并备案此代理服务器。</li>
+</ul></li>
+<li>使用反向代理。
+<ul>
+<li>在我们的服务器上做对方服务的反向代理（听起来有点绕，不直观）</li>
+<li>维护简单，就像是我们用 nginx/slb 为对方做了个负载均衡，但配置稍有不同；</li>
+</ul></li>
+</ol>
+<pre><code class="language-json">server {
+
+     server_name {{ proxy_info.server_name }};
+     listen {{ proxy_info.ssl_listen }};
+
+     location / {
+         proxy_pass_header Server;
+         proxy_pass {{ proxy_info.proxy_url }};
+         proxy_redirect off;
+         proxy_set_header X-Real-IP $remote_addr;
+         proxy_set_header X-Scheme $scheme;
+         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     }
+}
+</code></pre>
+<ul>
+<li>使用简单，使用方配置本机 hosts 即可，为对方域名和代理 IP 映射。</li>
+</ul>
+<ol start="3">
+<li>iptables
+<ul>
+<li>类似局域网共享上网；</li>
+<li>对 iptables 配置有要求；</li>
+<li>目标域名对应的 ip 地址改变，需要更新配置。</li>
+</ul></li>
+</ol>
+<p>最终我们通过 aliyun slb 的4层负载接两台部署了 ss5 的机器提供高可用的代理服务</p>
+<ul>
+<li>4层（TCP协议）服务中，当前不支持添加进后端云服务器池的ECS既作为Real Server，又作为客户端向所在的负载均衡实例发送请求。</li>
+<li>ss5 启动于内网地址即可</li>
+<li>ss5 配置需关注 AUTHENTICATION 和 AUTHORIZATION</li>
+</ul>
+<h2 id=consequences-36>Consequences</h2>
+<p>Refs:</p>
+<ol>
+<li>云服务器 ECS Linux 系统通过 Squid 配置实现代理上网 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/knowledge_detail/41342.html</a></li>
+<li>正向代理与反向代理的区别 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://www.jianshu.com/p/208c02c9dd1d</a></li>
+<li>设置 iptables 使用linux做代理服务器 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://www.l68.net/493.html</a></li>
+<li>SS5 <a href="https://github.com/npryce/adr-tools">http://ss5.sourceforge.net/project.htm</a></li>
+</ol>
+<h1 id=38-数据脱敏>38. 数据脱敏</h1>
+<p>Date: 2017-06-13</p>
+<h2 id=status-37>Status</h2>
+<p>Accepted</p>
+<h2 id=context-37>Context</h2>
+<ol>
+<li>数据目前交由服务后台或前端进行敏感信息处理，原始数据存在多种风险（外部脱裤，内部人员非必要性的查看等）；</li>
+<li>各个 Team 数据加密策略不一致(有 MD5, AES etc)；</li>
+<li>数据掩码方式也不统一。</li>
+</ol>
+<h2 id=decision-37>Decision</h2>
+<p>使用四个策略的结合：</p>
+<ol>
+<li>掩码 - 业务系统需要查看部分内容，已核对信息，日志中为了便于定位；</li>
+<li>替换 - 字段实际不被使用，但保留字段，并将数据替换为空内容；</li>
+<li>可逆加密 - AES(ECB/PKCS5Padding - 128)</li>
+<li>不可逆加密 - SHA1</li>
+</ol>
+<p>策略的使用需考虑，使用场景（生产、测试等环境），成本（对人员、服务器的需求），是否易用（影响开发效率），维度（目前就分两种：机密和公开）</p>
+<p>掩码规则：</p>
+<ul>
+<li>姓名 - <code>*斌</code> - 保留最后一个字，其余部分统一为一个星号</li>
+<li>电话 - <code>131****0039</code> - 中间4~7位每个字符替换为一个星号</li>
+<li>身份证号 - <code>**************1234</code> - 保留后四位，其余部分每个字符替换为一个星号</li>
+<li>银行卡号 - <code>3111111******1234</code> - 保留前六、后四位，其余部分每个字符替换为一个星号</li>
+<li>地址 - ``</li>
+<li>邮箱 - ``</li>
+<li>密码 - ``</li>
+<li>交易金额 - ``</li>
+<li>充值码 - ``</li>
+</ul>
+<p>两个原则：</p>
+<ol>
+<li>remain meaningful for application logic(尽可能的为脱敏后的应用，保留脱敏前的有意义信息)</li>
+<li>sufficiently treated to avoid reverse engineer(最大程度上防止黑客进行破解)</li>
+</ol>
+<h2 id=consequences-37>Consequences</h2>
+<p>Refs:</p>
+<ul>
+<li><a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">动态数据脱敏最佳实践.pdf</a></li>
+<li>美团数据仓库-数据脱敏 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://tech.meituan.com/data-mask.html</a></li>
+<li>大数据与数据脱敏 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://zhuanlan.zhihu.com/p/20824603</a></li>
+<li>加解密详解 <a href="https://github.com/npryce/adr-tools">http://www.jianshu.com/p/b3be35c1d424</a></li>
+<li>大数据隐私保护技术之脱敏技术探究 <a href="https://github.com/agis-/git-style-guide">http://www.freebuf.com/articles/database/120040.html</a></li>
+</ul>
+<h1 id=39-秘钥管理>39. 秘钥管理</h1>
+<p>Date: 2017-06-14</p>
+<h2 id=status-38>Status</h2>
+<p>Accepted</p>
+<h2 id=context-38>Context</h2>
+<ol>
+<li>目前有相当多的账户、密码等信息存储在项目配置文件中；</li>
+<li>部分项目将敏感信息和项目分离，但所部署的服务器还是能被所有人登录查看；</li>
+<li>将服务器登录权限限制在运维手中，需要运维人员维护所有敏感信息的存储与管理，数量线性增长，尤其是支付组涉及的敏感信息更多，每一个新项目都需要运维人员的参与和维护。</li>
+</ol>
+<h2 id=decision-38>Decision</h2>
+<ol>
+<li>将服务器登录权限限制在个别人的手中；</li>
+<li>使用密码管理服务，确保运维人员只需维护一个秘钥；</li>
+<li>使用 Aliyun KMS 而不是自己搭建，节约运维成本。</li>
+</ol>
+<p>直接使用KMS加密、解密</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<p>结合我们的需求，我们选用这种方式，使用方式如下</p>
+<pre><code class="language-python">import json
+from aliyunsdkcore.client import AcsClient
+from aliyunsdkkms.request.v20160120 import EncryptRequest, DecryptRequest
+
+OLD = 'password'
+NEW = 'M2U5YzZlNGEtZTczZS00NmM4LWE0YmQtZjI3ODI0MmU4YWJjcEVDZW5SMEtWYjJsdWovdU5ibFNhSk5KS0RqbE9ENTRBQUFBQUFBQUFBQXJOd2dGc2l4S1JpV0tPRUgvbkwvSXVHYU5heCt5eHlFPQ=='
+
+client = AcsClient('id', 'secret', 'cn-beijing')
+
+
+def en():
+    request = EncryptRequest.EncryptRequest()
+    request.set_KeyId('e6116a43-9926-4a66-a781-55fce623c2cb')
+    request.set_Plaintext(OLD)
+    response = client.do_action_with_exception(request)
+    print json.loads(response)['CiphertextBlob']
+
+
+def de():
+    request = DecryptRequest.DecryptRequest()
+    request.set_CiphertextBlob(NEW)
+    response = client.do_action_with_exception(request)
+    print json.loads(response)['Plaintext'] == OLD
+
+
+if __name__ == '__main__':
+    de()
+</code></pre>
+<p>使用信封加密在本地加密、解密</p>
+<p><img src="files/branches.png" alt=""></p>
+<p><img src="files/bastion.png" alt=""></p>
+<h2 id=consequences-38>Consequences</h2>
+<ol>
+<li>直接使用KMS加密、解密会影响启动速度；</li>
+<li>一个明文多次加密，产生的密文不同，但所有密文都可以解密为明文。</li>
+</ol>
+<p>Refs:</p>
+<ul>
+<li>使用场景 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/document_detail/28937.html</a></li>
+<li>什么是信封加密？<a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://help.aliyun.com/knowledge_detail/42339.html</a></li>
+<li>Python SDK使用说明 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://help.aliyun.com/document_detail/53090.html</a></li>
+<li>KMS SDK source: <a href="https://github.com/npryce/adr-tools">https://github.com/aliyun/aliyun-openapi-python-sdk/tree/master/aliyun-python-sdk-kms/aliyunsdkkms/request/v20160120</a></li>
+<li>结合KMS实现本地文件加解密 <a href="https://github.com/agis-/git-style-guide">https://help.aliyun.com/video_detail/54134.html</a></li>
+<li>JAVA SDK样例代码 <a href="http://zhuanlan.51cto.com/art/201612/525719.htm">https://help.aliyun.com/document_detail/43347.html</a></li>
+</ul>
+<h1 id=40-agile---daily-standup-meeting>40. Agile - Daily standup meeting</h1>
+<p>Date: 2017-06-16</p>
+<h2 id=status-39>Status</h2>
+<p>Accepted</p>
+<h2 id=context-39>Context</h2>
+<ol>
+<li>Team <code>devops</code> set up recently, we need some change to improve the performance;</li>
+<li>No communication in the team, always person to person;</li>
+<li>Tasks not organized well which spread among different projects;</li>
+<li>Some teams require daily reports for their management, but lose the communication between team members.</li>
+</ol>
+<h2 id=decision-39>Decision</h2>
+<p>We're going to have 10 minutes daily standup meetings with each team so that We're on the same page about what everyone in the team is working on and we can strategize on how to approach the work items on the board for the day to come.</p>
+<p>Effective standups are all about communication and commitment, not about status updates. So before every scrum take 5 minutes to actually think and note down what you were planning to accomplish yesterday, did you actually accomplish what you've committed to, if not why?</p>
+<p>Take some time to plan your day and decide what you're going to accomplish today, commit to it and state it to the team (not the management), so the team members will keep each other accountable for the commitments they make to make the whole team improve together and make sure to remove impediments that prevent team members to accomplish what they plan.</p>
+<p>Scrum master should pay more attention to the status of each card, encourage team members to deploy in time.</p>
+<p>We change scrum master every two week to make sure all team members understand the details as an owner.</p>
+<h3 id=keynotes-39>Keynotes</h3>
+<ul>
+<li>Safe time - make sure everyone free that time;</li>
+<li>Everyone should standup;</li>
+<li>Focus - Every should watching the board;</li>
+<li>Less than 10 minutes for the whole meeting;</li>
+<li>One minute per person, no more than two minutes;</li>
+<li>Remove impediments;</li>
+<li>What done yesterday;</li>
+<li>What will do today.</li>
+</ul>
+<h2 id=consequences-39>Consequences</h2>
+<p>Everyone in the team will know each other better.</p>
+<p>Refs:</p>
+<ul>
+<li>Episode 66 – Standups <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">http://www.thisagilelife.com/66/</a></li>
+</ul>
+<h1 id=41-mysql-迁移-rds-总结>41. MySQL 迁移 RDS 总结</h1>
+<p>Date: 2017-07-17</p>
+<h2 id=status-40>Status</h2>
+<p>Accepted</p>
+<h2 id=context-40>Context</h2>
+<ol>
+<li>当前数据库为 Master, Slave 模式；</li>
+<li>Master 实例上创建了 16 个数据库，全部需要迁移；</li>
+<li>部分业务存在跨库查询；</li>
+<li>有一个数据库被近 10 个业务进行查询等数据库操作；</li>
+<li>当前数据库为 MySQL 5.1，存在主从同步性能问题；</li>
+<li>RDS 仅支持 MySQL 5.5, 5.6, 5.7 版本；</li>
+</ol>
+<h2 id=decision-40>Decision</h2>
+<ol>
+<li>调研 MySQL 5.1 与 5.5 之间的差异，并周知各个项目组成员；</li>
+<li>将数据库与业务之间的引用关系用二维表列举出来；</li>
+<li>选出被业务单独或少量引用的数据库，先通过将对应测试数据库进行迁移，并交由测试人员进行测试；</li>
+<li>测试完成后对正式环境直接进行迁移；</li>
+<li>针对被10多个业务引用的数据库迁移，我们不止要做测试环境的迁移，还要做线上环境的测试
+<ol>
+<li>为了保证线上测试可回滚，我们需限定只有测试人员进行操作；
+<ol>
+<li>限制我们的服务器安全组，外网只能通过办公网络访问；</li>
+<li>限制我们的入口 slb，只能通过办公网络访问。</li>
+</ol></li>
+<li>我们的服务之间存在调用关系，部分业务走的外网域名；
+<ol>
+<li>准备我们所有外网业务的域名及其内网 ip 映射，通过 ansible 分发并追加其至所有的线上机器 hosts</li>
+</ol></li>
+<li>所有业务准备好分支 feature/db-config-update-to-rds，此分支与 master 分支差异只有数据库配置改动，冻结 master 新代码合入，如此确保随时可上线，随时可回滚；</li>
+<li>创建数据库迁移任务： 结构迁移+整体数据+增量数据迁移；</li>
+<li>停止并备份任务计划调度(/etc/crontab，cron.d，/var/spool/cron)；</li>
+<li>停止所有业务服务；</li>
+<li>停止所有 nginx；</li>
+<li>脚本验证所有机器上的服务和任务计划，确保无运行中相关程序；</li>
+<li>验证无数据库连接；</li>
+<li>锁定原数据库写操作(验证确认确实不可写)</li>
+<li>网络隔离；</li>
+<li>检查源数据库与目的数据库 数据一致性；</li>
+<li>停止数据迁移任务；</li>
+<li>停止主db数据库服务；</li>
+<li>启动RDS到从库的数据同步任务；</li>
+<li>重启所有服务；</li>
+<li>重启 nginx；</li>
+<li>测试团队开始全面验证；</li>
+<li>网络隔离解除；</li>
+<li>恢复任务计划；</li>
+<li>重新执行停服期间计划任务。</li>
+</ol></li>
+</ol>
+<h2 id=consequences-40>Consequences</h2>
+<ol>
+<li>RDS 磁盘预留过低，导致同步中途停止，无法进行写操作；</li>
+<li>一些业务需要回调，测试不完整；</li>
+<li>如果有完整的预发布环境，可保证服务零停机时间；</li>
+</ol>
+<h1 id=42-agile---retrospective-meeting>42. Agile - Retrospective meeting</h1>
+<p>Date: 2017-07-31</p>
+<h2 id=status-41>Status</h2>
+<p>Accepted</p>
+<h2 id=context-41>Context</h2>
+<ol>
+<li>Team members know little about last iteration and don’t know which part is good, bad or need improve;</li>
+<li>New team members know nothing about the team’s history and don’t know the best practices for this team;</li>
+<li>We need learn from what we done.</li>
+</ol>
+<h2 id=decision-41>Decision</h2>
+<h3 id=description-41>Description</h3>
+<p>After each iteration we'll spend one hour discussing relevant topics we add during the iteration in our retrospective board.</p>
+<p>The idea is to spend quality time and get the most value out of this meeting, therefore each team member is encouraged to bring discussion topics as well as suggestion for improvement.</p>
+<h3 id=preparation-41>Preparation</h3>
+<ul>
+<li>The SM marks the current iteration as finished, moving all the unfinished tasks to the new iteration;</li>
+<li>Check the dashboard and analyze our metrics for the last finished iteration. Find out all problematic tasks with <code>low Flow Efficiency</code> or <code>low Quality Score</code>;</li>
+<li>Safety check;</li>
+<li>The SM remind team members in team channel at least 10 minutes before starting the meeting;
+<ul>
+<li>Everyone is available;</li>
+<li>Everyone is encouraged to prepared the <code>Good</code>,<code>Bad</code> and <code>Need improve</code> cards;
+<ul>
+<li>Something that went well or wrong;</li>
+<li>Any type of improvement suggestion you might think of. Regarding the process, the code base, the collaboration etc.</li>
+</ul></li>
+<li>Add description/comments to existing ones;</li>
+<li>Votes(optional);</li>
+</ul></li>
+</ul>
+<h3 id=process-41>Process</h3>
+<ul>
+<li>Discuss problematic tasks that have bad metrics, in order to understand how we can improve;
+<ul>
+<li>Identify the root cause of the problem;</li>
+<li>Come up with ideas about how we could have done it better, so that we can learn from our mistakes;</li>
+</ul></li>
+<li>The SM prioritizes the topics, based on team member's votes (optional);</li>
+<li>Follow up on the previous iteration's discussion (optional);</li>
+<li>Follow up on existing action items;</li>
+<li>During the meeting the SM records the outcomes and action items in our retrospective board;</li>
+<li>At the end of the meeting we should save 10 min for a brief overview of the past iteration(recently completed features, features in progress, planed features, velocity graphs and user story vs bugs graphs)</li>
+</ul>
+<h3 id=notice-41>Notice</h3>
+<ul>
+<li>Starts on time and all the team members must participate;</li>
+<li>Discuss the accumulated cards in our Backlog, 5 minutes/card;</li>
+<li>Each topic is time-boxed. However after the 5min timer expires, if everyone agrees we need further discussion, we restart the timer one more time.</li>
+<li>Anybody can stop the current discussion if it's clear we're going nowhere;</li>
+<li>We keep the retrospective meetings within 1 hour.</li>
+</ul>
+<h2 id=consequences-41>Consequences</h2>
+<p>Everyone will learn from history, and not make same error twice.</p>
+<h1 id=43-支持过滤的消息队列>43. 支持过滤的消息队列</h1>
+<p>Date: 2017-08-18</p>
+<h2 id=status-42>Status</h2>
+<p>Accepted</p>
+<h2 id=context-42>Context</h2>
+<p>最近需要优化这样的场景，我们的合同状态有多种（待完善，待审核，审核通过，审核不通过等），每种状态的改变来自多个地方（中介后台，运营后台，风控系统等），每种状态的处理也来自多个地方（SAAS系统，中介后台，运营系统等），且处理者需要处理的状态不相同；</p>
+<p>当前实现方案是：</p>
+<ol>
+<li>定时任务，各个系统定时处理状态为 X 的合同(处理不及时)；</li>
+<li>使用回调，状态更新时回调至处理者处(扩展不方便)；</li>
+</ol>
+<h2 id=decision-42>Decision</h2>
+<ol>
+<li><p>消息服务(MNS) 主题模型</p>
+<p><img src="files/password-manage.png" alt=""></p>
+<ul>
+<li>可订阅，并且可以通过 Tag 进行消息过滤；</li>
+<li>只支持推送模式，每个消费者需要创建回调接口；</li>
+<li>只支持外网地址推送，对内部服务来说，网络耗时太高。</li>
+</ul></li>
+<li><p>消息服务(MNS) 队列模型</p>
+<p><img src="files/branches.png" alt=""></p>
+<ul>
+<li>根据消费者创建队列，几个消费者就创建几个队列；</li>
+<li>生产者根据消费者所需向其队列发送消息，即生产者需要发送相同消息至多个队列；</li>
+<li>每增加一个消费者，都需更新所有对应生产者的代码，维护性太低。</li>
+</ul></li>
+<li><p>消息服务(MNS) 主题+队列模型</p>
+<p><img src="files/bastion.png" alt=""></p>
+<ul>
+<li>根据消费者创建队列，几个消费者就创建几个队列；</li>
+<li>生产着只需向主题队列发送消息，&lt;del&gt;消费者队列订阅所有主题队列的消息&lt;/del&gt;；</li>
+<li>&lt;del&gt;消费者需要接收所有消息，并在业务逻辑中过滤出自己需要处理的消息&lt;/del&gt;；</li>
+<li>消费者队列可以按 tag 进行过滤；</li>
+<li>消费者完整消费自己的队列即可。</li>
+</ul></li>
+<li><p>消息队列(ONS) MQ</p>
+<p><img src="files/message-filter.png" alt=""></p>
+<ul>
+<li>总共只需一个 topic 队列，各个消费者通过 Tag 进行过滤；</li>
+<li>完美支持我们的使用场景；</li>
+<li>不提供 Python SDK。</li>
+</ul></li>
+</ol>
+<h2 id=consequences-42>Consequences</h2>
+<ul>
+<li>方案 1，2 不用考虑；</li>
+<li>使用方案 3，所有消费者需要处理所有的消息；</li>
+<li>使用方案 4，需先实现其 SDK。</li>
+</ul>
+<p><img src="files/ons-mq-from-ali-workorder.png" alt=""></p>
+<p>官方不建议用方案 4，我们尝试调试也不顺畅，所以决定使用方案 3。</p>
+<p>Refs:</p>
+<ul>
+<li>消息服务 <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://help.aliyun.com/document_detail/27414.html</a></li>
+<li>广播拉取消息模型 <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">https://help.aliyun.com/document_detail/34483.html</a></li>
+</ul>
+<h1 id=44-泛域名解析>44. 泛域名解析</h1>
+<p>Date: 2017-08-25</p>
+<h2 id=status-43>Status</h2>
+<p>Accepted</p>
+<h2 id=context-43>Context</h2>
+<p>随着会找房平台第三方公寓的入驻，我们需要手动添加大量的公寓二级域名于 DNS 中，如，ayk.huizhaofang.com, jingyu.huizhaofang.com 等。</p>
+<ol>
+<li>整个流程依赖域名管理者；</li>
+<li>DNS 管理控制台维护这些记录很麻烦，并将原有专用域名淹没在大量记录中；</li>
+<li>网站做了前后端分离，起始页永远返回状态为 200 的页面。</li>
+</ol>
+<h2 id=decision-43>Decision</h2>
+<ol>
+<li>DNS 记录添加泛解析；</li>
+<li>Nginx server name 添加泛解析；</li>
+<li>不受约束的泛解析，会使所有子域名返回状态为 200 的页面，导致搜索引擎降权；</li>
+<li>使用 <code>include /path/to/server_names;</code> 可以通过独立的文件解决此问题，并可对新添加的子域名做 code review；</li>
+<li>上面的方案需要每次更改后做 nginx reload；有个想法是通过 lua 从 redis 中获取支持的子域名，进行判断并过滤；</li>
+</ol>
+<h2 id=consequences-43>Consequences</h2>
+<ol>
+<li><code>include</code> 方案：当前最简单，且有审核机制，但运维参与较重，需经常重启 nginx；</li>
+<li>lua + redis 方案：
+<ul>
+<li>每次请求需查询 redis；</li>
+<li>需做一个对应的管理系统进行子域名的管理。</li>
+</ul></li>
+</ol>
+<p>Refs:</p>
+<ul>
+<li>How can I set up a catch-all (wildcard) subdomain? <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">https://www.namecheap.com/support/knowledgebase/article.aspx/597/2237/how-can-i-set-up-a-catchall-wildcard-subdomain</a></li>
+<li>Server names <a href="http://reasonofone.blogspot.hk/2014/08/architecture-decisions-what-are-they.html">http://nginx.org/en/docs/http/server_names.html</a></li>
+<li>谷歌重复内容处理 <a href="https://www.utdallas.edu/~chung/SA/zz-Impreso-architecture_decisions-tyree-05.pdf">https://support.google.com/webmasters/answer/66359</a></li>
+<li>百度网址降权 <a href="https://github.com/npryce/adr-tools">https://baike.baidu.com/item/网站降权</a></li>
+<li>nginx泛域名解析，实现多个二级域名 <a href="https://github.com/agis-/git-style-guide">https://yq.aliyun.com/articles/44682</a></li>
+<li>SEO Friendly Wildcard DNS Set Up for Apache, IIS, Nginx <a href="http://zhuanlan.51cto.com/art/201612/525719.htm">http://www.stepforth.com/resources/web-marketing-knowledgebase/set-seo-friendly-wildcard-dns/</a></li>
+<li>Nginx : thousands of server_name <a href="https://segmentfault.com/a/1190000004634172">https://serverfault.com/questions/405355/nginx-thousands-of-server-name</a></li>
+</ul>
+
+  </div>
+</div>
+</body>
+</html>
