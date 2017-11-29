@@ -1,36 +1,12 @@
-let moment = require('moment')
 let fs = require('fs')
 let walkSync = require('walk-sync')
 
 import Utils from './utils'
-import Status from './status'
-import {JsonGenerateBuilder} from './base/JsonGenerateBuilder'
 import MdHelper from './helpers/MdHelper'
 import CSVBuilder from './output/CSVBuilder'
 import JSONBuilder from './output/JSONBuilder'
 
 let path = Utils.getSavePath()
-
-function buildJsonBodyFun (index, decision, file, bodyString): string[] {
-  let lastStatus = Status.getLatestStatus(path + file.relativePath)
-  let body = {
-    index: index,
-    decision: decision,
-    modifiedDate: moment(file.mtime).format('YYYY-MM-DD'),
-    lastStatus: lastStatus
-  }
-  return bodyString.push(body)
-}
-
-function outputJson () {
-  let path = Utils.getSavePath()
-  let graphGenerate = new JsonGenerateBuilder(path)
-  let results = graphGenerate
-    .setBody(buildJsonBodyFun)
-    .build()
-
-  return JSON.stringify(results)
-}
 
 function outputMarkdown () {
   let files = walkSync.entries(path, {globs: ['**/*.md']})
