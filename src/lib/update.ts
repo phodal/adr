@@ -7,14 +7,18 @@ import {generate} from './generate'
 
 let savePath = Utils.getSavePath()
 
+function generateNewFileName (newIndex: number, title: string | any) {
+  let indexString = Utils.createIndexByNumber(newIndex)
+  let decisionInfile = Utils.generateFileName(title)
+  return indexString + '-' + decisionInfile + '.md'
+}
+
 function updateNameByTitle (): void {
-  let files = walkSync.entries(savePath, {globs: ['**/*.md']})
+  let files = walkSync.entries(savePath, {globs: ['**/*.md'], ignore: ['README.md']})
+
   for (let i = 0; i < files.length; i++) {
     let file = files[i]
     let fileName = file.relativePath
-    if (fileName === 'README.md') {
-      break
-    }
     let fileData = fs.readFileSync(savePath + fileName, 'utf8')
     let firstLine = fileData.split('\n')[0]
     let title = firstLine.replace(/#\s\d+\.\s/g, '')
@@ -23,9 +27,8 @@ function updateNameByTitle (): void {
       break
     }
 
-    let indexString = Utils.createIndexByNumber(parseInt(indexRegex[1], 10))
-    let decisionInfile = Utils.generateFileName(title)
-    let newFileName = indexString + '-' + decisionInfile + '.md'
+    let newIndex = parseInt(indexRegex[1], 10)
+    let newFileName = generateNewFileName(newIndex, title)
     if (fileName !== newFileName) {
       console.log(fileName + ' -> ' + newFileName)
       fs.renameSync(savePath + fileName, savePath + newFileName)

@@ -6,6 +6,8 @@ import { test } from 'ava'
 
 import ADR from 'adr'
 
+let Utils = ADR.Utils
+
 let mdTemplate = `# 1. 更友好的 CLI
 
 日期: 2017-11-23
@@ -18,19 +20,13 @@ let mdTemplate = `# 1. 更友好的 CLI
 `
 
 test('ADR: init in chinese', t => {
+  let ADRGetSavePathSpy = sinon.stub(Utils, 'getSavePath').returns('./')
   let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
   let consoleSpy = sinon.stub(console, 'log')
   let renameSpy = sinon.stub(fs, 'renameSync')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-DAF编写完整的单元测试.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
-      mode: 33188,
-      size: 246,
-      mtime: 1511435254653
-    },
-    {
-      relativePath: 'README.md',
       basePath: '/Users/fdhuang/learing/adr/doc/adr/',
       mode: 33188,
       size: 246,
@@ -48,6 +44,7 @@ test('ADR: init in chinese', t => {
   fsReadSpy
     .onCall(0).returns(mdTemplate)
     .onCall(2).returns(mdTemplate)
+    .onCall(3).returns('{}')
     .onCall(1).returns(JSON.stringify({
       path: 'some'
     }))
@@ -62,4 +59,5 @@ test('ADR: init in chinese', t => {
   entriesSpy.restore()
   consoleSpy.restore()
   renameSpy.restore()
+  ADRGetSavePathSpy.restore()
 })
