@@ -81,25 +81,20 @@ export function output (type: string): string {
   let output
   let workDir = Utils.getWorkDir()
 
-  switch (type.toLowerCase()) {
-    case 'csv':
-      output = outputCsv()
-      fs.writeFileSync(workDir + '/export.csv', output, 'utf-8')
-      break
-    case 'json':
-      output = outputJson()
-      fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
-      break
-    case 'markdown':
-      output = outputMarkdown()
-      break
-    case 'html':
-      output = outputHtml()
-      fs.writeFileSync(workDir + '/export.html', output, 'utf-8')
-      break
-    default:
-      let message = '\n error: type ' + type + ' current not supported'
-      console.log(message)
+  if (type.toLowerCase() === 'csv') {
+    output = outputCsv()
+    fs.writeFileSync(workDir + '/export.csv', output, 'utf-8')
+  } else if (type.toLowerCase() === 'json') {
+    output = outputJson()
+    fs.writeFileSync(workDir + '/export.json', output, 'utf-8')
+  } else if (type.toLowerCase() === 'markdown') {
+    output = outputMarkdown()
+  } else if (type.toLowerCase() === 'html') {
+    output = outputHtml()
+    fs.writeFileSync(workDir + '/export.html', output, 'utf-8')
+  } else {
+    let message = '\n error: type ' + type + ' current not supported'
+    console.log(message)
   }
 
   return output
