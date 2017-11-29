@@ -11,23 +11,36 @@ function getWorkDir () {
   return process.cwd()
 }
 
-function getSavePath (): string {
+function getConfig (defaultValue: string) {
   if (!fs.existsSync(getWorkDir() + '/.adr.json')) {
-    return getWorkDir() + '/doc/adr/'
+    return 'en'
   }
-
   let config = fs.readFileSync(getWorkDir() + '/.adr.json', 'utf8')
-
   try {
     let adrConfig = JSON.parse(config)
-    if (adrConfig.path) {
-      return getWorkDir() + '/' + adrConfig.path
-    }
-    return getWorkDir() + '/' + 'doc/adr/'
+    return adrConfig
   } catch (e) {
     console.error(e)
-    return ''
+    return defaultValue
   }
+}
+
+function getLanguage () {
+  let config = getConfig('en')
+  if (config && config.language) {
+    return config.language
+  }
+  console.log('no exist .adr.json file, a example: {"path":"doc/adr/","language":"en"}')
+  return 'en'
+}
+
+function getSavePath (): string {
+  let defaultPath = getWorkDir() + '/doc/adr/'
+  let config = getConfig(defaultPath)
+  if (config && config.path) {
+    return config.path
+  }
+  return defaultPath
 }
 
 function createIndexByNumber (num): string {
@@ -81,26 +94,6 @@ function generateFileName (originFileName) {
     .replace(/。/g, '')
     .replace(/ /g, '-')
     .replace(/\?/g, '-')
-}
-
-function getLanguage () {
-  if (!fs.existsSync(getWorkDir() + '/.adr.json')) {
-    console.log('no .adr.json, auto create ..')
-    init('en')
-    return 'en'
-  }
-  let config = fs.readFileSync(getWorkDir() + '/.adr.json', 'utf8')
-
-  try {
-    let adrConfig = JSON.parse(config)
-    if (adrConfig.language) {
-      return adrConfig.language
-    }
-    return 'en'
-  } catch (e) {
-    console.error(e)
-    return 'en'
-  }
 }
 
 function getNumberLength (fileName: string): number {
