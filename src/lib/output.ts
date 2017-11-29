@@ -7,6 +7,7 @@ import Status from './status'
 import {GenerateBuilder} from './base/GenerateBuilder'
 import {JsonGenerateBuilder} from './base/JsonGenerateBuilder'
 import MdHelper from './helpers/MdHelper'
+import CSVBuilder from './base/CSVBuilder'
 
 let path = Utils.getSavePath()
 function buildCsvBodyFun (index, decision, file, bodyString): string[] {
@@ -82,8 +83,9 @@ export function output (type: string): string {
   let workDir = Utils.getWorkDir()
 
   if (type.toLowerCase() === 'csv') {
-    output = outputCsv()
-    fs.writeFileSync(workDir + '/export.csv', output, 'utf-8')
+    let csvOutput = new CSVBuilder(path, workDir)
+    output = csvOutput.buildContent()
+    csvOutput.output()
   } else if (type.toLowerCase() === 'json') {
     output = outputJson()
     fs.writeFileSync(workDir + '/export.json', output, 'utf-8')

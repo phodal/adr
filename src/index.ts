@@ -10,6 +10,7 @@ import {htmlRender} from './lib/helpers/htmlRender'
 import Status from './lib/status'
 import {GenerateBuilder} from './lib/base/GenerateBuilder'
 import MdHelper from './lib/helpers/MdHelper'
+import CSVBuilder from './lib/base/CSVBuilder'
 
 export default {
   create: create,
@@ -20,6 +21,7 @@ export default {
   init: init,
   logs: logs,
   output: output,
+  CsvOutput: CSVBuilder,
   htmlRender: htmlRender,
   MdHelper: MdHelper,
   GenerateClass: GenerateBuilder,
