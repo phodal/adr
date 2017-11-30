@@ -8,11 +8,6 @@ import { test } from 'ava'
 import ADR from 'adr'
 let Status = ADR.Status
 
-let adrOptions = JSON.stringify({
-  path: './',
-  language: 'zh-cn'
-})
-
 let mdTemplate = `
 # 10. 更友好的 CLI
 
