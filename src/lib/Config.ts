@@ -65,7 +65,8 @@ let Config = {
   getSavePath: getSavePath,
   getLanguage: getLanguage,
   getPrefix: getPrefix,
-  getDigits: getDigits
+  getDigits: getDigits,
+  getConfig: getConfig
 }
 
 export default Config
