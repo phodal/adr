@@ -4,8 +4,6 @@ import Config from './Config'
 let moment = require('moment')
 let walkSync = require('walk-sync')
 
-let DEFAULT_DIGITS = 4
-
 function getWorkDir () {
   return process.cwd()
 }
@@ -13,7 +11,7 @@ function getWorkDir () {
 function createIndexByNumber (num): string {
   let s = '00000000' + num
   // return Config.getPrefix() + s.substr(s.length - DEFAULT_DIGITS)
-  return s.substr(s.length - DEFAULT_DIGITS)
+  return s.substr(s.length - Config.getDigits())
 }
 
 function getMaxIndex (files: {relativePath: string}[]) {
@@ -24,7 +22,7 @@ function getMaxIndex (files: {relativePath: string}[]) {
       break
     }
 
-    let fileNumber = fileName.substring(0, DEFAULT_DIGITS)
+    let fileNumber = fileName.substring(0, Config.getDigits())
     let currentIndex = parseInt(fileNumber, 10)
     if (currentIndex > maxNumber) {
       maxNumber = currentIndex
@@ -79,8 +77,7 @@ function createDateString (): string {
   return moment().format('YYYY-MM-DD')
 }
 
-export default {
-  DEFAULT_DIGITS: DEFAULT_DIGITS,
+let Utils = {
   getNewIndexString: getNewIndexString,
   getLatestIndex: getLatestIndex,
   createIndexByNumber: createIndexByNumber,
@@ -91,3 +88,5 @@ export default {
   getNumberLength: getNumberLength,
   getIndexByString: getIndexByString
 }
+
+export default Utils
