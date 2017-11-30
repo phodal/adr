@@ -1,7 +1,9 @@
 let sinon = require('sinon')
 let fs = require('fs')
+
 import { test } from 'ava'
 import ADR from 'adr'
+let Utils = ADR.Utils
 
 test('ADR: init in chinese', t => {
   let cwdSpy = sinon.stub(process, 'cwd').returns('/test')
@@ -9,7 +11,7 @@ test('ADR: init in chinese', t => {
 
   ADR.init('chinese')
   t.deepEqual(fsWriteSpy.calledOnce, true)
-  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', JSON.stringify({ path: 'doc/adr/', language: 'zh-cn' })), true)
+  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', '{"language":"zh-cn","path":"doc/adr/","prefix":"","digits":4}'), true)
   cwdSpy.restore()
   fsWriteSpy.restore()
 })
@@ -20,7 +22,7 @@ test('ADR: init en', t => {
 
   ADR.init('en')
   t.deepEqual(fsWriteSpy.calledOnce, true)
-  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', JSON.stringify({ path: 'doc/adr/', language: 'en' })), true)
+  t.deepEqual(fsWriteSpy.calledWith('/test/.adr.json', '{"language":"en","path":"doc/adr/","prefix":"","digits":4}'), true)
   cwdSpy.restore()
   fsWriteSpy.restore()
 })
