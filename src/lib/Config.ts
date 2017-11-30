@@ -47,28 +47,25 @@ function getSavePath (): string {
   return defaultPath
 }
 
-function getPrefix (): string {
-  let defaultPath = ''
+function getConfig (key: string) {
+  let defaultValue = DEFAULT_CONFIG[key]
   let config
   if (cache.get('config')) {
     config = cache.get('config')
   }
-  if (config && config['prefix']) {
-    return config['prefix']
+  if (config && config[key]) {
+    return config[key]
   }
-  return defaultPath
+
+  return defaultValue
 }
 
-function getDigits (): number {
-  let defaultDigits = DEFAULT_CONFIG['digits']
-  let config
-  if (cache.get('config')) {
-    config = cache.get('config')
-  }
-  if (config && config['digits']) {
-    return config['digits']
-  }
-  return defaultDigits
+function getPrefix () {
+  return getConfig('prefix')
+}
+
+function getDigits () {
+  return getConfig('digits')
 }
 
 let Config = {
