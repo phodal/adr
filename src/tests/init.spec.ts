@@ -3,7 +3,6 @@ let fs = require('fs')
 
 import { test } from 'ava'
 import ADR from 'adr'
-let Utils = ADR.Utils
 
 test('ADR: init in chinese', t => {
   let cwdSpy = sinon.stub(process, 'cwd').returns('/test')
