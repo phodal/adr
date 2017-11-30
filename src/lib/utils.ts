@@ -15,18 +15,18 @@ function createIndexByNumber (num): string {
 
 function getMaxIndex (files: {relativePath: string}[]) {
   let maxNumber = 0
-  for (let i = 0; i < files.length; i++) {
-    let fileName = files[i].relativePath
+  files.forEach(function (file) {
+    let fileName = file.relativePath
     if (fileName === 'README.md') {
-      break
+      return
     }
 
-    let fileNumber = fileName.substring(0, Config.getDigits())
-    let currentIndex = parseInt(fileNumber, 10)
+    let indexNumber = fileName.substring(Config.getPrefix().length, Config.getDigits() + Config.getPrefix().length)
+    let currentIndex = parseInt(indexNumber, 10)
     if (currentIndex > maxNumber) {
       maxNumber = currentIndex
     }
-  }
+  })
 
   return maxNumber
 }
