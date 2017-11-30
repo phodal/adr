@@ -13,7 +13,7 @@ let DEFAULT_CONFIG = {
   digits: 4
 }
 
-function getConfig (defaultValue: string) {
+function getAllConfig (defaultValue: string) {
   if (!fs.existsSync(Utils.getWorkDir() + '/.adr.json')) {
     return defaultValue
   }
@@ -31,7 +31,7 @@ function getConfig (defaultValue: string) {
 
 function getLanguage () {
   let defaultLanguage = DEFAULT_CONFIG.language
-  let config = getConfig(defaultLanguage)
+  let config = getAllConfig(defaultLanguage)
   if (config && config['language']) {
     return config['language']
   }
@@ -40,7 +40,7 @@ function getLanguage () {
 
 function getSavePath (): string {
   let defaultPath = DEFAULT_CONFIG.path
-  let config = getConfig(defaultPath)
+  let config = getAllConfig(defaultPath)
   if (config && config['path']) {
     return config['path']
   }
@@ -72,7 +72,7 @@ function getDigits (): number {
 }
 
 let Config = {
-  getConfig: getConfig,
+  getAllConfig: getAllConfig,
   getSavePath: getSavePath,
   getLanguage: getLanguage,
   getPrefix: getPrefix,
