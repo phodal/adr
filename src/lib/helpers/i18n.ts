@@ -7,13 +7,27 @@ export function getI18n () {
       decision: 'Decision',
       modifiedDate: 'Last Modified Date',
       lastStatus: 'Last Status',
-      logSavePath: 'Save Path:'
+      logSavePath: 'Save Path:',
+      status: {
+        proposed: 'Proposed',
+        accepted: 'Accepted',
+        done: 'Done',
+        deprecated: 'Deprecated',
+        superseded: 'Superseded'
+      }
     },
     'zh-cn': {
       decision: '决策',
       modifiedDate: '上次修改时间',
       lastStatus: '最后状态',
-      logSavePath: '保存路径：'
+      logSavePath: '保存路径：',
+      status: {
+        proposed: '提议',
+        accepted: '通过',
+        done: '完成',
+        deprecated: '已弃用',
+        superseded: '已取代'
+      }
     }
   }
 
