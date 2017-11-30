@@ -1,3 +1,5 @@
+import {DEFAULT_CONFIG} from "tslint/lib/configuration";
+
 let fs = require('fs')
 let LRU = require('lru-cache')
 let cache = LRU({
@@ -5,6 +7,13 @@ let cache = LRU({
 })
 
 import Utils from './utils'
+
+let DEFAULT_CONFIG = {
+  language: 'en',
+  path: Utils.getWorkDir() + '/doc/adr/',
+  prefix: '',
+  digits: 4
+}
 
 function getConfig (defaultValue: string) {
   if (!fs.existsSync(Utils.getWorkDir() + '/.adr.json')) {
