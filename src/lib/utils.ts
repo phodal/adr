@@ -70,9 +70,8 @@ function getNumberLength (fileName: string): number {
 
 function getIndexByString (fileName: string): number {
   let numberLength = getNumberLength(fileName)
-  // let prefixLength = Config.getPrefix().length
-  // return parseInt(fileName.substring(0, numberLength + prefixLength), 10)
-  return parseInt(fileName.substring(0, numberLength), 10)
+  let prefixLength = Config.getPrefix().length
+  return parseInt(fileName.substring(prefixLength, numberLength + prefixLength), 10)
 }
 
 function createDateString (): string {
