@@ -59,6 +59,9 @@ function generateFileName (originFileName) {
     .replace(/。/g, '')
     .replace(/ /g, '-')
     .replace(/\?/g, '-')
+    .replace(/#/g, '')
+    .replace(/:/g, '')
+    .replace(/# /g, '')
 }
 
 function getNumberLength (fileName: string): number {

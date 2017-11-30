@@ -24,11 +24,17 @@ function updateNameByTitle (): void {
     let firstLine = fileData.split('\n')[0]
     let title = firstLine.replace(/#\s\d+\.\s/g, '')
     let indexRegex = /#\s(\d+)\.\s/.exec(firstLine)
-    if (!indexRegex || indexRegex.length < 1) {
-      break
+    let oldIndex
+    if (!indexRegex) {
+      oldIndex = Utils.getIndexByString(fileName)
+      if (!oldIndex) {
+        break
+      }
+    } else {
+      oldIndex = indexRegex[1]
     }
 
-    let newIndex = parseInt(indexRegex[1], 10)
+    let newIndex = parseInt(oldIndex, 10)
     let newFileName = generateNewFileName(newIndex, title)
     if (fileName !== newFileName) {
       console.log(fileName + ' -> ' + newFileName)
