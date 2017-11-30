@@ -31,19 +31,12 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
 
  - Supported Windows, GNU/Linux, Mac OS (Done)
  - **report for PM, BA**: html, csv, json (Done)
- - generate markdown toc
+ - generate markdown toc（see in [doc/adr](/doc/adr) ）
  - **i18n**: English, 中文 (Done)
  - status logs (Done)
  - status query (doing)
  - better list view (Done)
  - compatible adr-tools (Done)
-
-Screenshots
----
-
-![List Examples](./doc/list-example.png)
-
-![Toc Examples](./doc/toc-example.png)
 
 HTML Reporter Example
 ---
@@ -55,6 +48,13 @@ HTML Reporter Example
 [会分期 Example](https://phodal.github.io/adr/examples/export-2.html)
 
 [Arachne Framework Example](https://phodal.github.io/adr/examples/export-4.html)
+
+Screenshots
+---
+
+![List Examples](./doc/list-example.png) 
+
+![Reporter Examples](./doc/reporter-example.png)
 
 Install
 ---
