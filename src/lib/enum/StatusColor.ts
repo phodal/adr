@@ -1,11 +1,9 @@
-import { Status } from './Status'
-
-const StatusColor = new Map<Status, string>([
-  [Status.proposed, 'white'],
-  [Status.accepted, 'cyan'],
-  [Status.done, 'green'],
-  [Status.deprecated, 'red'],
-  [Status.superseded, 'yellow']
+const StatusColor = new Map<string, string>([
+  ['proposed', 'white'],
+  ['accepted', 'cyan'],
+  ['done', 'green'],
+  ['deprecated', 'red'],
+  ['superseded', 'yellow']
 ])
 
 export default StatusColor
