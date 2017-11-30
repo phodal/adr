@@ -1,25 +1,15 @@
 let fs = require('fs')
 let moment = require('moment')
 
-import { AbstractOutput } from './AbstractOutput'
 import Status from '../status'
 import Utils from '../utils'
 import Config from '../Config'
+import BasicOutput from './BasicOutput'
 import { GenerateBuilder } from '../base/GenerateBuilder'
 
 let savePath
 
-class CSVBuilder implements AbstractOutput {
-  result: any
-  path: any
-  workDir: any
-
-  constructor (path: string, workDir: string) {
-    this.workDir = workDir
-    this.path = path
-    savePath = this.path
-  }
-
+class CSVBuilder extends BasicOutput {
   buildFunc (index, decision, file, bodyString): string[] {
     let lastStatus = Status.getLatestStatus(savePath + file.relativePath)
     let body = `${index}, ${decision}, ${moment(file.mtime).format('YYYY-MM-DD')}, ${lastStatus}\n`

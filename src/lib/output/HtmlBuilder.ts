@@ -2,21 +2,9 @@ let walkSync = require('walk-sync')
 let fs = require('fs')
 
 import MdHelper from '../helpers/MdHelper'
-import { AbstractOutput } from './AbstractOutput'
+import BasicOutput from './BasicOutput'
 
-let savePath
-
-class HtmlBuilder implements AbstractOutput {
-  result: any
-  path: any
-  workDir: any
-
-  constructor (path: string, workDir: string) {
-    this.workDir = workDir
-    this.path = path
-    savePath = this.path
-  }
-
+class HtmlBuilder extends BasicOutput {
   buildFunc () {
     let files = walkSync.entries(this.path, {globs: ['**/*.md']})
     let path = this.path

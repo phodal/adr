@@ -3,23 +3,13 @@ import { JsonGenerateBuilder } from '../base/JsonGenerateBuilder'
 let fs = require('fs')
 let moment = require('moment')
 
-import { AbstractOutput } from './AbstractOutput'
+import BasicOutput from './BasicOutput'
 import Status from '../status'
 import Config from '../Config'
 
 let savePath
 
-class JSONBuilder implements AbstractOutput {
-  result: any
-  path: any
-  workDir: any
-
-  constructor (path: string, workDir: string) {
-    this.workDir = workDir
-    this.path = path
-    savePath = this.path
-  }
-
+class JSONBuilder extends BasicOutput {
   buildFunc (index, decision, file, bodyString): string[] {
     let lastStatus = Status.getLatestStatus(savePath + file.relativePath)
     let body = {
