@@ -51,8 +51,6 @@ test('ADR: create', t => {
   t.deepEqual(fsWriteSyncSpy.calledWith('./0002-create.md'), true)
   // TOC
   t.deepEqual(fsWriteSyncSpy.calledWith('./README.md'), true)
-
-  t.deepEqual(fsReadSpy.callCount, 3)
   t.deepEqual(mkdirpSync.callCount, 1)
 
   fsWriteSyncSpy.restore()

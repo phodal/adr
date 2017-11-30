@@ -1,9 +1,9 @@
 let sinon = require('sinon')
 let fs = require('fs')
 let walkSync = require('walk-sync')
+let LRU = require('lru-cache')
 
 import { test } from 'ava'
-
 import ADR from 'adr'
 
 let mdTemplate = `# 1. 更友好的 CLI
@@ -24,6 +24,11 @@ let mdTemplate = `# 1. 更友好的 CLI
 test('ADR: logs', t => {
   let consoleSpy = sinon.stub(console, 'log')
   let renameSpy = sinon.stub(fs, 'renameSync')
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'zh-cn'
+  })
+
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-DAF编写完整的单元测试.md',
@@ -43,10 +48,7 @@ test('ADR: logs', t => {
   let fsReadSpy = sinon.stub(fs, 'readFileSync')
   fsReadSpy
     .onCall(0).returns(mdTemplate)
-    .onCall(2).returns(mdTemplate)
-    .onCall(1).returns(JSON.stringify({
-      path: 'some'
-    }))
+    .onCall(1).returns(mdTemplate)
 
   let logs = ADR.logs('1')
   t.deepEqual(logs, `╔════════════╤══════╗
@@ -63,4 +65,5 @@ test('ADR: logs', t => {
   entriesSpy.restore()
   consoleSpy.restore()
   renameSpy.restore()
+  cacheSpy.restore()
 })

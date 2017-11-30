@@ -29,15 +29,6 @@ function getAllConfig (defaultValue: string) {
   }
 }
 
-function getLanguage () {
-  let defaultLanguage = DEFAULT_CONFIG.language
-  let config = getAllConfig(defaultLanguage)
-  if (config && config['language']) {
-    return config['language']
-  }
-  return defaultLanguage
-}
-
 function getConfig (key: string) {
   let defaultValue = DEFAULT_CONFIG[key]
   let config
@@ -51,6 +42,10 @@ function getConfig (key: string) {
   }
 
   return defaultValue
+}
+
+function getLanguage () {
+  return getConfig('language')
 }
 
 function getPrefix () {

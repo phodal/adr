@@ -1,6 +1,7 @@
 let sinon = require('sinon')
 let fs = require('fs')
 let walkSync = require('walk-sync')
+let LRU = require('lru-cache')
 
 import { test } from 'ava'
 
@@ -37,11 +38,13 @@ test('ADR: list status', t => {
       mtime: 1511435254653
     }
   ])
-
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'zh-cn'
+  })
   let fsReadSpy = sinon.stub(fs, 'readFileSync')
     .onCall(0).returns(mdTemplate)
-    .onCall(1).returns(JSON.stringify(adrOptions))
-    .onCall(2).returns(mdTemplate)
+    .onCall(1).returns(mdTemplate)
 
   let status = Status.getAllStatus('./001-README.md')
   t.deepEqual(status, [
@@ -50,8 +53,5 @@ test('ADR: list status', t => {
   ])
   fsReadSpy.restore()
   entriesSpy.restore()
-})
-
-test('placeholder', t => {
-  t.deepEqual(true, true)
+  cacheSpy.restore()
 })

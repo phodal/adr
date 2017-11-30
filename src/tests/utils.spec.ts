@@ -6,10 +6,6 @@ let LRU = require('lru-cache')
 import { test } from 'ava'
 import ADR from 'adr'
 
-const namespace = {
-  LRU: require('lru-cache')
-}
-
 let Utils = ADR.Utils
 let Config = ADR.Config
 
@@ -122,6 +118,10 @@ test('getNewNumber: when exist last number', t => {
 
 test('getLanguage: should enable get language', t => {
   let fsExistSpy = sinon.stub(fs, 'existsSync').returns(true)
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'test'
+  })
   let fsReadSpy = sinon.stub(fs, 'readFileSync').returns(JSON.stringify({
     path: 'some',
     language: 'test'
@@ -132,6 +132,7 @@ test('getLanguage: should enable get language', t => {
   t.deepEqual(language, 'test')
   fsExistSpy.restore()
   fsReadSpy.restore()
+  cacheSpy.restore()
 })
 
 test('createDateString: should return correct date string', t => {

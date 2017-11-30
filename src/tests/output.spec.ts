@@ -1,6 +1,8 @@
 let sinon = require('sinon')
 let walkSync = require('walk-sync')
 let fs = require('fs')
+let LRU = require('lru-cache')
+
 import { test } from 'ava'
 import ADR from 'adr'
 
@@ -25,6 +27,10 @@ test('ADR: export csv', t => {
   let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
   let consoleSpy = sinon.stub(console, 'log')
   let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'zh-cn'
+  })
   let fsReadSpy = sinon.stub(fs, 'readFileSync')
     .onCall(0).returns(JSON.stringify(adrOptions))
     .onCall(1).returns(JSON.stringify(adrOptions))
@@ -42,7 +48,7 @@ test('ADR: export csv', t => {
 
   let results = ADR.output('csv')
   t.deepEqual(results,
-`Index, Decision, Last Modified Date, Last Status
+`Index, 决策, 上次修改时间, 最后状态
 1, 编写完整的单元测试, 2017-11-23, undefined
 `)
   // t.deepEqual(fsWriteSpy.calledWith('./export.csv'), true)
@@ -51,6 +57,7 @@ test('ADR: export csv', t => {
   fsWriteSpy.restore()
   entriesSpy.restore()
   consoleSpy.restore()
+  cacheSpy.restore()
 })
 
 test('ADR: export json', t => {
