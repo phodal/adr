@@ -1,7 +1,7 @@
 let fs = require('fs')
 let moment = require('moment')
 
-import Status from '../status'
+import StatusHelper from '../StatusHelper'
 import Utils from '../utils'
 import Config from '../Config'
 import BasicOutput from './BasicOutput'
@@ -11,7 +11,7 @@ let savePath
 
 class CSVBuilder extends BasicOutput {
   buildFunc (index, decision, file, bodyString): string[] {
-    let lastStatus = Status.getLatestStatus(savePath + file.relativePath)
+    let lastStatus = StatusHelper.getLatestStatus(savePath + file.relativePath)
     let body = `${index}, ${decision}, ${moment(file.mtime).format('YYYY-MM-DD')}, ${lastStatus}\n`
     return bodyString.push(body)
 

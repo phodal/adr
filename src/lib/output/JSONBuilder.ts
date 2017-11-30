@@ -4,14 +4,14 @@ let fs = require('fs')
 let moment = require('moment')
 
 import BasicOutput from './BasicOutput'
-import Status from '../status'
+import StatusHelper from '../StatusHelper'
 import Config from '../Config'
 
 let savePath
 
 class JSONBuilder extends BasicOutput {
   buildFunc (index, decision, file, bodyString): string[] {
-    let lastStatus = Status.getLatestStatus(savePath + file.relativePath)
+    let lastStatus = StatusHelper.getLatestStatus(savePath + file.relativePath)
     let body = {
       index: index,
       decision: decision,

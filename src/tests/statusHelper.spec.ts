@@ -6,7 +6,7 @@ let LRU = require('lru-cache')
 import { test } from 'ava'
 
 import ADR from 'adr'
-let Status = ADR.Status
+let StatusHelper = ADR.StatusHelper
 
 let mdTemplate = `
 # 10. 更友好的 CLI
@@ -41,7 +41,7 @@ test('ADR: list status', t => {
     .onCall(0).returns(mdTemplate)
     .onCall(1).returns(mdTemplate)
 
-  let status = Status.getAllStatus('./001-README.md')
+  let status = StatusHelper.getAllStatus('./001-README.md')
   t.deepEqual(status, [
     '2017-11-23 提议',
     '2017-11-23 通过'

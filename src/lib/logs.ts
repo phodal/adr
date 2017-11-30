@@ -2,7 +2,7 @@ let walkSync = require('walk-sync')
 let Table = require('table')
 
 import Utils from './utils'
-import Status from './status'
+import StatusHelper from './StatusHelper'
 import Config from './Config'
 
 let path = Config.getSavePath()
@@ -51,7 +51,7 @@ export function logs (index): string {
   let outputArray = getAllFilesName()
   let currentFileName = outputArray[index]
   let filePath = path + currentFileName
-  let allStatus = Status.getAllStatus(filePath)
+  let allStatus = StatusHelper.getAllStatus(filePath)
   if (allStatus.length === 0) {
     console.log('no status: did .adr.json config has correct config of language??')
     return ''

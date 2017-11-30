@@ -95,9 +95,9 @@ function getTemplateStatusTitle () {
   return getStatusHeader(tree)
 }
 
-let Status = {
+let StatusHelper = {
   getLatestStatus: getLatestStatus,
   getAllStatus: getAllStatus
 }
 
-export default Status
+export default StatusHelper

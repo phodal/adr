@@ -7,7 +7,7 @@ import { init } from './lib/init'
 import { logs } from './lib/logs'
 import { output } from './lib/output'
 import { htmlRender } from './lib/helpers/htmlRender'
-import Status from './lib/status'
+import StatusHelper from './lib/StatusHelper'
 import Config from './lib/Config'
 import { GenerateBuilder } from './lib/base/GenerateBuilder'
 import MdHelper from './lib/helpers/MdHelper'
@@ -31,5 +31,5 @@ export default {
   MdHelper: MdHelper,
   Config: Config,
   GenerateClass: GenerateBuilder,
-  Status: Status
+  StatusHelper: StatusHelper
 }

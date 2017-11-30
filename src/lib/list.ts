@@ -2,14 +2,14 @@ let moment = require('moment')
 let Table = require('table')
 
 import Utils from './utils'
-import Status from './status'
+import StatusHelper from './StatusHelper'
 import { ListGenerateBuilder } from './base/ListGenerateBuilder'
 import Config from './Config'
 
 let path = Config.getSavePath()
 
 function buildTocBodyFun (index, decision, file, bodyString): string[] {
-  let lastStatus = Status.getLatestStatus(path + file.relativePath)
+  let lastStatus = StatusHelper.getLatestStatus(path + file.relativePath)
   let newItem = [index + '.' + decision, moment(file.mtime).format('YYYY-MM-DD'), lastStatus]
   return bodyString.push(newItem)
 }
