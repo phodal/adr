@@ -116,6 +116,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.12.2",
+    "lru-cache": "^4.1.1",
     "markdown": "^0.5.0",
     "markdown-toc": "^1.2.0",
     "mkdirp": "^0.5.1",

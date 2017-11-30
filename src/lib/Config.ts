@@ -1,4 +1,8 @@
 let fs = require('fs')
+let LRU = require('lru-cache')
+let cache = LRU({
+  max: 500
+})
 
 import Utils from './utils'
 
@@ -8,7 +12,10 @@ function getConfig (defaultValue: string) {
   }
   let config = fs.readFileSync(Utils.getWorkDir() + '/.adr.json', 'utf8')
   try {
-    return JSON.parse(config)
+    let parsedConfig = JSON.parse(config)
+    cache.set('config', parsedConfig)
+
+    return parsedConfig
   } catch (e) {
     console.error(e)
     return defaultValue
@@ -35,7 +42,10 @@ function getSavePath (): string {
 
 function getPrefix (): string {
   let defaultPath = ''
-  let config = getConfig(defaultPath)
+  let config
+  if (cache.get('config')) {
+    config = cache.get('config')
+  }
   if (config && config.prefix) {
     return config.prefix
   }
