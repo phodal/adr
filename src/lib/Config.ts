@@ -52,6 +52,8 @@ function getConfig (key: string) {
   let config
   if (cache.get('config')) {
     config = cache.get('config')
+  } else {
+    config = getAllConfig(defaultValue)
   }
   if (config && config[key]) {
     return config[key]
