@@ -50,7 +50,7 @@ test('ADR: init in chinese', t => {
     }))
 
   ADR.update()
-  t.deepEqual(fsWriteSpy.callCount, 1)
+  t.deepEqual(fsWriteSpy.callCount, 2)
   t.deepEqual(fsReadSpy.callCount, 2)
   t.deepEqual(renameSpy.callCount, 1)
   t.deepEqual(consoleSpy.calledWith('001-DAF编写完整的单元测试.md -> 0001-更友好的-cli.md'), true)

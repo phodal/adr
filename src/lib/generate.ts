@@ -1,7 +1,8 @@
-import { GenerateBuilder } from './base/GenerateBuilder'
+let fs = require('fs')
 
+import { GenerateBuilder } from './base/GenerateBuilder'
 import Config from './Config'
-import {getI18n} from "./helpers/i18n";
+import { getI18n } from './helpers/i18n'
 
 function buildGraphBuildFun (index, decision, file, bodyString, filesLength): string[] {
   bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
@@ -48,7 +49,9 @@ function generateGraph () {
 
 export function generate (type, options?: {output: boolean}) {
   if (type === 'toc') {
-    return generateToc(options)
+    let toc = generateToc(options)
+    fs.writeFileSync(Config.getSavePath() + 'README.md', toc)
+    return toc
   }
   if (type === 'graph') {
     return generateGraph()
