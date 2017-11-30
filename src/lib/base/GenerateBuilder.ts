@@ -19,8 +19,8 @@ export class GenerateBuilder implements AbstractBuilder {
 
   setBody (handleBody: any) {
     let files = this.files
-    for (let i = 0; i < files.length; i++) {
-      let file = files[i]
+    let bodyString = this.bodyString
+    this.files.forEach( function (file) {
       let fileName = file.relativePath
       let fileNameLength = fileName.length
       let numberLength = Utils.getNumberLength(fileName) + '-'.length
@@ -28,9 +28,9 @@ export class GenerateBuilder implements AbstractBuilder {
       let index = Utils.getIndexByString(fileName)
       if (index) {
         let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
-        handleBody(index, decision, file, this.bodyString, files.length)
+        handleBody(index, decision, file, bodyString, files.length)
       }
-    }
+    })
     return this
   }
 
