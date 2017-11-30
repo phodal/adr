@@ -1,5 +1,3 @@
-import {DEFAULT_CONFIG} from "tslint/lib/configuration";
-
 let fs = require('fs')
 let LRU = require('lru-cache')
 let cache = LRU({
@@ -17,7 +15,7 @@ let DEFAULT_CONFIG = {
 
 function getConfig (defaultValue: string) {
   if (!fs.existsSync(Utils.getWorkDir() + '/.adr.json')) {
-    return 'en'
+    return defaultValue
   }
   let config = fs.readFileSync(Utils.getWorkDir() + '/.adr.json', 'utf8')
   try {
@@ -32,19 +30,19 @@ function getConfig (defaultValue: string) {
 }
 
 function getLanguage () {
-  let config = getConfig('en')
-  if (config && config.language) {
-    return config.language
+  let defaultLanguage = DEFAULT_CONFIG.language
+  let config = getConfig(defaultLanguage)
+  if (config && config['language']) {
+    return config['language']
   }
-  console.log('no exist .adr.json file, a example: {"path":"doc/adr/","language":"en"}')
-  return 'en'
+  return defaultLanguage
 }
 
 function getSavePath (): string {
-  let defaultPath = Utils.getWorkDir() + '/doc/adr/'
+  let defaultPath = DEFAULT_CONFIG.path
   let config = getConfig(defaultPath)
-  if (config && config.path) {
-    return config.path
+  if (config && config['path']) {
+    return config['path']
   }
   return defaultPath
 }
@@ -61,16 +59,16 @@ function getPrefix (): string {
   return defaultPath
 }
 
-function getDigits (): string {
-  let defaultPath = ''
+function getDigits (): number {
+  let defaultDigits = DEFAULT_CONFIG.digits
   let config
-  if (cache.get('digits')) {
-    config = cache.get('digits')
+  if (cache.get(defaultDigits)) {
+    config = cache.get(defaultDigits)
   }
   if (config && config.digits) {
     return config.digits
   }
-  return defaultPath
+  return defaultDigits
 }
 
 let Config = {
