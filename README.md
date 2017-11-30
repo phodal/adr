@@ -157,14 +157,21 @@ Index, 决策, 上次修改时间, 最后状态
 Config
 ---
 
-current: **language**, **path**
+current:
+ 
+  - **language**, language
+  - **path**, save path
+  - **digits**, the index length, e.x. digits:3 001-index.md
+  - **prefix**, the prefix of files, e.x. adr-0001
 
 example config: 
 
 ```
 {
   "path":"doc/adr/",
-  "language":"zh-cn"
+  "language":"zh-cn",
+  "prefix": "",
+  "digits": 4
 }
 ```
 
