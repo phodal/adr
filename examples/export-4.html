@@ -1,0 +1,1992 @@
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADR Documents</title>
+
+  <style type="text/css">
+    html {
+      color: #333;
+      background: #fff;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      text-rendering: optimizelegibility;
+    }
+
+    /* 如果你的项目仅支持 IE9+ | Chrome | Firefox 等，推荐在 <html> 中添加 .borderbox 这个 class */
+    html.borderbox *, html.borderbox *:before, html.borderbox *:after {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    /* 内外边距通常让各个浏览器样式的表现位置不同 */
+    body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+    article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+      display: block;
+    }
+
+    /* HTML5 媒体文件跟 img 保持一致 */
+    audio, canvas, video {
+      display: inline-block;
+    }
+
+    /* 要注意表单元素并不继承父级 font 的问题 */
+    body, button, input, select, textarea {
+      font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    }
+
+    button::-moz-focus-inner,
+    input::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    /* 去掉各Table cell 的边距并让其边重合 */
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /* 去除默认边框 */
+    fieldset, img {
+      border: 0;
+    }
+
+    /* 块/段落引用 */
+    blockquote {
+      position: relative;
+      color: #999;
+      font-weight: 400;
+      border-left: 1px solid #1abc9c;
+      padding-left: 1em;
+      margin: 1em 3em 1em 2em;
+    }
+
+    @media only screen and ( max-width: 640px ) {
+      blockquote {
+        margin: 1em 0;
+      }
+    }
+
+    /* Firefox 以外，元素没有下划线，需添加 */
+    acronym, abbr {
+      border-bottom: 1px dotted;
+      font-variant: normal;
+    }
+
+    /* 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌） */
+    abbr {
+      cursor: help;
+    }
+
+    /* 一致的 del 样式 */
+    del {
+      text-decoration: line-through;
+    }
+
+    address, caption, cite, code, dfn, em, th, var {
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    /* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
+    ul, ol {
+      list-style: none;
+    }
+
+    /* 对齐是排版最重要的因素, 别让什么都居中 */
+    caption, th {
+      text-align: left;
+    }
+
+    q:before, q:after {
+      content: '';
+    }
+
+    /* 统一上标和下标 */
+    sub, sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+    }
+
+    :root sub, :root sup {
+      vertical-align: baseline; /* for ie9 and other modern browsers */
+    }
+
+    sup {
+      top: -0.5em;
+    }
+
+    sub {
+      bottom: -0.25em;
+    }
+
+    /* 让链接在 hover 状态下显示下划线 */
+    a {
+      color: #1abc9c;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .typo a {
+      border-bottom: 1px solid #1abc9c;
+    }
+
+    .typo a:hover {
+      border-bottom-color: #555;
+      color: #555;
+      text-decoration: none;
+    }
+
+    /* 默认不显示下划线，保持页面简洁 */
+    ins, a {
+      text-decoration: none;
+    }
+
+    /* 专名号：虽然 u 已经重回 html5 Draft，但在所有浏览器中都是可以使用的，
+     * 要做到更好，向后兼容的话，添加 class="typo-u" 来显示专名号
+     * 关于 <u> 标签：http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-u-element
+     * 被放弃的是 4，之前一直搞错 http://www.w3.org/TR/html401/appendix/changes.html#idx-deprecated
+     * 一篇关于 <u> 标签的很好文章：http://html5doctor.com/u-element/
+     */
+    u, .typo-u {
+      text-decoration: underline;
+    }
+
+    /* 标记，类似于手写的荧光笔的作用 */
+    mark {
+      background: #fffdd1;
+      border-bottom: 1px solid #ffedce;
+      padding: 2px;
+      margin: 0 5px;
+    }
+
+    /* 代码片断 */
+    pre, code, pre tt {
+      font-family: Courier, 'Courier New', monospace;
+    }
+
+    pre {
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      padding: 1em 1.5em;
+      display: block;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* 一致化 horizontal rule */
+    hr {
+      border: none;
+      border-bottom: 1px solid #cfcfcf;
+      margin-bottom: 0.8em;
+      height: 10px;
+    }
+
+    /* 底部印刷体、版本等标记 */
+    small, .typo-small,
+      /* 图片说明 */
+    figcaption {
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    strong, b {
+      font-weight: bold;
+      color: #000;
+    }
+
+    /* 可拖动文件添加拖动手势 */
+    [draggable] {
+      cursor: move;
+    }
+
+    .clearfix:before, .clearfix:after {
+      content: "";
+      display: table;
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    .clearfix {
+      zoom: 1;
+    }
+
+    /* 强制文本换行 */
+    .textwrap, .textwrap td, .textwrap th {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .textwrap-table {
+      table-layout: fixed;
+    }
+
+    /* 提供 serif 版本的字体设置: iOS 下中文自动 fallback 到 sans-serif */
+    .serif {
+      font-family: Palatino, Optima, Georgia, serif;
+    }
+
+    /* 保证块/段落之间的空白隔行 */
+    .typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
+    .typo-p, .typo-pre, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote {
+      margin-bottom: 1.2em
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+      font-weight: 100;
+      color: #000;
+      line-height: 1.35;
+    }
+
+    /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
+    .typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6,
+    .typo-h1, .typo-h2, .typo-h3, .typo-h4, .typo-h5, .typo-h6 {
+      margin-top: 1.2em;
+      margin-bottom: 0.6em;
+      line-height: 1.35;
+    }
+
+    .typo h1, .typo-h1 {
+      font-size: 2em;
+    }
+
+    .typo h2, .typo-h2 {
+      font-size: 1.8em;
+    }
+
+    .typo h3, .typo-h3 {
+      font-size: 1.6em;
+    }
+
+    .typo h4, .typo-h4 {
+      font-size: 1.4em;
+    }
+
+    .typo h5, .typo h6, .typo-h5, .typo-h6 {
+      font-size: 1.2em;
+    }
+
+    /* 在文章中，应该还原 ul 和 ol 的样式 */
+    .typo ul, .typo-ul {
+      margin-left: 1.3em;
+      list-style: disc;
+    }
+
+    .typo ol, .typo-ol {
+      list-style: decimal;
+      margin-left: 1.9em;
+    }
+
+    .typo li ul, .typo li ol, .typo-ul ul, .typo-ul ol, .typo-ol ul, .typo-ol ol {
+      margin-bottom: 0.8em;
+      margin-left: 2em;
+    }
+
+    .typo li ul, .typo-ul ul, .typo-ol ul {
+      list-style: circle;
+    }
+
+    /* 同 ul/ol，在文章中应用 table 基本格式 */
+    .typo table th, .typo table td, .typo-table th, .typo-table td, .typo table caption {
+      border: 1px solid #ddd;
+      padding: 0.5em 1em;
+      color: #666;
+    }
+
+    .typo table th, .typo-table th {
+      background: #fbfbfb;
+    }
+
+    .typo table thead th, .typo-table thead th {
+      background: #f1f1f1;
+    }
+
+    .typo table caption {
+      border-bottom: none;
+    }
+
+    /* 去除 webkit 中 input 和 textarea 的默认样式  */
+    .typo-input, .typo-textarea {
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .typo-em, .typo em, legend, caption {
+      color: #000;
+      font-weight: inherit;
+    }
+
+    /* 着重号，只能在少量（少于100个字符）且全是全角字符的情况下使用 */
+    .typo-em {
+      position: relative;
+    }
+
+    .typo-em:after {
+      position: absolute;
+      top: 0.65em;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      content: "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・";
+    }
+
+    /* Responsive images */
+    .typo img {
+      max-width: 100%;
+    }
+
+    header {
+      position: fixed;
+      z-index: 2;
+      z-index: 1024;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #fff;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      text-transform: uppercase;
+      font-size: 20px
+    }
+
+    header .logo {
+      display: inline-block;
+      padding-left: 37px;
+      float: left;
+      text-decoration: none;
+      color: #333;
+      line-height: 60px;
+      background-repeat: no-repeat;
+      background-position: left center
+    }
+
+    header nav {
+      text-align: right;
+      font-size: 0
+    }
+
+    header nav ul {
+      display: inline-block;
+      padding: 0;
+      list-style: none
+    }
+
+    header nav li {
+      display: inline
+    }
+
+    header nav a {
+      display: inline-block;
+      padding: 0 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 20px;
+      line-height: 60px;
+      transition: opacity .2s
+    }
+
+    header nav a.current {
+      color: #9600ff
+    }
+
+    header nav a:hover {
+      opacity: .75
+    }
+    .content {
+      padding-top: 100px;
+    }
+
+    #toc {
+      width: 30%;
+      max-width: 420px;
+      max-height: 85%;
+      float: left;
+      margin: 25px 0px 20px 0px;
+      position: fixed !important;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overflow-scrolling: touch;
+      box-sizing: border-box;
+      z-index: 1;
+      left: 0;
+      top: 40px;
+      bottom: 0;
+      padding: 20px;
+    }
+
+    #toc > ul {
+      list-style: none;
+      padding: 20px 40px 0 40px;
+      margin: 0;
+      border-bottom: 1px solid #eee
+    }
+
+    #toc > ul > li > ul {
+      padding-left: 40px;
+    }
+
+    #toc a {
+      display: block;
+      padding: 10px 0;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      transition: opacity .2s
+    }
+
+    #toc a.current {
+      color: #9600ff
+    }
+
+    #toc a:hover {
+      opacity: .75
+    }
+
+    .main {
+      width: 70%;
+      max-width: 980px;
+      float: left;
+      padding-left: 30%;
+      top: 160px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <a href="https://github.com/phodal/adr" class="logo">ADR</a>
+    <nav>
+      <ul>
+        <li><a href="https://github.com/phodal/adr">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="content">
+  <div id="toc" class="tocify">
+    <ul>
+<li><a href="#architecture-decision-record-use-adrs">Architecture Decision Record: Use ADRs</a>
+<ul>
+<li><a href="#context">Context</a></li>
+<li><a href="#decision">Decision</a></li>
+<li><a href="#status">Status</a></li>
+<li><a href="#consequences">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-configuration">Architecture Decision Record: Configuration</a>
+<ul>
+<li><a href="#context-1">Context</a></li>
+<li><a href="#decision-1">Decision</a></li>
+<li><a href="#status-1">Status</a></li>
+<li><a href="#consequences-1">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-datomic-based-configuration">Architecture Decision Record: Datomic-based Configuration</a>
+<ul>
+<li><a href="#context-2">Context</a>
+<ul>
+<li><a href="#config-as-database">Config as Database</a></li>
+<li><a href="#configuration-as-ontology">Configuration as Ontology</a></li>
+<li><a href="#implementation-options">Implementation Options</a></li>
+<li><a href="#rdf">RDF</a>
+<ul>
+<li><a href="#benefits-for-arachne">Benefits for Arachne</a></li>
+<li><a href="#tradeoffs-for-arachne-with-mitigations">Tradeoffs for Arachne (with mitigations)</a></li>
+</ul></li>
+<li><a href="#datomic">Datomic</a>
+<ul>
+<li><a href="#benefits-for-arachne-1">Benefits for Arachne</a></li>
+<li><a href="#tradeoffs-for-arachne-with-mitigations-1">Tradeoffs for Arachne (with mitigations)</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#decision-2">Decision</a></li>
+<li><a href="#status-2">Status</a></li>
+<li><a href="#consequences-2">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-module-structure--loading">Architecture Decision Record: Module Structure &amp; Loading</a>
+<ul>
+<li><a href="#context-3">Context</a></li>
+<li><a href="#decision-3">Decision</a></li>
+<li><a href="#status-3">Status</a></li>
+<li><a href="#consequences-3">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-user-facing-configuration">Architecture Decision Record: User Facing Configuration</a>
+<ul>
+<li><a href="#context-4">Context</a>
+<ul>
+<li><a href="#option-raw-datomic-txdata">Option: Raw Datomic Txdata</a></li>
+<li><a href="#option-custom-edn-data-formats">Option: Custom EDN data formats</a></li>
+<li><a href="#option-code-based-configuration">Option: Code-based configuration</a></li>
+</ul></li>
+<li><a href="#decision-4">Decision</a></li>
+<li><a href="#status-4">Status</a></li>
+<li><a href="#consequences-4">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-core-runtime">Architecture Decision Record: Core Runtime</a>
+<ul>
+<li><a href="#context-5">Context</a></li>
+<li><a href="#decision-5">Decision</a>
+<ul>
+<li><a href="#components">Components</a></li>
+<li><a href="#arachne-runtime">Arachne Runtime</a></li>
+<li><a href="#startup-procedure">Startup Procedure</a></li>
+</ul></li>
+<li><a href="#status-5">Status</a></li>
+<li><a href="#consequences-5">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-configuration-updates">Architecture Decision Record: Configuration Updates</a>
+<ul>
+<li><a href="#context-6">Context</a>
+<ul>
+<li><a href="#prior-art">Prior Art</a></li>
+</ul></li>
+<li><a href="#decision-6">Decision</a></li>
+<li><a href="#status-6">Status</a></li>
+<li><a href="#consequences-6">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-abstract-modules">Architecture Decision Record: Abstract Modules</a>
+<ul>
+<li><a href="#context-7">Context</a>
+<ul>
+<li><a href="#what-does-it-mean-to-use-a-module">What does it mean to use a module?</a></li>
+</ul></li>
+<li><a href="#decision-7">Decision</a>
+<ul>
+<li><a href="#concrete-example">Concrete Example</a></li>
+</ul></li>
+<li><a href="#status-7">Status</a></li>
+<li><a href="#consequences-7">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-configuration-ontology">Architecture Decision Record: Configuration Ontology</a>
+<ul>
+<li><a href="#context-8">Context</a></li>
+<li><a href="#decision-8">Decision</a></li>
+<li><a href="#status-8">Status</a></li>
+<li><a href="#consequences-8">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-persistent-configuration">Architecture Decision Record: Persistent Configuration</a>
+<ul>
+<li><a href="#context-9">Context</a>
+<ul>
+<li><a href="#goals">Goals</a></li>
+</ul></li>
+<li><a href="#decision-9">Decision</a></li>
+<li><a href="#status-9">Status</a></li>
+<li><a href="#consequences-9">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-asset-pipeline">Architecture Decision Record: Asset Pipeline</a>
+<ul>
+<li><a href="#context-10">Context</a>
+<ul>
+<li><a href="#development-vs-production">Development vs Production</a></li>
+<li><a href="#deployment--distribution">Deployment &amp; Distribution</a></li>
+<li><a href="#entirely-static-sites">Entirely Static Sites</a></li>
+</ul></li>
+<li><a href="#decision-10">Decision</a></li>
+<li><a href="#status-10">Status</a></li>
+<li><a href="#consequences-10">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-enhanced-validation">Architecture Decision Record: Enhanced Validation</a>
+<ul>
+<li><a href="#context-11">Context</a></li>
+<li><a href="#decision-11">Decision</a>
+<ul>
+<li><a href="#configuration-validation">Configuration Validation</a></li>
+<li><a href="#runtime-validation">Runtime Validation</a></li>
+</ul></li>
+<li><a href="#status-11">Status</a></li>
+<li><a href="#consequences-11">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-error-reporting">Architecture Decision Record: Error Reporting</a>
+<ul>
+<li><a href="#context-12">Context</a></li>
+<li><a href="#decision-12">Decision</a>
+<ul>
+<li><a href="#creating-errors">Creating Errors</a></li>
+<li><a href="#displaying-errors">Displaying Errors</a></li>
+</ul></li>
+<li><a href="#status-12">Status</a></li>
+<li><a href="#consequences-12">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-project-templates">Architecture Decision Record: Project Templates</a>
+<ul>
+<li><a href="#context-13">Context</a>
+<ul>
+<li><a href="#lein-templates">Lein templates</a></li>
+<li><a href="#rails-templates">Rails templates</a></li>
+</ul></li>
+<li><a href="#decision-13">Decision</a>
+<ul>
+<li><a href="#maven-distribution">Maven Distribution</a></li>
+</ul></li>
+<li><a href="#status-13">Status</a></li>
+<li><a href="#consequences-13">Consequences</a>
+<ul>
+<li><a href="#contrast-with-rails">Contrast with Rails</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#architecture-decision-record-data-abstraction-model">Architecture Decision Record: Data Abstraction Model</a>
+<ul>
+<li><a href="#context-14">Context</a>
+<ul>
+<li><a href="#other-use-cases">Other use cases</a></li>
+<li><a href="#modeling--manipulation">Modeling &amp; Manipulation</a></li>
+<li><a href="#existing-solutions-orms">Existing solutions: ORMs</a></li>
+<li><a href="#database-migrations">Database &quot;migrations&quot;</a></li>
+</ul></li>
+<li><a href="#decision-14">Decision</a>
+<ul>
+<li><a href="#adapters">Adapters</a></li>
+</ul>
+<ul>
+<li><a href="#limitations-and-drawbacks">Limitations and Drawbacks</a></li>
+<li><a href="#modeling">Modeling</a>
+<ul>
+<li><a href="#modeling-entity-types">Modeling: Entity Types</a></li>
+<li><a href="#attribute-definitions">Attribute Definitions</a>
+<ul>
+<li><a href="#value-types">Value Types</a></li>
+</ul></li>
+<li><a href="#validation">Validation</a></li>
+<li><a href="#schema--migration-operations">Schema &amp; Migration Operations</a></li>
+</ul></li>
+<li><a href="#entity-manipulation">Entity Manipulation</a>
+<ul>
+<li><a href="#data-representation">Data Representation</a></li>
+<li><a href="#persistence-operations">Persistence Operations</a></li>
+<li><a href="#capability-model">Capability Model</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#status-14">Status</a></li>
+<li><a href="#consequences-14">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-database-migrations">Architecture Decision Record: Database Migrations</a>
+<ul>
+<li><a href="#context-15">Context</a>
+<ul>
+<li><a href="#prior-art-1">Prior Art</a></li>
+<li><a href="#scenarios">Scenarios</a></li>
+</ul></li>
+<li><a href="#decision-15">Decision</a>
+<ul>
+<li><a href="#migration-types">Migration Types</a></li>
+<li><a href="#structure--usage">Structure &amp; Usage</a>
+<ul>
+<li><a href="#parallel-migrations">Parallel Migrations</a></li>
+</ul></li>
+<li><a href="#chimera-migrations--entity-types">Chimera Migrations &amp; Entity Types</a></li>
+<li><a href="#applying-migrations">Applying Migrations</a></li>
+<li><a href="#databases-without-migrations">Databases without migrations</a></li>
+<li><a href="#migration-rollback">Migration Rollback</a></li>
+</ul></li>
+<li><a href="#status-15">Status</a></li>
+<li><a href="#consequences-15">Consequences</a></li>
+</ul></li>
+<li><a href="#architecture-decision-record-simplification-of-chimera-model">Architecture Decision Record: Simplification of Chimera Model</a>
+<ul>
+<li><a href="#context-16">Context</a></li>
+<li><a href="#decision-16">Decision</a></li>
+<li><a href="#status-16">Status</a></li>
+<li><a href="#consequences-16">Consequences</a></li>
+</ul></li>
+</ul>
+
+  </div>
+  <div class="main typo">
+    <h1 id=architecture-decision-record-use-adrs>Architecture Decision Record: Use ADRs</h1>
+<h2 id=context-nan>Context</h2>
+<p>Arachne has several very explicit goals that make the practice and
+discipline of architecture very important:</p>
+<ul>
+<li>We want to think deeply about all our architectural decisions,
+exploring all alternatives and making a careful, considered,
+well-researched choice.</li>
+<li>We want to be as transparent as possible in our decision-making
+process.</li>
+<li>We don't want decisions to be made unilaterally in a
+vacuum. Specifically, we want to give our steering group the
+opportunity to review every major decision.</li>
+<li>Despite being a geographically and temporally distributed team, we
+want our contributors to have a strong shared understanding of the
+technical rationale behind decisions.</li>
+<li>We want to be able to revisit prior decisions to determine fairly if
+they still make sense, and if the motivating circumstances or
+conditions have changed.</li>
+</ul>
+<h2 id=decision-nan>Decision</h2>
+<p>We will document every architecture-level decision for Arachne and its
+core modules with an
+<a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">Architecture Decision Record</a>. These
+are a well structured, relatively lightweight way to capture
+architectural proposals. They can serve as an artifact for discussion,
+and remain as an enduring record of the context and motivation of past
+decisions.</p>
+<p>The workflow will be:</p>
+<ol>
+<li>A developer creates an ADR document outlining an approach for a
+particular question or problem. The ADR has an initial status of &quot;proposed.&quot;</li>
+<li>The developers and steering group discuss the ADR. During this
+period, the ADR should be updated to reflect additional context,
+concerns raised, and proposed changes.</li>
+<li>Once consensus is reached, ADR can be transitioned to either an
+&quot;accepted&quot; or &quot;rejected&quot; state.</li>
+<li>Only after an ADR is accepted should implementing code be committed
+to the master branch of the relevant project/module.</li>
+<li>If a decision is revisited and a different conclusion is reached, a
+new ADR should be created documenting the context and rationale for
+the change. The new ADR should reference the old one, and once the
+new one is accepted, the old one should (in its &quot;status&quot; section)
+be updated to point to the new one. The old ADR should not be
+removed or otherwise modified except for the annotation pointing to
+the new ADR.</li>
+</ol>
+<h2 id=status-nan>Status</h2>
+<p>Accepted</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ol>
+<li>Developers must write an ADR and submit it for review before
+selecting an approach to any architectural decision -- that is, any
+decision that affects the way Arachne or an Arachne application is
+put together at a high level.</li>
+<li>We will have a concrete artifact around which to focus discussion,
+before finalizing decisions.</li>
+<li>If we follow the process, decisions will be made deliberately, as a group.</li>
+<li>The master branch of our repositories will reflect the high-level
+consensus of the steering group.</li>
+<li>We will have a useful persistent record of why the system is the way it is.</li>
+</ol>
+<h1 id=architecture-decision-record-configuration>Architecture Decision Record: Configuration</h1>
+<h2 id=context-nan>Context</h2>
+<p>Arachne has a number of goals.</p>
+<ol>
+<li><p>It needs to be <em>modular</em>. Different software packages, written by
+different developers, should be usable and swappable in the same
+application with a minimum of effort.</p></li>
+<li><p>Arachne applications need to be <em>transparent</em> and
+<em>introspectable</em>. It should always be as clear as possible what is
+going on at any given moment, and why the application is behaving
+in the way it does.</p></li>
+<li><p>As a general-purpose web framework, it needs to provide a strong
+set of default settings which are also highly overridable, and
+<em>configurable</em> to suit the unique needs of users.</p></li>
+</ol>
+<p>Also, it is a good development practice (particularly in Clojure) to
+code to a specific information model (that is, data) rather than to
+particular functions or APIs. Along with other benefits, this helps
+separate (avoids &quot;complecting&quot;) the intended operation and its
+implementation.</p>
+<p>Documenting the full rationale for this &quot;data first&quot; philosophy is
+beyond the scope of this document, but some resources that explain it (among other things) are:</p>
+<ul>
+<li><a href="http://www.infoq.com/presentations/Simple-Made-Easy">Simple Made Easy</a> - Rich Hickey</li>
+<li><a href="https://vimeo.com/77199361">Narcissistic Design</a> - Stuart Halloway</li>
+<li><a href="https://malcolmsparks.com/posts/data-beats-functions.html">Data Beats Functions</a> - Malcolm Sparks</li>
+<li><a href="https://www.youtube.com/watch?v=3oQTSP4FngY">Always Be Composing</a> - Zach Tellman</li>
+<li><a href="http://www.lispcast.com/data-functions-macros-why">Data &gt; Functions &gt; Macros</a> - Eric Normand</li>
+</ul>
+<p>Finally, one weakness of many existing Clojure libraries, especially
+web development libraries, is the way in which they overload the
+Clojure runtime (particularly vars and reified namespaces) to store
+information about the webapp. Because both the Clojure runtime and
+many web application entities (e.g servers) are stateful, this causes
+a variety of issues, particularly with reloading namespaces. Therefore,
+as much as possible, we would like to avoid entangling information
+about an Arachne application with the Clojure runtime itself.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>Arachne will take the &quot;everything is data&quot; philosophy to its logical
+extreme, and encode as much information about the application as
+possible in a single, highly general data structure. This will include
+not just data that is normally thought of as &quot;config&quot; data, but the
+structure and definition of the application itself. Everything that
+does not have to be arbitrary executable code will be
+reflected in the application config value.</p>
+<p>Some concrete examples include (but are not limited to):</p>
+<ul>
+<li>Dependency injection components</li>
+<li>Runtime entities (servers, caches, connections, pools, etc)</li>
+<li>HTTP routes and middleware</li>
+<li>Persistence schemas and migrations</li>
+<li>Locations of static and dynamic assets</li>
+</ul>
+<p>This configuration value will have a <em>schema</em> that defines what types
+of entities can exist in the configuration, and what their expected
+properties are.</p>
+<p>Each distinct module will have the ability to contribute to the schema
+and define entity types specific to its own domain. Modules may
+interact by referencing entity types and properties defined in other
+modules.</p>
+<p>Although it has much in common with a fully general in-memory
+database, the configuration value will be a single immutable value,
+not a stateful data store. This will avoid many of the complexities
+of state and change, and will eliminate the temptation to use the
+configuration itself as dynamic storage for runtime data.</p>
+<h2 id=status-nan>Status</h2>
+<p>Proposed</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Applications will be defined comprehensively and declaratively by a
+rich data structure, before the application even starts.</li>
+<li>The config schema provides an explicit, reliable contract and set of
+extension points, which can be used by other modules to modify
+entities or behaviors.</li>
+<li>It will be easy to understand and inspect an application by
+inspecting or querying its configuration. It will be possible to
+write tools to make exploring and visualizing applications even easier.</li>
+<li>Developers will need to carefully decide what types of things are
+appropriate to encode statically in the configuration, and what must
+be dynamic at runtime.</li>
+</ul>
+<h1 id=architecture-decision-record-datomic-based-configuration>Architecture Decision Record: Datomic-based Configuration</h1>
+<h2 id=context-nan>Context</h2>
+<p><a href="adr-002-configuration.md">ADR-002</a> indicates that we will store the
+entire application config in a single rich data structure with a schema.</p>
+<h3 id=config-as-database-nan>Config as Database</h3>
+<p>This implies that it should be possible to easily search, query and
+update the configuration value. It also implies that the configuration
+value is general enough to store arbitrary data; we don't know what
+kinds of things users or module authors will need to include.</p>
+<p>If what we need is a system that allows you to define, query, and
+update arbitrary data with a schema, then we are looking for a
+database.</p>
+<p>Required data store characteristics:</p>
+<ol>
+<li>It must be available under a permissive open source
+license. Anything else will impose unwanted restrictions on who can
+use Arachne.</li>
+<li>It can operate embedded in a JVM process. We do not want to force
+users to install anything else or run multiple processes just to
+get Arachne to work.</li>
+<li>The database must be serializable. It must be possible to write the
+entire configuration to disk, and then reconstitute it in the same
+exact state in a separate process.</li>
+<li>Because modules build up the schema progressively, the schema must
+be inherently extensible. It should be possible for modules to
+progressively add both new entity types and new attributes to
+existing entity types.</li>
+<li>It should be usable from Clojure without a painful impedance mismatch.</li>
+</ol>
+<h3 id=configuration-as-ontology-nan>Configuration as Ontology</h3>
+<p>As an extension of the rationale discussed in
+<a href="adr-002-configuration.md">ADR-002</a>, it is useful to enumerate the
+possible use cases of the configuration and configuration schema
+together.</p>
+<ul>
+<li>The configuration is read by the application during bootstrap and
+controls the behavior of the application.</li>
+<li>The configuration schema defines what types of values the
+application can or will read to modify its structure and behavior at
+boot time and run time.</li>
+<li>The configuration is how an application author communicates their
+intent about how their application should fit together and run, at a
+higher, more conceptual level than code.</li>
+<li>The configuration schema is how module authors communicate to
+application authors what settings, entities and structures
+are available for them to use in their applications.</li>
+<li>The configuration schema is how module authors communicate to other
+potential module authors what their extension points are; module
+extenders can safely read or write any entities/attributes declared
+by the modules upon which they depend.</li>
+<li>The configuration schema can be used to validate a particular
+configuration, and explain where and how it deviates from what is
+actually supported.</li>
+<li>The configuration can be exposed (via user interfaces of various
+types) to end users for analytics and debugging, explaining the
+structure of their application and why things are the way they are.</li>
+<li>A serialization of the configuration, together with a particular
+codebase (identified by a git SHA) form a precise, complete, 100%
+reproducible definition of the behavior of an application.</li>
+</ul>
+<p>To the extent that the configuration schema expresses and communicates
+the &quot;categories of being&quot; or &quot;possibility space&quot; of an application, it
+is a formal <a href="https://en.wikipedia.org/wiki/Ontology">Ontology</a>. This is
+a desirable characteristic, and to the degree that it is practical to
+do so, it will be useful to learn from or re-use existing work around
+formal ontological systems.</p>
+<h3 id=implementation-options-nan>Implementation Options</h3>
+<p>There are instances of four broad categories of data stores that match
+the first three of the data store characteristics defined above.</p>
+<ul>
+<li>Relational (Derby, HSQLDB, etc)</li>
+<li>Key/value (BerkelyDB, hashtables, etc)</li>
+<li>RDF/RDFs/OWL stores (Jena)</li>
+<li>Datomic-style (Datascript)</li>
+</ul>
+<p>We can eliminate relational solutions fairly quickly; SQL schemas are
+not generally extensible or flexible, failing condition #4. In
+addition, they do not fare well on #5 -- using SQL for queries and updates
+is not particularly fluent in Clojure.</p>
+<p>Similarly, we can eliminate key/value style data stores. In general,
+these do not have schemas at all (or at least, not the type of rich
+schema that provides a meaningful data contract or ontology, which is the point
+for Arachne.)</p>
+<p>This leaves solutions based on the RDF stack, and Datomic-style data
+stores. Both are viable options which would provide unique benefits
+for Arachne, and both have different drawbacks.</p>
+<p>Explaining the core technical characteristics of RDF/OWL and Datomic
+is beyond the scope of this document; please see the
+<a href="https://jena.apache.org/documentation/index.html">Jena</a> and
+<a href="http://docs.datomic.com">Datomic</a> documentation for more
+details. More information on RDF, OWL and the Semantic web in general:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Resource_Description_Framework">Wikipedia article on RDF</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Web_Ontology_Language">Wikipedia article on OWL</a></li>
+<li><a href="http://www.w3.org/TR/owl-semantics/">OWL Semantics</a> standards document.</li>
+</ul>
+<h3 id=rdf-nan>RDF</h3>
+<p>The clear choice for a JVM-based, permissively licensed,
+standards-compliant RDF API is Apache Jena.</p>
+<h4 id=benefits-for-arachne-nan>Benefits for Arachne</h4>
+<ul>
+<li>OWL is a good fit insofar as Arachne's goal is to define an
+ontology of applications. The point of the configuration schema is
+first and foremost to serve as unambiguous communication regarding
+the types of entities that can exist in an application, and what the
+possible relationships between them are. By definition, this is
+defining an ontology, and is the exact use case which OWL is
+designed to address.</li>
+<li>Information model is a good fit for Clojure: tuples and declarative logic.</li>
+<li>Open and extensible by design.</li>
+<li>Well researched by very smart people, likely to avoid common
+mistakes that would result from building an ontology-like system
+ourselves.</li>
+<li>Existing technology, well known beyond the Clojure
+ecosystem. Existing tools could work with Arachne project
+configurations out of the box.</li>
+<li>The open-world assumption is a good fit for Arachne's per-module
+schema modeling, since modules cannot know what other modules might
+be present in the application.</li>
+<li>We're likely to want to introduce RDFs/OWL to the application
+anyway, at some point, as an abstract entity meta-schema (note: this
+has not been firmly decided yet.)</li>
+</ul>
+<h4 id=tradeoffs-for-arachne-with-mitigations-nan>Tradeoffs for Arachne (with mitigations)</h4>
+<ul>
+<li>OWL is complex. Learning to use it effectively is a skill in its own
+right and it might be asking a lot to require of module authors.</li>
+<li>OWLs representation of some common concepts can be verbose and/or
+convoluted in ways that would make schema more difficult to
+read/write. (e.g, Restriction classes)</li>
+<li>OWL is not a schema. Although the open world assumption is valid and
+good when writing ontologies, it means that OWL inferencing is
+incapable of performing many of the kind of validations we would
+want to apply once we do have a complete configuration and want to
+check it for correctness. For example, open-world reasoning can
+never validate a <code>owl:minCardinality</code> rule.
+<ul>
+<li>Mitigation: Although OWL inferencing cannot provide closed-world
+validation of a given RDF dataset, such tools do exist. Some
+mechanisms for validating a particular closed set of RDF triples
+include:
+<ol>
+<li>Writing SPARQL queries that catch various types of validation errors.</li>
+<li>Deriving validation errors using Jena's rules engine.</li>
+<li>Using an existing RDF validator such as
+<a href="https://jena.apache.org/documentation/tools/eyeball-getting-started.html">Eyeball</a>
+(although, unfortunately, Eyeball does not seem to be well
+maintained.)</li>
+</ol></li>
+<li>For Clojure, it would be possible to validate a given OWL class
+by generating a specification using <code>clojure.spec</code> that could be
+applied to concrete instances of the class in their map form.</li>
+</ul></li>
+<li>Jena's API is aggressively object oriented and at odds with Clojure
+idioms.
+<ul>
+<li>Mitigation: Write a data-oriented wrapper (note: I have a
+working proof of concept already.)</li>
+</ul></li>
+<li>SPARQL is a string-based query language, as opposed to a composable data API.
+<ul>
+<li>Mitigation: It is possible to hook into Jena's ARQ query engine
+at the object layer, and expose a data-oriented API from there,
+with SPARQL semantics but an API similar to Datomic datalog.</li>
+</ul></li>
+<li>OWL inferencing is known to have performance issues with complex
+inferences. While Arachne configurations are tiny (as knowledge bases
+go), and we are unlikely to use the more esoteric derivations, it is
+unknown whether this will cause problems with the kinds of
+ontologies we do need.
+<ul>
+<li>Mitigation: We could restrict ourselves to the OWL DL or even
+OWL Lite sub-languages, which have more tractable inferencing
+rules.</li>
+</ul></li>
+<li>Jena's APIs are such that it is impossible to write an immutable
+version of a RDF model (at least without breaking most of Jena's
+API.) It's trivial to write a data-oriented wrapper, but intractable
+to write a persistent immutable one.</li>
+</ul>
+<h3 id=datomic-nan>Datomic</h3>
+<p>Note that Datomic itself does not satisfy the first requirement; it is
+closed-source, proprietary software. There <em>is</em> an open source
+project, Datascript, which emulates Datomic's APIs (without any of the
+storage elements). Either one would work for Arachne, since Arachne
+only needs the subset of features they both support. In, fact, if
+Arachne goes the Datomic-inspired route, we would probably want to
+support <em>both</em>: Datomic, for those who have an existing investment
+there, and Datascript for those who desire open source all the way.</p>
+<h4 id=benefits-for-arachne-nan>Benefits for Arachne</h4>
+<ul>
+<li>Well known to most Clojurists</li>
+<li>Highly idiomatic to use from Clojure</li>
+<li>There is no question that it would be performant and technically
+suitable for Arachne-sized data.</li>
+<li>Datomic's schema is a real validating schema; data transacted to
+Datomic must always be valid.</li>
+<li>Datomic Schema is open and extensible.</li>
+</ul>
+<h4 id=tradeoffs-for-arachne-with-mitigations-nan>Tradeoffs for Arachne (with mitigations)</h4>
+<ul>
+<li>The expressivity of Datomic's schema is anemic compared to RDFs/OWL;
+for example, it has no built-in notion of types. It is focused
+towards data storage and integrity rather than defining a public
+ontology, which would be useful for Arachne.
+<ul>
+<li>Mitigation: If we did want something more ontologically focused,
+it is possible to build an ontology system on top of Datomic
+using meta-attributes and Datalog rules. Examples of such
+systems already exist.</li>
+</ul></li>
+<li>If we did build our own ontology system on top of Datomic (or use an
+existing one) we would still be responsible for &quot;getting it right&quot;,
+ensuring that it meets any potential use case for Arachne while
+maintaining internal and logical consistency.
+<ul>
+<li>Mitigation: we could still use the work that has been done in
+the OWL world and re-implement a subset of axioms and
+derivations on top of Datomic.</li>
+</ul></li>
+<li>Any ontological system built on top of Datomic would be novel to
+module authors, and therefore would require careful, extensive
+documentation regarding its capabilities and usage.</li>
+<li>To satisfy users of Datomic as well as those who have a requirement
+for open source, it will be necessary to abstract across both
+Datomic and Datascript.
+<ul>
+<li>Mitigation: This work is already done (provided users stay
+within the subset of features that is supported by both
+products.)</li>
+</ul></li>
+</ul>
+<h2 id=decision-nan>Decision</h2>
+<p>The steering group decided the RDF/OWL approach is too high-risk to
+wrap in Clojure and implement at this time, while the rewards are
+mostly intangible &quot;openness&quot; and &quot;interoperability&quot; rather than
+something that will help move Arachne forward in the short term.</p>
+<p>Therefore, we will use a Datomic style schema for Arachne's configuration.</p>
+<p>Users may use either Datomic Pro, Datomic Free or Datascript at
+runtime in their applications. We will provide a &quot;multiplexer&quot;
+configuration implementation that utilizes both, and asserts that the
+results are equal: this can be used by module authors to ensure they
+stay within the subset of features supported by both platforms.</p>
+<p>Before Arachne leaves &quot;alpha&quot; status (that is, before it is declared
+ready for experimental production use or for the release of
+third-party modules), we will revisit the question of whether OWL
+would be more appropriate, and whether we have encountered issues that
+OWL would have made easier. If so, and if time allows, we reserve the
+option to either refactor the configuration layer to use Jena as a
+primary store (porting existing modules), or provide an OWL
+view/rendering of an ontology stored in Datomic.</p>
+<h2 id=status-nan>Status</h2>
+<p>Proposed</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>It will be possible to write schemas that precisely define the
+configuration data that modules consume.</li>
+<li>The configuration system will be open and extensible to additional
+modules by adding additional attributes and meta-attributes.</li>
+<li>The system will not provide an ontologically oriented view of the
+system's data without additional work.</li>
+<li>Additional work will be required to validate configuration with
+respect to requirements that Datomic does not support natively (e.g,
+required attributes.)</li>
+<li>Every Arachne application must include either Datomic Free, Datomic
+Pro or Datascript as a dependency.</li>
+<li>We will need to keep our eyes open to look for situations where a
+more formal ontology system might be a better choice.</li>
+</ul>
+<h1 id=architecture-decision-record-module-structure--loading>Architecture Decision Record: Module Structure &amp; Loading</h1>
+<h2 id=context-nan>Context</h2>
+<p>Arachne needs to be as modular as possible. Not only do we want the
+community to be able to contribute new abilities and features that
+integrate well with the core and with eachother, we want some of the
+basic functionality of Arachne to be swappable for alternatives as
+well.</p>
+<p><a href="adr-002-configuration.md">ADR-002</a> specifies that one role of modules
+is to contribute schema to the application config. Other roles of
+modules would include providing code (as any library does), and
+querying and updating the config during the startup
+process. Additionally, since modules can depend upon each other, they
+must specify which modules they depend upon.</p>
+<p>Ideally there will be as little overhead as possible for creating and
+consuming modules.</p>
+<p>Some of the general problems associated with plugin/module systems include:</p>
+<ul>
+<li>Finding and downloading the implementation of the module.</li>
+<li>Discovering and activating the correct set of installed modules.</li>
+<li>Managing module versions and dependencies.</li>
+</ul>
+<p>There are some existing systems for modularity in the Java
+ecosystem. The most notable is OSGi, which provides not only a module
+system addressing the concerns above, but also service runtime with
+classpath isolation, dynamic loading and unloading and lazy
+activation.</p>
+<p>OSGi (and other systems of comparable scope) are overkill for
+Arachne. Although they come with benefits, they are very heavyweight
+and carry a high complexity burden, not just for Arachne development
+but also for end users. Specifically, Arachne applications will be
+drastically simpler if (at runtime) they exist as a straightforward
+codebase in a single classloader space. Features like lazy loading and
+dynamic start-stop are likewise out of scope; the goal is for an
+Arachne runtime itself to be lightweight enough that starting and
+stopping when modules change is not an issue.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>Arachne will not be responsible for packaging, distribution or
+downloading of modules. These jobs will be delegated to an external
+dependency management &amp; packaging tool. Initially, that tool will be
+Maven/Leiningen/Boot, or some other tool that works with Maven
+artifact repositories, since that is currently the standard for JVM
+projects.</p>
+<p>Modules that have a dependency on another module must specify a
+dependency using Maven (or other dependency management tool.)</p>
+<p>Arachne will provide no versioning system beyond what the packaging
+tool provides.</p>
+<p>Each module JAR will contain a special <code>arachne-modules.edn</code> file at
+the root of its classpath. This data file (when read) contains a
+sequence of <em>module definition maps</em>.</p>
+<p>Each module definition map contains the following information:</p>
+<ul>
+<li>The formal name of the module (as a namespaced symbol.)</li>
+<li>A list of dependencies of the module (as a set of namespaced
+symbols.) Module dependencies must form a directed acyclic graph;
+circular dependencies are not allowed.</li>
+<li>A namespace qualified symbol that resolves to the module's <em>schema
+function.</em> A schema function is a function with no arguments that
+returns transactable data containing the schema of the module.</li>
+<li>A namespace qualified symbol that resolves to the module's
+<em>configure function</em>. A configure function is a function that takes a
+configuration value and returns an updated configuration.</li>
+</ul>
+<p>When an application is defined, the user must specify a set of module
+names to use (exact mechanism TBD.) Only the specified modules (and
+their dependencies) will be considered by Arachne. In other words,
+merely including a module as a dependency in the package manager is
+not sufficient to activate it and cause it to be used in an
+application.</p>
+<h2 id=status-nan>Status</h2>
+<p>Proposed</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Creating a basic module is lightweight, requiring only:
+<ul>
+<li>writing a short EDN file</li>
+<li>writing a function that returns schema</li>
+<li>writing a function that queries and/or updates a configuration</li>
+</ul></li>
+<li>From a user's point of view, consuming modules will use the same
+familiar mechanisms as consuming a library.</li>
+<li>Arachne is not responsible for getting code on the classpath; that
+is a separate concern.</li>
+<li>We will need to think of a straightforward, simple way for
+application authors to specify the modules they want to be active.</li>
+<li>Arachne is not responsible for any complexities of publishing,
+downloading or versioning modules</li>
+<li>Module versioning has all of the drawbacks of the package manager's
+(usually Maven), including the pain of resolving conflicting
+versions. This situation with respect to dependency version
+management will be effectively the same as it is now with Clojure
+libraries.</li>
+<li>A single dependency management artifact can contain several Arachne
+modules (whether this is ever desirable is another question.)</li>
+<li>Although Maven is currently the default dependency/packaging tool
+for the Clojure ecosystem, Arachne is not specified to use only
+Maven. If an alternative system gains traction, it will be possible
+to package and publish Arachne modules using that.</li>
+</ul>
+<h1 id=architecture-decision-record-user-facing-configuration>Architecture Decision Record: User Facing Configuration</h1>
+<h2 id=context-nan>Context</h2>
+<p>Per <a href="adr-003-config-implementation.md">ADR-003</a>, Arachne uses
+Datomic-shaped data for configuration. Although this is a flexible,
+extensible data structure which is a great fit for programmatic
+manipulation, in its literal form it is quite verbose.</p>
+<p>It is quite difficult to understand the structure of Datomic data by
+reading its native textual representation, and it is similarly hard to
+write, containing enough repeated elements that copying and pasting
+quickly becomes the default.</p>
+<p>One of Arachne's core values is ease of use and a fluent experience
+for developers. Since much of a developer's interaction with Arachne
+will be writing to the config, it is of paramount importance that
+there be some easy way to create configuration data.</p>
+<p>The question is, what is the best way for developers of Arachne
+applications to interact with their application's configuration?</p>
+<h4 id=option-raw-datomic-txdata-nan>Option: Raw Datomic Txdata</h4>
+<p>This would require end users to write Datomic transaction data by hand
+in order to configure their application.</p>
+<p>This is the &quot;simplest&quot; option, and has the fewest moving
+parts. However, as mentioned above, it is very far from ideal for
+human interactions.</p>
+<h4 id=option-custom-edn-data-formats-nan>Option: Custom EDN data formats</h4>
+<p>In this scenario, users would write EDN data in some some nested
+structure of maps, sets, seqs and primitives. This is currently the
+most common way to configure Clojure applications.</p>
+<p>Each module would then need to provide a mapping from the EDN config
+format to the underlying Datomic-style config data.</p>
+<p>Because Arachne's configuration is so much broader, and defines so
+much more of an application than a typical application config file,
+it is questionable if standard nested EDN data would be a good fit
+for representing it.</p>
+<h4 id=option-code-based-configuration-nan>Option: Code-based configuration</h4>
+<p>Another option would be to go in the direction of some other
+frameworks, such as Ruby on Rails, and have the user-facing
+configuration be <em>code</em> rather than data.</p>
+<p>It should be noted that the primary motivation for having a
+data-oriented configuration language, that it makes it easier to
+interact with programmatically, doesn't really apply in Arachne's
+case. Since applications are always free to interact richly with
+Arachne's full configuration database, the ability to programmatically
+manipulate the precursor data is moot. As such, one major argument
+against a code-based configuration strategy does not apply.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>Developers will have the option of writing configuration using either
+native Datomic-style, data, or code-based <em>configuration
+scripts</em>. Configuration scripts are Clojure files which, when
+evaluated, update a configuration stored in an atom currently in
+context (using a dynamically bound var.)</p>
+<p>Configuration scripts are Clojure source files in a distinct directory
+that by convention is <em>outside</em> the application's classpath:
+configuration code is conceptually and physically separate from
+application code. Conceptually, loading the configuration scripts
+could take place in an entirely different process from the primary
+application, serializing the resulting config before handing it to the
+runtime application.</p>
+<p>To further emphasize the difference between configuration scripts and
+runtime code, and because they are not on the classpath, configuration
+scripts will not have namespaces and will instead include each other
+via Clojure's <code>load</code> function.</p>
+<p>Arachne will provide code supporting the ability of module authors to
+write &quot;configuration DSLs&quot; for users to invoke from their
+configuration scripts. These DSLs will emphasize making it easy to
+create appropriate entities in the configuration. In general, DSL
+forms will have an imperative style: they will convert their arguments
+to configuration data and immediately transact it to the context
+configuration.</p>
+<p>As a trivial example, instead of writing the verbose configuration data:</p>
+<pre><code class="language-clojure">{:arachne/id :my.app/server
+ :arachne.http.server/port 8080
+ :arachne.http.server/debug true}
+</code></pre>
+<p>You could write the corresponding DSL:</p>
+<pre><code class="language-clojure">(server :id :my.app/server, :port 8080, :debug true)
+</code></pre>
+<p>Note that this is an illustrative example and does not represent the
+actual DSL or config for the HTTP module.</p>
+<p>DSLs should make heavy use of Spec to make errors as comprehensible as possible.</p>
+<h2 id=status-nan>Status</h2>
+<p>Proposed</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>It will be possible for end users to define their configuration
+without writing config data by hand.</li>
+<li>Users will have access to the full power of the Clojure programming
+language when configuring their application. This grants a great deal
+of power and flexibility, but also the risk of users doing inadvisable
+things in their config scripts (e.g, non-repeatable side effects.)</li>
+<li>Module authors will bear the responsibility of providing
+an appropriate, user-friendly DSL interface to their configuration data.</li>
+<li>DSLs can compose; any module can reference and re-use the DSL
+definitions included in modules upon which it depends.</li>
+</ul>
+<h1 id=architecture-decision-record-core-runtime>Architecture Decision Record: Core Runtime</h1>
+<h2 id=context-nan>Context</h2>
+<p>At some point, every Arachne application needs to start; to bootstrap
+itself from a static project or deployment artifact, initialize what
+needs initializing, and begin servicing requests, connecting to
+databases, processing data, etc.</p>
+<p>There are several logically inherent subtasks to this bootstrapping process, which can be broken down as follows.</p>
+<ul>
+<li>Starting the JVM
+<ul>
+<li>Assembling the project's dependencies</li>
+<li>Building a JVM classpath</li>
+<li>Starting a JVM</li>
+</ul></li>
+<li>Arachne Specific
+<ul>
+<li>Reading the initial user-supplied configuration (i.e, the configuration scripts from <a href="adr-005-user-facing-config.md">ADR-005</a>)</li>
+<li>Initializing the Arachne configuration given a project's set of modules (described in <a href="adr-002-configuration.md">ADR-002</a> and <a href="adr-004-module-loading.md">ADR-004</a>)</li>
+</ul></li>
+<li>Application Specific
+<ul>
+<li>Instantiate user and module-defined objects that needs to exist at runtime.</li>
+<li>Start and stop user and module-defined services</li>
+</ul></li>
+</ul>
+<p>As discussed in <a href="adr-004-module-loading.md">ADR-004</a>, tasks in the &quot;starting the JVM&quot; category are not in-scope for Arachne; rather, they are offloaded to whatever build/dependency tool the project is using (usually either <a href="http://boot-clj.com">boot</a> or <a href="http://leiningen.org">leiningen</a>.)</p>
+<p>This leaves the Arachne and application-specific startup tasks. Arachne should provide an orderly, structured startup (and shutdown) procedure, and make it possible for modules and application authors to hook into it to ensure that their own code initializes, starts and stops as desired.</p>
+<p>Additionally, it must be possible for different system components to have dependencies on eachother, such that when starting, services start <em>after</em> the services upon which they depend. Stopping should occur in reverse-dependency order, such that a service is never in a state where it is running but one of its dependencies is stopped.</p>
+<h2 id=decision-nan>Decision</h2>
+<h4 id=components-nan>Components</h4>
+<p>Arachne uses the <a href="https://github.com/stuartsierra/component">Component</a> library to manage system components. Instead of requiring users to define a component system map manually, however, Arachne itself builds one based upon the Arachne config via <em>Configuration Entities</em> that appear in the configuration.</p>
+<p>Component entities may be added to the config directly by end users (via a initialization script as per <a href="adr-005-user-facing-config.md">ADR-005</a>), or by modules in their <code>configure</code> function (<a href="adr-004-module-loading.md">ADR-004</a>.)</p>
+<p>Component entities have attributes which indicates which other components they depend upon. Circular dependencies are not allowed; the component dependency structure must form a Directed Acyclic Graph (DAG.) The dependency attributes also specify the key that Component will use to <code>assoc</code> dependencies.</p>
+<p>Component entities also have an attribute that specifies a <em>component constructor function</em> (via a fully qualified name.) Component constructor functions must take two arguments: the configuration, and the entity ID of the component that is to be constructed. When invoked, a component constructor must return a runtime component object, to be used by the Component library. This may be any object that implements <code>clojure.lang.Associative</code>, and may also optionally satisfy Component's <code>Lifecycle</code> protocol.</p>
+<h4 id=arachne-runtime-nan>Arachne Runtime</h4>
+<p>The top-level entity in an Arachne system is a reified <em>Arachne Runtime</em> object. This object contains both the Component system object, and the configuration value upon which the runtime is based. It satisfies the <code>Lifecycle</code> protocol itself; when it is started or stopped, all of the component objects it contains are started or stopped in the appropriate order.</p>
+<p>The constructor function for a Runtime takes a configuration value and some number of &quot;roots&quot;; entity IDs or lookup refs of Component entities in the config. Only these root components and their transitive dependencies will be instantiated or added to the Component system. In other words, only component entities that are actually used will be instantiated; unused component entities defined in the config will be ignored.</p>
+<p>A <code>lookup</code> function will be provided to find the runtime object instance of a component, given its entity ID or lookup ref in the configuraiton.</p>
+<h4 id=startup-procedure-nan>Startup Procedure</h4>
+<p>Arachne will rely upon an external build tool (such as boot or leiningen.) to handle downloading dependencies, assembling a classpath, and starting a JVM.</p>
+<p>Once JVM with the correct classpath is running, the following steps are required to yield a running Arachne runtime:</p>
+<ol>
+<li>Determine a set of modules to use (the &quot;active modules&quot;)</li>
+<li>Build a configuration schema by querying each active module using its <code>schema</code> function (<a href="module-loading.md">ADR-004</a>)</li>
+<li>Update the config with initial configuration data from user init scripts (<a href="adr-005-user-facing-config.md">ADR-005</a>)</li>
+<li>In module dependency order, give each module a chance to query and update the configuration using its <code>configure</code> function (<a href="module-loading.md">ADR-004</a>)</li>
+<li>Create a new Arachne runtime, given the configuration and a set of root components.</li>
+<li>Call the runtime's <code>start</code> method.</li>
+</ol>
+<p>The Arachne codebase will provide entry points to automatically perform these steps for common development and production scenarios. Alternatively, they can always be be executed individually in a REPL, or composed in custom startup functions.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>It is possible to fully define the system components and their dependencies in an application's configuration. This is how Arachne achieves dependency injection and inversion of control.</li>
+<li>It is possible to explicitly create, start and stop Arachne runtimes.</li>
+<li>Multiple Arachne runtimes may co-exist in the same JVM (although they may conflict and fail to start if they both attempt to use a global resource such as a HTTP port)</li>
+<li>By specifying different root components when constructing a runtime, it is possible to run different types of Arachne applications based on the same Arachne configuration value.</li>
+</ul>
+<h1 id=architecture-decision-record-configuration-updates>Architecture Decision Record: Configuration Updates</h1>
+<h2 id=context-nan>Context</h2>
+<p>A core part of the process of developing an application is making changes to its configuration. With its emphasis on configuration, this is even more true of Arachne than with most other web frameworks.</p>
+<p>In a development context, developers will want to see these changes reflected in their running application as quickly as possible. Keeping the test/modify cycle short is an important goal.</p>
+<p>However, accommodating change is a source of complexity. Extra code would be required to handle  &quot;update&quot; scenarios. Components are initialized with a particular configuration in hand. While it would be possible to require that every component support an <code>update</code> operation to receive an arbitrary new config, implementing this is non-trivial and would likely need to involve conditional logic to determine the ways in which the new configuration is different from the old. If any mistakes where made in the implementation of <code>update</code>, <em>for any component</em>, such that the result was not identical to a clean restart, it would be possible to put the system in an inconsistent, unreproducible state.</p>
+<p>The &quot;simplest&quot; approach is to avoid the issue and completely discard and rebuild the Arachne runtime (<a href="adr-006-core-runtime">ADR-006</a>) every time the configuration is updated. Every modification to the config would be applied via a clean start, guaranteeing reproducibility and a single code path.</p>
+<p>However, this simple baseline approach has two major drawbacks:</p>
+<ol>
+<li>The shutdown, initialization, and startup times of the entire set of components will be incurred every time the configuration is updated.</li>
+<li>The developer will lose any application state stored in the components whenever the config is modified.</li>
+</ol>
+<p>The startup and shutdown time issues are potentially problematic because of the general increase to cycle time. However, it might not be too bad depending on exactly how long it takes sub-components to start. Most commonly-used components take only a few milliseconds to rebuild and restart. This is a cost that most Component workflows absorb without too much trouble.</p>
+<p>The second issue is more problematic. Not only is losing state a drain on overall cycle speed, it is a direct source of frustration, causing developers to repeat the same tasks over and over. It will mean that touching the configuration has a real cost, and will cause developers to be hesitant to do so.</p>
+<h3 id=prior-art-nan>Prior Art</h3>
+<p>There is a library designed to solve the startup/shutdown problem, in conjunction with Component: <a href="https://github.com/weavejester/suspendable">Suspendable</a>. It is not an ideal fit for Arachne, since it focuses on suspending and resuming the same Component instances rather than rebuilding, but its approach may be instructive.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>Whenever the configuration changes, we will use the simple approach of stopping and discarding the entire old Arachne runtime (and all its components), and starting a new one.</p>
+<p>To mitigate the issue of lost state, Arachne will provide a new protocol called <code>Preservable</code> (name subject to change, pending a better one.) Components may optionally implement <code>Preservable</code>; it is not required. <code>Preservable</code> defines a single method, <code>preserve</code>.</p>
+<p>Whenever the configuration changes, the following procedure will be used:</p>
+<ol>
+<li>Call <code>stop</code> on the old runtime.</li>
+<li>Instantiate the new runtime.</li>
+<li>For all components in the new runtime which implement <code>Preservable</code>, invoke the <code>preserve</code> function, passing it the corresponding component from the old runtime (if there is one).</li>
+<li>The <code>preserve</code> function will selectively copy state out of the old, stopped component into the new, not-yet-started component. It should be careful not to copy any state that would be invalidated by a configuration change.</li>
+<li>Call <code>start</code> on the new runtime.</li>
+</ol>
+<p>Arachne will not provide a mitigation for avoiding the cost of stopping and starting individual components. If this becomes a pain point, we can explore solutions such as that offered by Suspendable.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>The basic model for handling changes to the config will be easy to implement and reason about.</li>
+<li>It will be possible to develop with stateful components without losing state after a configuration change.</li>
+<li>Only components which need preservable state need to worry about it.</li>
+<li>The default behavior will prioritize correctness.</li>
+<li>It is <em>possible</em> to write a bad <code>preserve</code> method which copies elements of the old configuration.</li>
+<li>However, because all copies are explicit, it should be easy to avoid writing bad <code>preserve</code> methods.</li>
+</ul>
+<h1 id=architecture-decision-record-abstract-modules>Architecture Decision Record: Abstract Modules</h1>
+<h2 id=context-nan>Context</h2>
+<p>One design goal of Arachne is to have modules be relatively easily swappable. Users should not be permanently committed to particular technical choices, but instead should have some flexibility in choosing their preferred tech, as long as it exists in the form of an Arachne module.</p>
+<p>Some examples of the alternative implementations that people might wish to use for various parts of their application:</p>
+<ul>
+<li>HTTP Server: Pedestal or Ring</li>
+<li>Database: Datomic, an RDBMS or one of many NoSQL options.</li>
+<li>HTML Templating: Hiccup, Enlive, StringTemplate, etc.</li>
+<li>Client-side code: ClojureScript, CoffeeScript, Elm, etc.</li>
+<li>Authentication: Password-based, OpenID, Facebook, Google, etc.</li>
+<li>Emailing: SMTP, one of many third-party services.</li>
+</ul>
+<p>This is only a representative sample; the actual list is unbounded.</p>
+<p>The need for this kind of flexibility raises some design concerns:</p>
+<p><strong>Capability</strong>. Users should always be able to leverage the full power of their chosen technology. That is, they should not have to code to the &quot;least common denominator&quot; of capability. If they use Datomic Pro, for example, they should be able to write Datalog and fully utilize the in-process Peer model, not be restricted to an anemic &quot;ORM&quot; that is also compatible with RDBMSs.</p>
+<p><strong>Uniformity</strong>. At tension with capability is the desire for uniformity; where the feature set of two alternatives is <em>not</em> particularly distinct, it is desirable to use a common API, so that implementations can be swapped out with little or no effort. For example, the user-facing API for sending a single email should (probably) not care whether it is ultimately sent via a local Sendmail server or a third-party service.</p>
+<p><strong>Composition</strong>. Modules should also <em>compose</em> as much as possible, and they should be as general as possible in their dependencies to maximize the number of compatible modules. In this situation, it is actually desirable to have a &quot;least common denominator&quot; that modules can have a dependency on, rather than depending on specific implementations. For example, many modules will need to persist data and ultimately will need to work in projects that use Datomic or SQL. Rather than providing multiple versions, one for Datomic users and another for SQL, it would be ideal if they could code against a common persistence abstraction, and therefore be usable in <em>any</em> project with a persistence layer.</p>
+<h3 id=what-does-it-mean-to-use-a-module-nan>What does it mean to use a module?</h3>
+<p>The following list enumerates the ways in which it is possible to &quot;use&quot; a module, either from a user application or from another module. (See <a href="ADR-004-module-loading.md">ADR-004</a>).</p>
+<ol>
+<li>You can call code that the module provides (the same as any Clojure library.)</li>
+<li>You can extend a protocol that the module provides (the same as any Clojure library.)</li>
+<li>You can read the attributes defined in the module from the configuration.</li>
+<li>You can write configuration data using the attributes defined in the module.</li>
+</ol>
+<p>These tools allow the definition of modules with many different kinds of relationships to each other. Speaking loosely, these relationships can correspond to other well-known patterns in software development including composition, mixins, interface/implementation, inheritance, etc.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>In order to simultaneously meet the needs for capability, uniformity and composition, Arachne's core modules will (as appropriate) use the pattern of <em>abstract modules</em>.</p>
+<p>Abstract modules define certain attributes (and possibly also corresponding init script DSLs) that describe entities in a particular domain, <em>without</em> providing any runtime implementation which uses them. Then, other modules can &quot;implement&quot; the abstract module, reading the abstract entities and doing something concrete with them at runtime, as well as defining their own more specific attributes.</p>
+<p>In this way, user applications and dependent modules can rely either on the common, abstract module or the specific, concrete module as appropriate. Coding against the abstract module will yield a more generic &quot;least common denominator&quot; experience, while coding against a specific implementor will give more access to the unique distinguishing features of that particular technology, at the cost of generality.</p>
+<p>Similar relationships should hold in the library code which modules expose (if any.) An abstract module, for example, would be free to define a protocol, intended to be implemented concretely by code in an implementing module.</p>
+<p>This pattern is fully extensible; it isn't limited to a single level of abstraction. An abstract module could itself be a narrowing or refinement of another, even more general abstract module.</p>
+<h3 id=concrete-example-nan>Concrete Example</h3>
+<p>As mentioned above, Arachne would like to support both Ring and Pedestal as HTTP servers. Both systems have a number of things in common:</p>
+<ul>
+<li>The concept of a &quot;server&quot; running on a port.</li>
+<li>The concept of a URL path/route</li>
+<li>The concept of a terminal &quot;handler&quot; function which receives a request and returns a response.</li>
+</ul>
+<p>They also have some key differences:</p>
+<ul>
+<li>Ring composes &quot;middleware&quot; functions, whereas Pedestal uses &quot;interceptor&quot; objects</li>
+<li>Asynchronous responses are handled differently</li>
+</ul>
+<p>Therefore, it makes sense to define an abstract HTTP module which defines the basic domain concepts; servers, routes, handlers, etc. Many dependent modules and applications will be able to make real use of this subset.</p>
+<p>Then, there will be the two modules which provide concrete implementations; one for Pedestal, one for Ring. These will contain the code that actually reads the configuration, and at runtime builds appropriate routing tables, starts server instances, etc. Applications which wish to make direct use of a specific feature like Pedestal interceptors may freely do so, using attributes defined by the Pedestal module.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>If modules or users want to program against a &quot;lowest common denominator&quot; abstraction, they may do so, at the cost of the ability to use the full feature set of a library.</li>
+<li>If modules or users want to use the full feature set of a library, they may do so, at the cost of being able to transparently replace it with something else.</li>
+<li>There will be a larger number of different Arachne modules available, and their relationships will be more complex.</li>
+<li>Careful thought and architecture will need to go into the factoring of modules, to determine what the correct general elements are.</li>
+</ul>
+<h1 id=architecture-decision-record-configuration-ontology>Architecture Decision Record: Configuration Ontology</h1>
+<h2 id=context-nan>Context</h2>
+<p>In <a href="adr-003-config-implementation.md">ADR-003</a> it was decided to use a Datomic-based configuration, the alternative being something more semantically or ontologically descriptive such as RDF+OWL.</p>
+<p>Although we elected to use Datomic, Datomic does not itself offer much ontological modeling capacity. It has no built-in notion of types/classes, and its attribute specifications are limited to what is necessary for efficient storage and indexing, rather than expressive or validative power.</p>
+<p>Ideally, we want modules to be able to communicate additional information about the structure and intent of their domain model, including:</p>
+<ul>
+<li>Types of entities which can exist</li>
+<li>Relationships between those types</li>
+<li>Logical constraints on the values of attributes:
+<ul>
+<li>more fine grained cardinality; optional/required attributes</li>
+<li>valid value ranges</li>
+<li>target entity type (for ref attributes)</li>
+</ul></li>
+</ul>
+<p>This additional data could serve three purposes:</p>
+<ul>
+<li>Documentation about the intended purpose and structure of the configuration defined by a module.</li>
+<li>Deeper, more specific validation of user-supplied configuration values</li>
+<li>Machine-readable integration point for tools which consume and produce Arachne configurations.</li>
+</ul>
+<h2 id=decision-nan>Decision</h2>
+<ul>
+<li>We will add meta-attributes to the schema of every configuration, expressing basic ontological relationships.</li>
+<li>These attributes will be semantically compatible with OWL (such that we could conceivably in the future generate an OWL ontology from a config schema)</li>
+<li>The initial set of these attributes will be minimal, and targeted towards the information necessary to generate rich schema diagrams
+<ul>
+<li>classes and superclass</li>
+<li>attribute domain</li>
+<li>attribute range (for ref attributes)</li>
+<li>min and max cardinality</li>
+</ul></li>
+<li>Arachne core will provide some (optional) utility functions for schema generation, to make writing module schemas less verbose.</li>
+</ul>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Arachne schemas will reify the concept of entity type and the possible relationships between entities of various types.</li>
+<li>We will have an approach for adding additional semantic attributes in the future, as it makes sense to do so.</li>
+<li>We will not be obligated to define an entire ontology up front</li>
+<li>Modules usage of the defined ontology is not technically enforced. Some, (such as entity type relationships) will be the strong convention and possibly required for tool support; others (such as min and max cardinality) will be optional.</li>
+<li>We will preserve the possibility for interop with OWL in the future.</li>
+</ul>
+<h1 id=architecture-decision-record-persistent-configuration>Architecture Decision Record: Persistent Configuration</h1>
+<h2 id=context-nan>Context</h2>
+<p>While many Arachne applications will use a transient config which is rebuilt from its initialization scripts every time an instance is started, some users might wish instead to store their config persistently in a full Datomic instance.</p>
+<p>There are a number of possible benefits to this approach:</p>
+<ul>
+<li>Deployments from the same configuration are highly reproducible</li>
+<li>Organizations can maintain an immutable persistent log of configuration changes over time.</li>
+<li>External tooling can be used to persistently build and define configurations, up to and including full &quot;drag and drop&quot; architecture or application design.</li>
+</ul>
+<p>Doing this introduces a number of additional challenges:</p>
+<ul>
+<li><p><strong>Initialization Scripts</strong>: Having a persistent configuration introduces the question of what role initialization scripts play in the setup. Merely having a persistent config does not make it easier to modify by hand - quite the opposite. While an init script could be used to create the configuration, it's not clear how they would be updated from that point (absent a full config editor UI.)</p>
+<p>Re-running a modified configuration script on an existing configuration poses challenges as well; it would require that all scripts be idempotent, so as not to create spurious objects on subsequent runs. Also, scripts would then need to support some concept of retraction.</p></li>
+<li><p><strong>Scope &amp; Naming</strong>: It is extremely convenient to use <code>:db.unique/identity</code> attributes to identify particular entities in a configuration and configuration init scripts. This is not only convenient, but <em>required</em> if init scripts are to be idempotent, since this is the only mechanism by which Datomic can determine that a new entity is &quot;the same&quot; as an older entity in the system.</p>
+<p>However, if there are multiple different configurations in the same database, there is the risk that some of these unique values might be unintentionally the same and &quot;collide&quot;, causing inadvertent linkages between what ought to be logically distinct configurations.</p>
+<p>While this can be mitigated in the simple case by ensuring that every config uses its own unique namespace, it is still something to keep in mind.</p></li>
+<li><p><strong>Configuration Copying &amp; Versioning</strong> Although Datomic supports a full history, that history is linear. Datomic does not currently support &quot;forking&quot; or maintaining multiple concurrent versions of the same logical data set.</p>
+<p>This does introduce complexities when thinking about &quot;modifying&quot; a configuration, while still keeping the old one. This kind of &quot;fork&quot; would require a deep clone of all the entities in the config, <em>as well as</em> renaming all of the <code>:db.unique/identity</code> attrs.</p>
+<p>Renaming identity attributes compounds the complexity, since it implies that either idents cannot be hardcoded in initialization scripts, or the same init script cannot be used to generate or update two different configurations.</p></li>
+<li><p><strong>Environment-specific Configuration</strong>: Some applications need slightly different configurations for different instances of the &quot;same&quot; application. For instance, some software needs to be told what its own IP address is. While it makes sense to put this data in the configuration, this means that there would no longer be a single configuration, but N distinct (yet 99% identical) configurations.</p>
+<p>One solution would be to not store this data in the configuration (instead picking it up at runtime from an environment variable or secondary config file), but multiplying the sources of configuration runs counter to Arachne's overriding philosophy of putting everything in the configuration to start with.</p></li>
+<li><p><strong>Relationship with module load process</strong>: Would the stored configuration represent only the &quot;initial&quot; configuration, before being updated by the active modules? Or would it represent the complete configuration, after all the modules have completed their updates?</p>
+<p>Both alternatives present issues.</p>
+<p>If only the user-supplied, initial config is stored, then the usefulness of the stored config is diminished, since it does not provide a comprehensive, complete view of the configuration.</p>
+<p>On the other hand, if the complete, post-module config is persisted, it raises more questions. What happens if the user edits the configuration in ways that would cause modules to do something different with the config? Is it possible to run the module update process multiple times on the same config? If so, how would &quot;old&quot; or stale module-generated values be removed?</p></li>
+</ul>
+<h4 id=goals-nan>Goals</h4>
+<p>We need a technical approach with good answers to the challenges described above, that enables a clean user workflow. As such, it is useful to enumerate the specific activities that it would be useful for a persistent config implementation to support:</p>
+<ul>
+<li>Define a new configuration from an init script.</li>
+<li>Run an init script on an existing configuration, updating it.</li>
+<li>Edit an existing configuration using the REPL.</li>
+<li>Edit an existing configuration using a UI.</li>
+<li>Clone a configuration</li>
+<li>Deploy based on a specific configuration</li>
+</ul>
+<p>At the same time, we need to be careful not to overly complicate things for the common case; most applications will still use the pattern of generating a configuration from an init script immediately before running an application using it.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>We will not attempt to implement a concrete strategy for config persistence at this time; it runs the risk of becoming a quagmire that will halt forward momentum.</p>
+<p>Instead, we will make a minimal set of choices and observations that will enable forward progress while preserving the ability to revisit the issue of persistent configuration at some point in the future.</p>
+<ol>
+<li>The configuration schema itself should be compatible with having several configurations present in the same persistent database. Specifically:</li>
+</ol>
+<ul>
+<li>Each logical configuration should have its own namespace, which will be used as the namespace of all <code>:db.unique/identity</code> values, ensuring their global uniqueness.</li>
+<li>There is a 'configuration' entity that reifies a config, its possible root components, how it was constructed, etc.</li>
+<li>The entities in a configuration must form a connected graph. That is, every entity in a configuration must be reachable from the base 'config' entity. This is required to have any ability to identify the config as a whole within for any purpose.</li>
+</ul>
+<ol start="2">
+<li><p>The current initial <em>tooling</em> for building configurations (including the init scripts) will focus on building configurations from scratch. Tooling capable of &quot;editing&quot; an existing configuration is sufficiently different, with a different set of requirements and constraints, that it needs its own design process.</p></li>
+<li><p>Any future tooling for storing, viewing and editing configurations will need to explicitly determine whether it wants to work with the configuration before or after processing by the modules, since there is a distinct set of tradeoffs.</p></li>
+</ol>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ol>
+<li>We can continue making forward progress on the &quot;local&quot; configuration case.</li>
+<li>Storing persistent configurations remains possible.</li>
+<li>It is immediately possible to save configurations for repeatability and debugging purposes.
+<ul>
+<li>The editing of persistent configs is what will be more difficult.</li>
+</ul></li>
+<li>When we want to edit persistent configurations, we will need to analyze the specific use cases to determine the best way to do so, and develop tools specific to those tasks.</li>
+</ol>
+<h1 id=architecture-decision-record-asset-pipeline>Architecture Decision Record: Asset Pipeline</h1>
+<h2 id=context-nan>Context</h2>
+<p>In addition to handling arbitrary HTTP requests, we would like for Arachne to make it easy to serve up certain types of well-known resources, such as static HTML, images, CSS, and JavaScript.</p>
+<p>These &quot;static assets&quot; can generally be served to users as files directly, without processing at the time they are served. However, it is extremely useful to provide <em>pre-processing</em>, to convert assets in one format to another format prior to serving them. Examples of such transformations include:</p>
+<ul>
+<li>SCSS/LESS to CSS</li>
+<li>CoffeeScript to JavaScript</li>
+<li>ClojureScript to JavaScript</li>
+<li>Full-size images to thumbnails</li>
+<li>Compress files using gzip</li>
+</ul>
+<p>Additionally, in some cases, several such transformations might be required, on the same resource. For example, a file might need to be converted from CoffeeScript to JavaScript, then minified, then gzipped.</p>
+<p>In this case, asset transformations form a logical pipeline, applying a set of transformations in a known order to resources that meet certain criteria.</p>
+<p>Arachne needs a module that defines a way to specify what assets are, and what transformations ought to apply and in what order. Like everything else, this system needs to be open to extension by other modules, to provide custom processing steps.</p>
+<h3 id=development-vs-production-nan>Development vs Production</h3>
+<p>Regardless of how the asset pipeline is implemented, it must provide a good development experience such that the developer can see their changes immediately. When the user modifies an asset file, it should be automatically reflected in the running application in near realtime. This keeps development cycle times low, and provides a fluid, low-friction development experience that allows developers to focus on their application.</p>
+<p>Production usage, however, has a different set of priorities. Being able to reflect changes is less important; instead, minimizing processing cost and response time is paramount. In production, systems will generally want to do as much processing as they can ahead of time (during or before deployment), and then cache aggressively.</p>
+<h3 id=deployment--distribution-nan>Deployment &amp; Distribution</h3>
+<p>For development and simple deployments, Arachne should be capable of serving assets itself. However, whatever technique it uses to implement the asset pipeline, it should also be capable of sending the final assets to a separate cache or CDN such that they can be served statically with optimal efficiency. This may be implemented as a separate module from the core asset pipeline, however.</p>
+<h3 id=entirely-static-sites-nan>Entirely Static Sites</h3>
+<p>There is a large class of websites which actually do not require any dynamic behavior at all; they can be built entirely from static assets (and associated pre-processing.) Examples of frameworks that cater specifically to this type of &quot;static site generation&quot; include Jekyll, Middleman, Brunch, and many more.</p>
+<p>By including the asset pipeline module, and <em>not</em> the HTTP or Pedestal modules, Arachne also ought to be able to function as a capable and extensible static site generator.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>Arachne will use Boot to provide an abstract asset pipeline. Boot has built-in support for immutable Filesets, temp directory management, and file watchers.</p>
+<p>As with everything in Arachne, the pipeline will be specified as pure data in the configuration, specifying inputs, outputs, and transformations explicitly.</p>
+<p>Modules that participate in the asset pipeline will develop against a well-defined API built around Boot Filesets.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>The asset pipeline will be fully specified as data in the Arachne configuration.</li>
+<li>Adding Arachne support for an asset transformation will involve writing a relatively straightforward wrapper adapting the library to work on boot Filesets.</li>
+<li>We will need to program against some of Boot's internal APIs, although Alan and Micha have suggested they would be willing to factor out the Fileset support to a separate library.</li>
+</ul>
+<h1 id=architecture-decision-record-enhanced-validation>Architecture Decision Record: Enhanced Validation</h1>
+<h2 id=context-nan>Context</h2>
+<p>As much as possible, an Arachne application should be defined by its configuration. If something is wrong with the configuration, there is no way that an application can be expected to work correctly.</p>
+<p>Therefore, it is desirable to validate that a configuration is correct to the greatest extent possible, at the earliest possible moment. This is important for two distinct reasons:</p>
+<ul>
+<li>Ease of use and developer friendliness. Config validation can return helpful errors that point out exactly what's wrong instead of deep failures with lengthy debug sessions.</li>
+<li>Program correctness. Some types of errors in configs might not be discovered at all during testing or development, and aggressively failing on invalid configs will prevent those issues from affecting end users in production.</li>
+</ul>
+<p>There are two &quot;kinds&quot; of config validation.</p>
+<p>The first is ensuring that a configuration as data is structurally correct; that it adheres to its own schema. This includes validating types and cardinalities as expressed by the Arachne's core ontology system.</p>
+<p>The second is ensuring that the Arachne Runtime constructed from a given configuration is correct; that the runtime component instances returned by component constructors are of the correct type and likely to work.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>Arachne will perform both kinds of validation. To disambiguate them (since they are logically distinct), we will term the structural/schema validation &quot;configuration validation&quot;, while the validation of the runtime objects will be &quot;runtime validation.&quot;</p>
+<p>Both styles of validation should be extensible by modules, so modules can specify additional validations, where necessary.</p>
+<h4 id=configuration-validation-nan>Configuration Validation</h4>
+<p>Configuration validation is ensuring that an Arachne configuration object is consistent with itself and with its schema.</p>
+<p>Because this is ultimately validating a set of Datomic style <code>eavt</code> tuples, the natural form for checking tuple data is Datalog queries and query rules, to search for and locate data that is &quot;incorrect.&quot;</p>
+<p>Each logical validation will have its own &quot;validator&quot;, a function which takes a config, queries it, and either returns or throws an exception. To validate a config, it is passed through every validator as the final step of building a module.</p>
+<p>The set of validators is open, and defined in the configuration itself. To add new validators, a module can transact entities for them during its configuration building phase.</p>
+<h4 id=runtime-validation-nan>Runtime Validation</h4>
+<p>Runtime validation occurs after a runtime is instantiated, but before it is started. Validation happens on the component level; each component may be subject to validation.</p>
+<p>Unlike Configuration validation, Runtime validation uses Spec. What specs should be applied to each component are defined in the configuration using a keyword-valued attribute. Specs may be defined on individual component entities, or to the <em>type</em> of a component entity. When a component is validated, it is validated using all the specs defined for it or any of its supertypes.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Validations have the opportunity to find errors and return clean error messages</li>
+<li>Both the structure of the config and the runtime instances can be validated</li>
+<li>The configuration itself describes how it will be validated</li>
+<li>Modules have complete flexibility to add new validations</li>
+<li>Users can write custom validations</li>
+</ul>
+<h1 id=architecture-decision-record-error-reporting>Architecture Decision Record: Error Reporting</h1>
+<h2 id=context-nan>Context</h2>
+<p>Historically, error handling has not been Clojure's strong suit. For the most part, errors take the form of a JVM exception, with a long stack trace that includes a lot of Clojure's implementation as well as stack frames that pertain directly to user code.</p>
+<p>Additionally, prior to the advent of <code>clojure.spec</code>, Clojure errors were often &quot;deep&quot;: a very generic error (like a NullPointerException) would be thrown from far within a branch, rather than eagerly validating inputs.</p>
+<p>There are Clojure libraries which make an attempt to improve the situation, but they typically do it by overriding Clojure's default exception printing functions across the board, and are sometimes &quot;lossy&quot;, dropping information that could be desirable to a developer.</p>
+<p>Spec provides an opportunity to improve the situation across the board, and with Arachne we want to be on the leading edge of providing helpful error messages that point straight to the problem, minimize time spent trying to figure out what's going on, and let developers get straight back to working on what matters to them.</p>
+<p>Ideally, Arachne's error handling should exhibit the following qualities:</p>
+<ul>
+<li>Never hide possibly relevant information.</li>
+<li>Allow module developers to be as helpful as possible to people using their tools.</li>
+<li>Provide rich, colorful, multi-line detailed explanations of what went wrong (when applicable.)</li>
+<li>Be compatible with existing Clojure error-handling practices for errors thrown from libraries that Arachne doesn't control.</li>
+<li>Not violate expectations of experienced Clojure programmers.</li>
+<li>Be robust enough not to cause additional problems.</li>
+<li>Not break existing logging tools for production use.</li>
+</ul>
+<h2 id=decision-nan>Decision</h2>
+<p>We will separate the problems of creating rich exceptions, and catching them and displaying them to the user.</p>
+<h3 id=creating-errors-nan>Creating Errors</h3>
+<p>Whenever a well-behaved Arachne module needs to report an error, it should throw an info-bearing exception. This exception should be formed such that it is handled gracefully by any JVM tooling; the message should be terse but communicative, containing key information with no newlines.</p>
+<p>However, in the <code>ex-data</code>, the exception will also contain much more detailed information, that can be used (in the correct context) to provide much more detailed or verbose errors. Specifically, it may contain the following keys:</p>
+<ul>
+<li><code>:arachne.error/message</code> - The short-form error message (the same as the Exception message.)</li>
+<li><code>:arachne.error/explanation</code> - a long-form error message, complete with newlines and formatting.</li>
+<li><code>:arachne.error/suggestions</code> - Zero or more suggestions on how the error might be fixed.</li>
+<li><code>:arachne.error/type</code> - a namespaced keyword that uniquely identifies the type of error.</li>
+<li><code>:arachne.error/spec</code> - The spec that failed (if applicable)</li>
+<li><code>:arachne.error/failed-data</code> - The data that failed to match the spec (if applicable)</li>
+<li><code>:arachne.error/explain-data</code> - An explain-data for the spec that failed (if applicable).</li>
+<li><code>:arachne.error/env</code> - A map of the locals in the env at the time the error was thrown.</li>
+</ul>
+<p>Exceptions may, of course, contain additional data; these are the common keys that tools can use to more effectively render errors.</p>
+<p>There will be a suite of tools, provided with Arachne's core, for conveniently generating errors that match this pattern.</p>
+<h3 id=displaying-errors-nan>Displaying Errors</h3>
+<p>We will use a pluggable &quot;error handling system&quot;, where users can explicitly install an exception handler other than the default.</p>
+<p>If the user does not install any exception handlers, errors will be handled the same way as they are by default (usually, dumped with the message and stack trace to  <code>System/err</code>.) This will not change.</p>
+<p>However, Arachne will also provide a function that a user can invoke in their main process, prior to doing anything else. Invoking this function will install a set of default exception handlers that will handle errors in a richer, more Arachne-specific way. This includes printing out the long-form error, or even (eventually) popping open a graphical data browser/debugger (if applicable.)</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Error handling will follow well-known JVM patterns.</li>
+<li>If users want, they can get much richer errors than baseline exception handling.</li>
+<li>The &quot;enhanced&quot; exception handling is optional and will not be present in production.</li>
+</ul>
+<h1 id=architecture-decision-record-project-templates>Architecture Decision Record: Project Templates</h1>
+<h2 id=context-nan>Context</h2>
+<p>When starting a new project, it isn't practical to start completely from scratch, every time. We would like to have a varity of &quot;starting point&quot; projects, for different purposes.</p>
+<h3 id=lein-templates-nan>Lein templates</h3>
+<p>In the Clojure space, Leiningen Templates fill this purpose. These are sets of special string-interpolated files that are &quot;rendered&quot; into a working project using special tooling.</p>
+<p>However, they have two major drawbacks:</p>
+<ul>
+<li>They only work when using Leiningen as a build tool.</li>
+<li>The template files are are not actually valid source files, which makes them difficult to maintain. Changes need to be manually copied over to the templates.</li>
+</ul>
+<h3 id=rails-templates-nan>Rails templates</h3>
+<p>Rails also provides a complete project templating solution. In Rails, the project template is a <code>template.rb</code> file which contains DSL forms that specify operations to perform on a fresh project. These operations include creating files, modifying a projects dependencies, adding Rake tasks, and running specific <em>generators</em>.</p>
+<p>Generators are particularly interesting, because the idea is that they can generate or modify stubs for files pertaining to a specific part of the application (e.g, a new model or a new controller), and they can be invoked <em>at any point</em>, not just initial project creation.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>To start with, Arachne templates will be standard git repositories containing an Arachne project. They will use no special syntax, and will be valid, runnable projects out of the box.</p>
+<p>In order to allow users to create their own projects, these template projects will include a <code>rename</code> script. The <code>rename</code> script will recursively rename an entire project directory to something that the user chooses, and will delete <code>.git</code> and re-run <code>git init</code>,</p>
+<p>Therefore, the process to start a new Arachne project will be:</p>
+<ol>
+<li>Choose an appropriate project template.</li>
+<li>Clone its git repository from Github</li>
+<li>Run the <code>rename</code> script to rename the project to whatever you wish</li>
+<li>Start a repl, and begin editing.</li>
+</ol>
+<h3 id=maven-distribution-nan>Maven Distribution</h3>
+<p>There are certain development environments where there is not full access to the open internet (particularly in certain governmental applications.) Therefore, accessing GitHub can prove difficult. However, in order to support developers, these organizations often run their own Maven mirrors.</p>
+<p>As a convenience to users in these situations, when it is necessary, we can build a wrapper that can compress and install a project directory as a Maven artifact. Then, using standard Maven command line tooling, it will be possible to download and decompress the artifact into a local filesystem directory, and proceed as normal.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>It will take only a few moments for users to create new Arachne projects.</li>
+<li>It will be straightforward to build, curate, test and maintain multiple different types of template projects.</li>
+<li>The only code we will need to write to support templates is the &quot;rename&quot; script.</li>
+<li>The rename script will need to be capable of renaming all the code and files in the template, with awareness of the naming requirements and conventions for Clojure namespaces and code.</li>
+<li>Template projects themselves can be built continuously using CI</li>
+</ul>
+<h3 id=contrast-with-rails-nan>Contrast with Rails</h3>
+<p>One way that this approach is inferior to Rails templates is that this approach is &quot;atomic&quot;; templating happens once, and it happens for the whole project. Rails templates can be composed of many different generators, and generators can be invoked at any point over a project's lifecycle to quickly stub out new functionality.</p>
+<p>This also has implications for maintenance; because Rails generators are updated along with each Rails release, the template itself is more stable, wheras Arachne templates would need to be updated every single time Arachne itself changes. This imposes a maintenance burden on templates maintained by the core team, and risks poor user experience for users who find and try to use an out-of-date third-party template.</p>
+<p>However, there is is mitigating difference between Arachne and Rails, which relates directly to the philosophy and approach of the two projects.</p>
+<p>In Rails, the project <em>is</em> the source files, and the project directory layout. If you ask &quot;where is a controller?&quot;, you can answer by pointing to the relevant <code>*.rb</code> file in the <code>app/controllers</code> directory. So in Rails, the task &quot;create a new controller&quot; <em>is equivalent to</em> creating some number of new files in the appropriate places, containing the appropriate code. Hence the importance of generators.</p>
+<p>In Arachne, by contrast, the project is not ultimately defined by its source files and directory structure; it is defined by the config. Of course there <em>are</em> source files and a directory structure, and there will be some conventions about how to organize them, but they are not the very definition of a project. Instead, a project's <em>Configuration</em> is the canonical definition of what a project is and what it does. If you ask &quot;where is a controller?&quot; in Arachne, the only meaningful answer is to point to data in the configuration. And the task &quot;create a controller&quot; means inserting the appropriate data into the config (usually via the config DSL.)</p>
+<p>As a consequence, Arachne can focus less on code generation, and more on generating <em>config</em> data. Instead of providing a <em>code</em> generator which writes source files to the project structure, Arachne can provide <em>config</em> generators which users can invoke (with comparable effort) in their config scripts.</p>
+<p>As such, Arachne templates will typically be very small. In Arachne, code generation is an antipattern. Instead of making it easy to generate code, Arachne focuses on building abstractions that let users specify their intent directly, in a terse manner.</p>
+<h1 id=architecture-decision-record-data-abstraction-model>Architecture Decision Record: Data Abstraction Model</h1>
+<h2 id=context-nan>Context</h2>
+<p>Most applications need to store and manipulate data. In the current state of the art in Clojure, this is usually done in a straightforward, ad-hoc way. Users write schema, interact with their database, and parse data from user input into a persistence format using explicit code.</p>
+<p>This is acceptable, if you're writing a custom, concrete application from scratch. But it will not work for Arachne. Arachne's modules need to be able to read and write domain data, while also being compatible with multiple backend storage modules.</p>
+<p>For example a user/password based authentication module needs to be able to read and write user records to the application database, and it should work whether a user is using a Datomic, SQL or NoSQL database.</p>
+<p>In other words, Arachne cannot function well in a world in which every module is required to interoperate directly against one of several alternative modules. Instead, there needs to be a way for modules to &quot;speak a common language&quot; for data manipulation and persistence.</p>
+<h3 id=other-use-cases-nan>Other use cases</h3>
+<p>Data persistence isn't the only concern. There are many other situations where having a common, abstract data model is highly useful. These include:</p>
+<ul>
+<li>quickly defining API endpoints based on a data model</li>
+<li>HTML &amp; mobile form generation</li>
+<li>generalized data validation tools</li>
+<li>unified administration &amp; metrics tools</li>
+</ul>
+<h3 id=modeling--manipulation-nan>Modeling &amp; Manipulation</h3>
+<p>There are actually two distinct concepts at play; data <em>modeling</em> and data <em>manipulation</em>.</p>
+<p><strong>Modeling</strong> is the activity of defining the abstract shape of the data; essentially, it is writing schema, but in a way that is not specific to any concrete implementation. Modules can then use the data model to generate concrete schema, generate API endpoints, forms, validate data, etc.</p>
+<p><strong>Manipulation</strong> is the activity of using the model to create, read update or delete actual data. For an abstract data manipulation layer, this generally means a polymorphic API that supports some common set of implementations, which can be extended to concrete CRUD operations</p>
+<h3 id=existing-solutions-orms-nan>Existing solutions: ORMs</h3>
+<p>Most frameworks have some answer to this problem. Rails has ActiveRecord, Elixir has Ecto, old-school Java has Hibernate, etc. In every case, they try to paper over what it looks like to access the actual database, and provide an idiomatic API in the language to read and persist data. This language-level API is uniformly designed to make the database &quot;easy&quot; to use, but also has the effect of providing a common abstraction point for extensions.</p>
+<p>Unfortunately, ORMs also exhibit a common set of problems. By their very nature, they are an extra level of indirection. They provide abstraction, but given how complex databases are the abstraction is always &quot;leaky&quot; in significant ways. Using them effectively requires a thorough understanding not only of the ORM's APIs, but also the underlying database implementation, and what the ORM is doing to map the data from one format to another.</p>
+<p>ORMs are also tied more or less tightly to the relational model. Attempts to extend ActiveRecord (for example) to non-relational data stores have had varying levels of success.</p>
+<h3 id=database-migrations-nan>Database &quot;migrations&quot;</h3>
+<p>One other function is to make sure that the concrete database schema matches the abstract data model that the application is using. Most ORMs implement this using some form of &quot;database migrations&quot;, which serve as a repeatable series of all changes made to a database. Ideally, these are not redundant with the abstract data model, to avoid repeating the same information twice and also to ensure consistency.</p>
+<h2 id=decision-nan>Decision</h2>
+<p>Arachne will provide a lightweight model for data abstraction and persistence, oriented around the Entity/Attribute mode. To avoid word salad and acronyms loaded with baggage and false expectations, we will give it a semantically clean name. We will be free to define this name, and set expectations around what it is and how it is to be used. I suggest &quot;Chimera&quot;, as it is in keeping with the Greek mythology theme and has several relevant connotations.</p>
+<p>Chimera consists of two parts:</p>
+<ul>
+<li>An entity model, to allow application authors to easily specify the shape of their domain data in their Arachne configuration.</li>
+<li>A set of persistence operations, oriented around plain Clojure data (maps, sets and vectors) that can be implemented meaningfully against multiple types of adapters. Individual operations are granular and can be both consumed and provided á la carte; adapters that don't support certain behaviors can omit them (at the cost of compatibility with modules that need them.)</li>
+</ul>
+<p>Although support for any arbitrary database cannot be guaranteed, the persistence operations are designed to support a majority of commonly used systems, including relational SQL databases, document stores, tuple stores, Datomic, or other &quot;NoSQL&quot; type systems.</p>
+<p>At the data model level, Chimera should be a powerful, easy to use way to specify the structure of your data, as data. Modules can then read this data and expose new functionality driven by the application domain model. It needs to be flexible enough that it can be &quot;projected&quot; as schema into diverse types of adapters, and customizable enough that it can be configured to adapt to existing database installations.</p>
+<h4 id=adapters-nan>Adapters</h4>
+<p>Chimera <em>Adapters</em> are Arachne modules which take the abstract data structures and operations defined by Chimera, and extend them to specific databases or database APIs such as JDBC, Datomic, MongoDB, etc.</p>
+<p>When applicable, there can also be &quot;abstract adapters&quot; that do the bulk of the work of adapting Chimera to some particular genre of database. For example, most key/value stores have similar semantics and core operations: there will likely be a &quot;Key/Value Adapter&quot; that does the bulk of the work for adapting Chimera's operations to key/value storage, and then several thin <em>concrete</em> adapters that implement the actual get/put commands for Cassandra, DynamoDB, Redis, etc.</p>
+<h3 id=limitations-and-drawbacks-nan>Limitations and Drawbacks</h3>
+<p>Chimera is designed to make a limited set of common operations <em>possible</em> to write generically. It is not and cannot ever be a complete interface to every database. Application developers <em>can</em> and <em>should</em> understand and use the native APIs of their selected database, or use a dedicated wrapper module that exposes the full power of their selected technology. Chimera represents only a single dimension of functionality; the entity/attribute model. By definition, it cannot provide access to the unique and powerful features that different databases provide and which their users ought to leverage.</p>
+<p>It is also important to recognize that there are problems (even problems that modules might want to tackle) for which Chimera's basic entity/attribute model is simply not a good fit. If the entity model isn't a good fit, &lt;u&gt;do not use&lt;/u&gt; Chimera. Instead, find (or write) an Arachne module that defines a data modeling abstraction better suited for the task at hand.</p>
+<p>Examples of applications that might not be a good fit for Chimera include:</p>
+<ul>
+<li>Extremely sparse or &quot;wide&quot; data</li>
+<li>Dynamic data which cannot have pre-defined attributes or structure</li>
+<li>Unstructured heterogeneous data (such as large binary or sampling data)</li>
+<li>Data that cannot be indexed and requires distributed or streaming data processing to handle effectively</li>
+</ul>
+<h3 id=modeling-nan>Modeling</h3>
+<p>The data model for an Arachne application is, like everything else, data in the Configuration. Chimera defines a set of DSL forms that application authors can use to define data models programmatically, and of course modules can also read, write and modify these definitions as part of their normal configuration process.</p>
+<p>Note: The configuration schema, including the schema for the data model, is <em>itself</em> defined using Chimera. This requires some special bootstrapping in the core module. It also implies that Arachne core has a dependency on Chimera. This does not mean that modules are required to use Chimera or that Chimera has some special status relative to other conceivable data models; it just means that it is a good fit for modeling the kind of data that needs to be stored in the configuration.</p>
+<h4 id=modeling-entity-types-nan>Modeling: Entity Types</h4>
+<p><em>Entity types</em> are entities that define the structure and content for a <em>domain entity</em>. Entity types specify a set of optional and required <em>attributes</em> that entities of that type must have.</p>
+<p>Entity types may have one or more supertypes. Semantically, supertypes imply that any entity which is an instance of the subtype is also an instance of the supertype. Therefore, the set of attributes that are valid or required for an entity are the attributes of its types and all ancestor types.</p>
+<p>Entity types define only data structures. They are not objects or classes; they do not define methods or behaviors.</p>
+<p>In addition to defining the structure of entities themselves, entity types can have additional config attributes that serve as implementation-specific hints. For example, an entity type could have an attribute to override the name of the SQL table used for persistence. This config attribute would be defined and used by the SQL module, not by Chimera itself.</p>
+<p>The basic attributes of the entity type, as defined by Chimera, are:</p>
+<ul>
+<li>The name of the type (as a namespace-qualified keyword)</li>
+<li>Any supertypes it may have</li>
+<li>What attributes can be applied to entities of this type</li>
+</ul>
+<h4 id=attribute-definitions-nan>Attribute Definitions</h4>
+<p>Attribute Definition entities define what types of values can be associated with an entity. They specify:</p>
+<ol>
+<li>The name of the attribute (as a namespace-qualified keyword)</li>
+<li>The min and max cardinality of an attribute (thereby specifying whether it is required or optional)</li>
+<li>The type of allowed values (see the section on <em>Value Types</em> below)</li>
+<li>Whether the attribute is a <em>key</em>. The values of a key attribute are expected to be globally unique, guaranteed to be present, and serve as a way to find specific entities, no matter what the underlying storage mechanism.</li>
+<li>Whether the attribute is <em>indexed</em>. This is primarily a hint to the underlying database implementation.</li>
+</ol>
+<p>Like entity types, attribute definitions may have any number of additional attributes, to modify behavior in an implementation-specific way.</p>
+<h5 id=value-types-nan>Value Types</h5>
+<p>The value of an attribute may be one of three types:</p>
+<ol>
+<li><p>A <strong>reference</strong> is a value that is itself an entity. The attribute must specify the entity type of the target entity.</p></li>
+<li><p>A <strong>component</strong> is a reference, with the added semantic implication that the value entity is a logical &quot;part&quot; of the parent entity. It will be retrieved automatically, along with the parent, and will also be deleted/retracted along with the parent entity.</p></li>
+<li><p>A <strong>primitive</strong> is a simple, atomic value. Primitives may be one of several defined types, which map more or less directly to primitive types on the JVM:</p>
+<ul>
+<li>Boolean (JVM <code>java.lang.Boolean</code>)</li>
+<li>String (JVM <code>java.lang.String</code>)</li>
+<li>Keyword (Clojure <code>clojure.lang.Keyword</code>)</li>
+<li>64 bit integer (JVM <code>java.lang.Long</code>)</li>
+<li>64 bit floating point decimal (JVM <code>java.lang.Double</code>)</li>
+<li>Arbitrary precision integer (JVM <code>java.math.BigInteger</code>)</li>
+<li>Arbitrary precision decimal (JVM <code>java.math.BigDecimal</code>)</li>
+<li>Instant (absolute time with millisecond resolution) (JVM <code>java.util.Date</code>)</li>
+<li>UUID (JVM <code>java.util.UUID</code>)</li>
+<li>Bytes (JVM byte array). Since not all storages support binary data, and might need to serialize it with base64, this should be fairly small.</li>
+</ul>
+<p>This set of primitives represent a reasonable common denominator that is supportable on most target databases. Note that the set is not closed: modules can specify new primitive types that are logically &quot;subtypes&quot; of the generic primitives. Entirely new types can also be defined (with the caveat that they will only work with adapters for which an implementation has been defined.)</p></li>
+</ol>
+<h4 id=validation-nan>Validation</h4>
+<p>All attribute names are namespace-qualified keywords. If there are specs registered using those keywords, they can be used to validate the corresponding values.</p>
+<p>Clojure requires that a namespace be loaded before the specs defined in it are globally registered. To ensure that all relevant specs are loaded before an application runs, Chimera provides config attributes that specify namespaces containing specs. Arachne will ensure that these namespaces are loaded first, so module authors can ensure that their specs are loaded before  they are needed.</p>
+<p>Chimera also provides a <code>generate-spec</code> operation which programmatically builds a spec for a given entity type, that can validate a full entity map of that type.</p>
+<h4 id=schema--migration-operations-nan>Schema &amp; Migration Operations</h4>
+<p>In order for data persistence to actually work, the schema of a particular database instance (at least, for those that have schema) needs to be compatible with the application's data model, as defined by Chimera's entity types and attributes.</p>
+<p>See <a href="adr-016-db-migrations.md">ADR-16</a> for an in-depth discussion of database migrations work, and the ramifications for how a Chimera data model is declared in the configuration.</p>
+<h3 id=entity-manipulation-nan>Entity Manipulation</h3>
+<p>The previous section discussed the data <em>model</em>, and how to define the general shape and structure of entities in an application. Entity <em>manipulation</em> refers to how the operations available to create, read, update, delete specific <em>instances</em> of those entities.</p>
+<h4 id=data-representation-nan>Data Representation</h4>
+<p>Domain entities are represented, in application code, as simple Clojure maps. In their function as Chimera entities, they are pure data; not objects. They are not required to support any additional protocols.</p>
+<p>Entity keys are restricted to being namespace-qualified keywords, which correspond with the attribute names defined in configuration (see <em>Attribute Definitions</em> above). Other keys will be ignored in Chimera's operations. Values may be any Clojure value, subject to spec validation before certain operations.</p>
+<p>Cardinality-many attributes <em>must</em> use a Clojure sequence, even if there is only one value.</p>
+<p>Reference values are represented in one of two ways; as a nested map, or as a <em>lookup reference</em>.</p>
+<p>Nested maps are straightforward. For example:</p>
+<pre><code>{:myapp.person/id 123
+ :myapp.person/name &quot;Bill&quot;
+ :myapp.person/friends [{:myapp.person/id 42
+                          :myapp.person/name &quot;Joe&quot;}]}
+</code></pre>
+<p>Lookup references are special values that identify an attribute (which must be a key) and value to indicate the target reference. Chimera provides a tagged literal specifially for lookup references.</p>
+<pre><code>{:myapp.person/id 123
+ :myapp.person/name &quot;Bill&quot;
+ :myapp.person/friends [#chimera.key[:myapp.person/id 42]]}
+</code></pre>
+<p>All Chimera operations that return data should use one of these representations.</p>
+<p>Both representations are largely equivalent, but there is an important note about passing nested maps to persistence operations: the intended semantics for any nested maps must be the same as the parent map. For example, you cannot call <code>create</code> and expect the top-level entity to be created while the nested entity is updated.</p>
+<p>Entities do <em>not</em> need to explicitly declare their entity type. Types may be derived from inspecting the set of keys and comparing it to the Entity Types defined in the configuration.</p>
+<h4 id=persistence-operations-nan>Persistence Operations</h4>
+<p>The following basic operations are defined:</p>
+<ul>
+<li><code>get</code> - Given an attribute name and value, return a set of matching entity maps from the database. Results are not guaranteed to be found unless the attribute is indexed. Results may be truncated if there are more than can be efficiently returned.</li>
+<li><code>create</code> - Given a full entity map, transactionally store it in the database. Adapters <em>may</em> throw an error if an entity with the same key attribute and value already exists.</li>
+<li><code>update</code> - Given a map of attributes and values update each of the attributes provided attributes to have new values. The map must contain at least one key attribute. Also takes a set of attribute names which will be deleted/retracted from the entity. Adapters <em>may</em> throw an error if no entity exists for the given key.</li>
+<li><code>delete</code> - Given a key attribute and a value, remove the entity and all its attributes and components.</li>
+</ul>
+<p>All these operations should be transactional if possible. Adapters which cannot provide transactional behavior for these operations should note this fact clearly in their documentation, so their users do not make false assumptions about the integrity of their systems.</p>
+<p>Each of these operations has its own protocol which may be required by modules, or satisfied by adapters à la carte. Thus, a module that does not require the full set of operations can still work with an adapter, as long as it satisfies the operations that it <em>does</em> need.</p>
+<p>This set of operations is not exhaustive; other modules and adapters are free to extend Chimera and define additional operations, with different or stricter semantics. These operations are those that it is possible to implement consistently, in a reasonably performant way, against a &quot;broad enough&quot; set of very different types of databases.</p>
+<p>To make it possible for them to be composed more flexibly, operations are expressed as data, not as direct methods.</p>
+<h4 id=capability-model-nan>Capability Model</h4>
+<p>Adapters must specify a list of what operations they support. Modules should validate this list at runtime, to ensure the adapter works with the operations that they require.</p>
+<p>In addition to specifying whether an operation is supported or not, adapters must specify whether they support the operation idempotently and/or transactionally.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Users and modules can define the shape and structure of their domain data in a way that is independent of any particular database or type of database.</li>
+<li>Modules can perform basic data persistence tasks in a database-agnostic way.</li>
+<li>Modules will be restricted to a severely limited subset of data persistence functionality, relative to using any database natively.</li>
+<li>The common data persistence layer is optional, and can be easily bypassed when it is not a good fit.</li>
+<li>The set of data persistence operations is open for extension.</li>
+<li>Because spec-able namespaced keywords are used pervasively, it will be straightforward to leverage Spec heavily for validation, testing, and seed data generation.</li>
+</ul>
+<h1 id=architecture-decision-record-database-migrations>Architecture Decision Record: Database Migrations</h1>
+<h2 id=context-nan>Context</h2>
+<p>In general, Arachne's philosophy embraces the concepts of immutability and reproducibility; rather than <em>changing</em> something, replace it with something new. Usually, this simplifies the mental model and reduces the number of variables, reducing the ways in which things can go wrong.</p>
+<p>But there is one area where this approach just can't work: administering changes to a production database. Databases must have a stable existence across time. You can't throw away all your data every time you want to make a change.</p>
+<p>And yet, some changes in the database do need to happen. Data models change. New fields are added. Entity relationships are refactored.</p>
+<p>The challenge is to provide a way to provide measured, safe, reproducible change across time which is <em>also</em> compatible with Arachne's target of defining and describing all relevant parts of an application (including it's data model (and therefore schema)) in a configuration.</p>
+<p>Compounding the challenge is the need to build a system that can define concrete schema for different types of databases, based on a common data model (such as Chimera's, as described in <a href="adr-015-data-abstraction-model.md">ADR-15</a>.)</p>
+<h3 id=prior-art-nan>Prior Art</h3>
+<p>Several systems to do this already exist. The best known is probably Rails' <a href="http://guides.rubyonrails.org/active_record_migrations.html">Active Record Migrations</a>, which is oriented around making schema changes to a relational database.</p>
+<p>Another solution of interest is <a href="http://www.liquibase.org">Liquibase</a>, a system which reifies database changes as data and explicitly applies them to a relation database.</p>
+<h3 id=scenarios-nan>Scenarios</h3>
+<p>There are a variety of &quot;user stories&quot; to accomodate. Some examples include:</p>
+<ol>
+<li>You are a new developer on a project, and want to create a local database that will work with the current HEAD of the codebase, for local development.</li>
+<li>You are responsible for the production deployment of your project, and your team has a new software version ready to go, but it requires some new fields to be added to the database before the new code will run.</li>
+<li>You want to set up a staging environment that is an exact mirror of your current production system.</li>
+<li>You and a fellow developer are merging your branches for different features. You both made different changes to the data model, and you need to be sure they are compatible after the merge.</li>
+<li>You recognize that you made a mistake earlier in development, and stored a currency value as a floating point number. You need to create a new column in the database which uses a fixed-point type, and copy over all the existing values, using rounding logic that you've agreed on with domain experts.</li>
+</ol>
+<h2 id=decision-nan>Decision</h2>
+<p>Chimera will explicitly define the concept of a migration, and reify migrations as entities in the configuration.</p>
+<p>A migration represents an atomic set of changes to the schema of a database. For any given database instance, either a migration has logically been applied, or it hasn't. Migrations have unique IDs, expressed as namespace-qualified keywords.</p>
+<p>Every migration has one or more &quot;parent&quot; migrations (except for a single, special &quot;initial&quot; migration, which has no parent). A migration may not be applied to a database unless all of its parents have already been applied.</p>
+<p>Migrations are also have a <em>signature</em>. The signature is an MD5 checksum of the <em>actual content</em> of the migration as it is applied to the database (whether that be txdata for Datomic, a string for SQL DDL, a JSON string, etc.) This is used to ensure that a migration is not &quot;changed&quot; after it has already been applied to some persistent database.</p>
+<p>Adapters are responsible for exposing an implementation of migrations (and accompanying config DSL) that is appropriate for the database type.</p>
+<p>Chimera Adapters must additionally satisfy two runtime operations:</p>
+<ul>
+<li><code>has-migration?</code> - takes ID and signature of a particular migration, and returns true if the migration has been successfully applied to the database. This implies that databases must be &quot;migration aware&quot; and store the IDs/signatures of migrations that have already been applied.</li>
+<li><code>migrate</code> - given a specific migration, run the migration and record that the migration has been applied.</li>
+</ul>
+<h3 id=migration-types-nan>Migration Types</h3>
+<p>There are four basic types of migrations.</p>
+<ol>
+<li><strong>Native migrations</strong>. These are instances of the migration type directly implemented by a database adapter, and are specific to the type of DB being used. For example, a native migration against a SQL database would be implemented (primarily) via a SQL string. A native migration can only be used by adapters of the appropriate type.</li>
+<li><strong>Chimera migrations</strong>. These define migrations using Chimera's entity/attribute data model. They are abstract, and should work against multiple different types of adapters. Chimera migrations should be supported by all Chimera adapters.</li>
+<li><strong>Sentinel migrations</strong>. These are used to coordinate manual changes to an existing database with the code that requires them. They will always fail to automatically apply to an existing database: the database admin must add the migration record explicitly after they perform the manual migration task.  <em>(Note, actually implementing these can be deferred until if or when they are needed)</em>.</li>
+</ol>
+<h3 id=structure--usage-nan>Structure &amp; Usage</h3>
+<p>Because migrations may have one or more parents, migrations form a directed acyclic graph.</p>
+<p>This is appropriate, and combines well with Arachne's composability model. A module may define a sequence of migrations that build up a data model, and extending modules can branch from any point to build their own data model that shares structure with it. Modules may also depend upon a chain of migrations specified in two dependent modules, to indicate that it requires both of them.</p>
+<p>In the configuration, a Chimera <strong>database component</strong> may depend on any number of migration components. These migrations, and all their ancestors, form a &quot;database definition&quot;, and represent the complete schema of a concrete database instance (as far as Chimera is concerned.)</p>
+<p>When a database component is started and connects to the underlying data store, it verifies that all the specifies migrations have been applied. If they have not, it fails to start. This guarantees the safety of an Arachne system; a given application simply will not start if it is not compatible with the specified database.</p>
+<h5 id=parallel-migrations-nan>Parallel Migrations</h5>
+<p>This does create an opportunity for problems: if two migrations which have no dependency relatinship (&quot;parallel migrations&quot;) have operations that are incompatible, or would yield different results depending on the order in which they are applied, then these operations &quot;conflict&quot; and applying them to a database could result in errors or non-deterministic behavior.</p>
+<p>If the parallel migrations are both Chimera migrations, then Arachne is aware of their internal structure and can detect the conflict and refuse to start or run the migrations, before it actually touches the database.</p>
+<p>Unfortunately, Arachne cannot detect conflicting parallel migrations for other migration types. It is the responsibility of application developers to ensure that parallel migrations are logically isolate and can coexist in the same database without conflict.</p>
+<p>Therefore, it is advisable in general for public modules to only use Chimera migrations. In addition to making them as broadly compatible as possible, and will also make it more tractable for application authors to avoid conflicting parallel migrations, since they only have to worry about those that they themselves create.</p>
+<h3 id=chimera-migrations--entity-types-nan>Chimera Migrations &amp; Entity Types</h3>
+<p>One drawback of using Chimera migrations is that you cannot see a full entity type defined in one place, just from reading a config DSL script. This cannot be avoided: in a real, living application, entities are defined over time, in many different migrations as the application grows, not all at once. Each Chimera migration contains only a fragment of the full data model.</p>
+<p>However, this poses a usability problem; both for developers, and for machine consumption. There are many reasons for developers or modules to view or query the entity type model as a &quot;point in time&quot; snapshot, rather than just a series of incremental changes.</p>
+<p>To support this use case, the Chimera module creates a flat entity type model for each database by &quot;rolling up&quot; the individual Chimera entity definition forms into a single, full data structure graph. This &quot;canonical entity model&quot; can then be used to render schema diagrams for users, or be queried by other modules.</p>
+<h3 id=applying-migrations-nan>Applying Migrations</h3>
+<p>When and how to invoke an Adapter's <code>migrate</code> function is not defined, since different teams will wish to do it in different ways.</p>
+<p>Some possibilities include:</p>
+<ol>
+<li>The application calls &quot;migrate&quot; every time it is started (this is only advisable if the database has excellent support for transactional and atomic migrations.) In this scenario, developers only need to worry about deploying the code.</li>
+<li>The devops team can manually invoke the &quot;migrate&quot; function for each new configuration, prior to deployment.</li>
+<li>In a continuous-deployment setup, a CI server could run a battery of tests against a clone of the production database and invoke &quot;migrate&quot; automatically if they pass.</li>
+<li>The development team can inspect the set of migrations and generate a set of native SQL or txdata statements for handoff to a dedicated DBA team for review and commit prior to deployment.</li>
+</ol>
+<h3 id=databases-without-migrations-nan>Databases without migrations</h3>
+<p>Not every application wants to use Chimera's migration system. Some situations where migrations may not be a good fit include:</p>
+<ul>
+<li>You prefer to manage your own database schema.</li>
+<li>You are working with an existing database that predates Arachne.</li>
+<li>You need to work with a database administered by a separate team.</li>
+</ul>
+<p>However, you still may wish to utilize Chimera's entity model, and leverage modules that define Chimera migrations.</p>
+<p>To support this, Chimera allows you to (in the configuration) designate a database component as &quot;<strong>assert-only</strong>&quot;. Assert-only databases never have migrations applied, and they do not require the database to track any concept of migrations. Instead, they inspect the Chimera entity model (after rolling up all declared migrations) and assert that the database <em>already</em> has compatible schema installed. If it does, everything starts up as normal; if it does not, the component fails to start.</p>
+<p>Of course, the schema that Chimera expects most likely will not be an exact match for what is present in the database. To accomodate this, Chimera adapters defines a set of <em>override</em> configuration entities (and accompanying DSL). Users can apply these overrides to change the behavior of the mappings that Chimera uses to query and store data.</p>
+<p>Note that Chimera Overrides are incompatible with actually running migrations: they can be used only on an &quot;assert-only&quot; database.</p>
+<h3 id=migration-rollback-nan>Migration Rollback</h3>
+<p>Generalized rollback of migrations is intractable, given the variety of databases Chimera intends to support. Use one of the following strategies instead:</p>
+<ul>
+<li>For development and testing, be constantly creating and throwing away new databases.</li>
+<li>Back up your database before running a migration</li>
+<li>If you can't afford the downtime or data loss associated with restoring a backup, manually revert the changes from the unwanted migration.</li>
+</ul>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Users can define a data model in their configuration</li>
+<li>The data model can be automatically reflected in the database</li>
+<li>Data model changes are explicitly modeled across time</li>
+<li>All migrations, entity types and schema elements are represented in an Arachne app's configuration</li>
+<li>Given the same configuration, a database built using migrations can be reliably reproduced.</li>
+<li>A configuration using migrations will contain an entire, perfectly reproducible history of the database.</li>
+<li>Migrations are optional, and Chimera's data model can be used against existing databases</li>
+</ul>
+<h1 id=architecture-decision-record-simplification-of-chimera-model>Architecture Decision Record: Simplification of Chimera Model</h1>
+<p>Note: this ADR supersedes some aspects of <a href="adr-015-data-abstraction-model.md">ADR-15</a> and <a href="adr-016-db-migrations.md">ADR-16</a>.</p>
+<h2 id=context-nan>Context</h2>
+<p>The Chimera data model (as described in ADR-15 and ADR-16) includes the concepts of <em>entity types</em> in the domain data model: a defined entity type may have supertypes, and inherits all the attributes of a given supertype</p>
+<p>This is quite expressive, and is a good fit for certain types of data stores (such as Datomic, graph databases, and some object stores.) It makes it possible to compose types, and re-use attributes effectively.</p>
+<p>However, it leads to a number of conceptual problems, as well as implementation complexities. These issues include but are not limited to:</p>
+<ul>
+<li>There is a desire for some types to be &quot;abstract&quot;, in that they exist purely to be extended and are not intented to be reified in the target database (e.g, as a table.) In the current model it is ambiguous whether this is the case or not.</li>
+<li>A singe <code>extend-type</code> migration operation may need to create multiple columns in multiple tables, which some databases do not support transactionally.</li>
+<li>When doing a lookup by attribute that exists in multiple types, it is ambiguous which type is intended.</li>
+<li>In a SQL database, how to best model an extended type becomes ambiguous: copying the column leads to &quot;denormalization&quot;, which might not be desired. On the other hand, creating a separate table for the shared columns leads to more complex queries with more joins.</li>
+</ul>
+<p>All of these issues can be resolved or worked around. But they add a variable amount of complexity cost to every Chimera adapter, and create a domain with large amounts of ambigous behavior that must be resolved (and which might not be discovered until writing a particular adapter.)</p>
+<h2 id=decision-nan>Decision</h2>
+<p>The concept of type extension and attribute inheritance does not provide benefits proportional to the cost.</p>
+<p>We will remove all concept of supertypes, subtypes and attribute inheritance from Chimera's data model.</p>
+<p>Chimera's data model will remain &quot;flat&quot;. In order to achieve attribute reuse for data stores for which that is idiomatic (such as Datomic), multiple Chimera attributes can be mapped to a single DB-level attribute in the adapter mapping metadata.</p>
+<h2 id=status-nan>Status</h2>
+<p>PROPOSED</p>
+<h2 id=consequences-nan>Consequences</h2>
+<ul>
+<li>Adapters will be significantly easier to implement.</li>
+<li>An attribute will need to be repeated if it is present on different domain entity types, even if it is semantically similar.</li>
+<li>Users may need to explicitly map multiple Chimera attributes back to the same underlying DB attr/column if they want to maintain an idiomatic data model for their database.</li>
+</ul>
+
+  </div>
+</div>
+</body>
+</html>
