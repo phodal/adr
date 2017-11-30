@@ -1,6 +1,6 @@
 let fs = require('fs')
 let LRU = require('lru-cache')
-let cache = LRU({
+let cache = new LRU({
   max: 500
 })
 
@@ -38,15 +38,6 @@ function getLanguage () {
   return defaultLanguage
 }
 
-function getSavePath (): string {
-  let defaultPath = DEFAULT_CONFIG.path
-  let config = getAllConfig(defaultPath)
-  if (config && config['path']) {
-    return config['path']
-  }
-  return defaultPath
-}
-
 function getConfig (key: string) {
   let defaultValue = DEFAULT_CONFIG[key]
   let config
@@ -68,6 +59,10 @@ function getPrefix () {
 
 function getDigits () {
   return getConfig('digits')
+}
+
+function getSavePath (): string {
+  return getConfig('path')
 }
 
 let Config = {

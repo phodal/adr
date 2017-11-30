@@ -1,8 +1,14 @@
 let sinon = require('sinon')
 let fs = require('fs')
 let walkSync = require('walk-sync')
+let LRU = require('lru-cache')
+
 import { test } from 'ava'
 import ADR from 'adr'
+
+const namespace = {
+  LRU: require('lru-cache')
+}
 
 let Utils = ADR.Utils
 let Config = ADR.Config
@@ -15,6 +21,34 @@ test('generateFileName: test for Chinese utf-8', t => {
 test('generateFileName: test for newline', t => {
   let str = Utils.generateFileName('adr new fdsa \n ADR')
   t.deepEqual(str, 'adr-new-fdsa-adr')
+})
+
+test('getSavePath: when no exist config file', t => {
+  let fsExistSpy = sinon.stub(fs, 'existsSync').returns(false)
+  let fsReadSpy = sinon.stub(fs, 'readFileSync').returns(JSON.stringify({
+    path: 'some'
+  }))
+
+  let dir = Config.getSavePath()
+  t.deepEqual(dir.includes('doc/adr/'), true)
+  fsExistSpy.restore()
+  fsReadSpy.restore()
+})
+
+test('getSavePath: when exist config file', t => {
+  let fsExistSpy = sinon.stub(fs, 'existsSync').returns(true)
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some-path'
+  })
+  let fsReadSpy = sinon.stub(fs, 'readFileSync').returns(JSON.stringify({
+    path: 'some-path'
+  }))
+
+  let dir = Config.getSavePath()
+  t.deepEqual(dir.indexOf('some-path') !== -1, true)
+  fsExistSpy.restore()
+  fsReadSpy.restore()
+  cacheSpy.restore()
 })
 
 test('createIndexByNumber: should return correct pad', t => {
@@ -30,32 +64,6 @@ test('createIndexByNumber: should return correct pad', t => {
 test('createIndexByNumber: should return correct pad', t => {
   let str = Utils.createIndexByNumber(999)
   t.deepEqual(str, '0999')
-})
-
-test('getSavePath: when no exist config file', t => {
-  let fsExistSpy = sinon.stub(fs, 'existsSync').returns(false)
-  let fsReadSpy = sinon.stub(fs, 'readFileSync').returns(JSON.stringify({
-    path: 'some'
-  }))
-
-  let dir = Config.getSavePath() ? Config.getSavePath() : ''
-  if (!dir) dir = ''
-  t.deepEqual(dir.includes('/doc/adr/'), true)
-  fsExistSpy.restore()
-  fsReadSpy.restore()
-})
-
-test('getSavePath: when exist config file', t => {
-  let fsExistSpy = sinon.stub(fs, 'existsSync').returns(true)
-  let fsReadSpy = sinon.stub(fs, 'readFileSync').returns(JSON.stringify({
-    path: 'some-path'
-  }))
-
-  let dir = Config.getSavePath() ? Config.getSavePath() : ''
-  if (!dir) dir = ''
-  t.deepEqual(dir.indexOf('some-path') > -1, true)
-  fsExistSpy.restore()
-  fsReadSpy.restore()
 })
 
 test('getLatestIndex: when exist config file', t => {
