@@ -62,8 +62,8 @@ function getPrefix (): string {
 function getDigits (): number {
   let defaultDigits = DEFAULT_CONFIG.digits
   let config
-  if (cache.get(defaultDigits)) {
-    config = cache.get(defaultDigits)
+  if (cache.get('config')) {
+    config = cache.get('config')
   }
   if (config && config.digits) {
     return config.digits
