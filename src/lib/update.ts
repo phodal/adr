@@ -17,8 +17,7 @@ function generateNewFileName (newIndex: number, title: string | any) {
 function updateNameByTitle (): void {
   let files = walkSync.entries(savePath, {globs: ['**/*.md'], ignore: ['README.md']})
 
-  for (let i = 0; i < files.length; i++) {
-    let file = files[i]
+  files.forEach( function (file) {
     let fileName = file.relativePath
     let fileData = fs.readFileSync(savePath + fileName, 'utf8')
     let firstLine = fileData.split('\n')[0]
@@ -28,7 +27,7 @@ function updateNameByTitle (): void {
     if (!indexRegex) {
       oldIndex = Utils.getIndexByString(fileName)
       if (!oldIndex) {
-        break
+        return
       }
     } else {
       oldIndex = indexRegex[1]
@@ -40,7 +39,7 @@ function updateNameByTitle (): void {
       console.log(fileName + ' -> ' + newFileName)
       fs.renameSync(savePath + fileName, savePath + newFileName)
     }
-  }
+  })
 }
 
 function updateToc (): void {
