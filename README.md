@@ -13,14 +13,26 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
 
 中文翻译：[架构决策记录](https://www.phodal.com/blog/documenting-architecture-decisions/)
 
+**功能特性**
+
+ - 支持 Windows, GNU/Linux, Mac OS
+ - 兼容 adr-tools
+ - 为项目经理、业务人员等非开发人员，生成报表：HTML，CSV, JSON
+ - 国际化支持：English、中文
+ - 状态历史
+ - 状态查询（未完成）
+ - 更好的列表展示
+ - 兼容 adr-tools
+
 **Features**
 
- - Support on Node.js OS: Windows, Linux, Mac OS (Done)
+ - Supported Windows, GNU/Linux, Mac OS (Done)
  - **report for PM, BA**: html, csv, json (Done)
  - **i18n**: English, 中文 (Done)
  - status logs (Done)
  - status query (doing)
  - better list view (Done)
+ - compatible adr-tools (Done)
 
 HTML Reporter Example
 ---
