@@ -16,8 +16,9 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
 **功能特性**
 
  - 支持 Windows, GNU/Linux, Mac OS
- - 兼容 adr-tools
+ - Markdown 目录生成
  - 为项目经理、业务人员等非开发人员，生成报表：HTML，CSV, JSON
+ - 兼容 adr-tools
  - 国际化支持：English、中文
  - 状态历史
  - 状态查询（未完成）
@@ -30,11 +31,19 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
 
  - Supported Windows, GNU/Linux, Mac OS (Done)
  - **report for PM, BA**: html, csv, json (Done)
+ - generate markdown toc
  - **i18n**: English, 中文 (Done)
  - status logs (Done)
  - status query (doing)
  - better list view (Done)
  - compatible adr-tools (Done)
+
+Screenshots
+---
+
+![List Examples](./doc/list-example.png)
+
+![Toc Examples](./doc/toc-example.png)
 
 HTML Reporter Example
 ---
