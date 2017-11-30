@@ -26,12 +26,6 @@ class HtmlBuilder implements AbstractOutput {
         return
       }
       let fileData = fs.readFileSync(path + fileName, 'utf8')
-      let firstLine = fileData.split('\n')[0]
-      let indexRegex = /#\s(\d+)\.\s/.exec(firstLine)
-      if (!indexRegex || indexRegex.length < 1) {
-        return
-      }
-
       fs.appendFileSync('output.md', fileData + '\n\n')
     })
   }
