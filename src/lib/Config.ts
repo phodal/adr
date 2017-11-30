@@ -52,11 +52,24 @@ function getPrefix (): string {
   return defaultPath
 }
 
+function getDigits (): string {
+  let defaultPath = ''
+  let config
+  if (cache.get('digits')) {
+    config = cache.get('digits')
+  }
+  if (config && config.digits) {
+    return config.digits
+  }
+  return defaultPath
+}
+
 let Config = {
   getConfig: getConfig,
   getSavePath: getSavePath,
   getLanguage: getLanguage,
-  getPrefix: getPrefix
+  getPrefix: getPrefix,
+  getDigits: getDigits
 }
 
 export default Config
