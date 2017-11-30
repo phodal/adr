@@ -1,6 +1,7 @@
 import { GenerateBuilder } from './base/GenerateBuilder'
 
 import Config from './Config'
+import {getI18n} from "./helpers/i18n";
 
 function buildGraphBuildFun (index, decision, file, bodyString, filesLength): string[] {
   bodyString[index] = '\n  _' + index + ' [label="' + index + '.' + decision + '"; URL="' + file.relativePath + '"]'
@@ -18,7 +19,7 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
 function generateToc (options?: {output: boolean}) {
   let path = Config.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
-  let header = '# Architecture Decision Records\n'
+  let header = '# ' + getI18n().tocHeader + '\n'
   let results = graphGenerate
     .setStart(header)
     .setEnd('')

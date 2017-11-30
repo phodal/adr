@@ -8,6 +8,7 @@ export function getI18n () {
       modifiedDate: 'Last Modified Date',
       lastStatus: 'Last Status',
       logSavePath: 'Save Path:',
+      tocHeader: 'Architecture Decision Records',
       status: {
         proposed: 'Proposed',
         accepted: 'Accepted',
@@ -21,6 +22,7 @@ export function getI18n () {
       modifiedDate: '上次修改时间',
       lastStatus: '最后状态',
       logSavePath: '保存路径：',
+      tocHeader: '架构决策纪录',
       status: {
         proposed: '提议',
         accepted: '通过',

@@ -76,7 +76,7 @@ test('ADR: generate toc', t => {
   let results = ADR.generate('toc')
   console.log(results)
   t.deepEqual(results,
-`# Architecture Decision Records
+`# 架构决策纪录
 
 * [1. 编写完整的单元测试](001-编写完整的单元测试.md)
 * [2. 编写完整的单元测试](002-编写完整的单元测试.md)`)
