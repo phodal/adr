@@ -10,8 +10,7 @@ function getWorkDir () {
 
 function createIndexByNumber (num): string {
   let s = '00000000' + num
-  // return Config.getPrefix() + s.substr(s.length - DEFAULT_DIGITS)
-  return s.substr(s.length - Config.getDigits())
+  return Config.getPrefix() + s.substr(s.length - Config.getDigits())
 }
 
 function getMaxIndex (files: {relativePath: string}[]) {
