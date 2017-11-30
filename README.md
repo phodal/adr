@@ -24,6 +24,8 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
  - 更好的列表展示
  - 兼容 adr-tools
 
+[查看本项目的架构决策记录](/doc/adr)
+
 **Features**
 
  - Supported Windows, GNU/Linux, Mac OS (Done)
