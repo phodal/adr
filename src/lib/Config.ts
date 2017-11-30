@@ -53,20 +53,20 @@ function getPrefix (): string {
   if (cache.get('config')) {
     config = cache.get('config')
   }
-  if (config && config.prefix) {
-    return config.prefix
+  if (config && config['prefix']) {
+    return config['prefix']
   }
   return defaultPath
 }
 
 function getDigits (): number {
-  let defaultDigits = DEFAULT_CONFIG.digits
+  let defaultDigits = DEFAULT_CONFIG['digits']
   let config
   if (cache.get('config')) {
     config = cache.get('config')
   }
-  if (config && config.digits) {
-    return config.digits
+  if (config && config['digits']) {
+    return config['digits']
   }
   return defaultDigits
 }
