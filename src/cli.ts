@@ -15,7 +15,7 @@ let {output} = require('./lib/output')
 program
   .version(version)
   .usage('[options]')
-  .option('-n, new <item>', 'create new ADR', create)
+  .option('-n, new <title...>', 'create new ADR', create)
   .option('-l, list', 'list all ADR', list)
   .option('-u, update', 'update ADR', update)
   .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
