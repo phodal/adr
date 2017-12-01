@@ -52,7 +52,11 @@ HTML Reporter Example
 Screenshots
 ---
 
-![List Examples](./doc/list-example.png) 
+### ADR List
+
+![List Examples](./doc/list-example.png)
+
+### ADR Reporter 
 
 ![Reporter Examples](./doc/reporter-example.png)
 
