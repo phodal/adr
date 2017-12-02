@@ -21,7 +21,7 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
  - 兼容 adr-tools
  - 国际化支持：English、中文
  - 状态历史
- - 状态查询（未完成）
+ - 状态查询
  - 更好的列表展示
  - 兼容 adr-tools
 
@@ -29,14 +29,14 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
 
 **Features**
 
- - Supported Windows, GNU/Linux, Mac OS (Done)
- - **report for PM, BA**: html, csv, json (Done)
+ - Supported Windows, GNU/Linux, Mac OS
+ - **report for PM, BA**: html, csv, json
  - generate markdown toc（see in [doc/adr](/doc/adr) ）
- - **i18n**: English, 中文 (Done)
- - status logs (Done)
- - status query (doing)
- - better list view (Done)
- - compatible adr-tools (Done)
+ - **i18n**: English, 中文
+ - status logs
+ - status query
+ - better list view
+ - compatible adr-tools
 
 HTML Reporter Example
 ---
@@ -181,6 +181,24 @@ Index, 决策, 上次修改时间, 最后状态
 1, 编写完整的单元测试, 2017-11-26, 2017-11-26 已完成
 2, 添加目录生成, 2017-11-26, 2017-11-25 已完成
 3, 图形生成功能, 2017-11-26, 2017-11-24 已完成
+```
+
+### search adr
+
+```
+adr search <keyword>
+```
+
+e.x. ``adr search 测试``
+
+```
+╔══════════════════════╤══════════════════╗
+║ 决策                 │ 最后状态         ║
+╟──────────────────────┼──────────────────╢
+║ 19.添加-e2e-测试     │ 2017-11-28 提议  ║
+╟──────────────────────┼──────────────────╢
+║ 1.编写完整的单元测试 │ 2017-11-26 完成  ║
+╚══════════════════════╧══════════════════╝
 ```
 
 Config
