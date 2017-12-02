@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.1"></a>
+## [0.7.1](https://github.com/phodal/adr/compare/v0.7.0...v0.7.1) (2017-12-02)
+
+
+
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/phodal/adr/compare/v0.5.6...v0.6.1) (2017-12-01)
 
