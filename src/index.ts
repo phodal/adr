@@ -5,6 +5,7 @@ import { update } from './lib/update'
 import { generate } from './lib/generate'
 import { init } from './lib/init'
 import { logs } from './lib/logs'
+import { search } from './lib/search'
 import { output } from './lib/output'
 import { htmlRender } from './lib/helpers/htmlRender'
 import StatusHelper from './lib/StatusHelper'
@@ -22,6 +23,7 @@ export default {
   update: update,
   generate: generate,
   init: init,
+  search: search,
   logs: logs,
   output: output,
   CSVBuilder: CSVBuilder,
