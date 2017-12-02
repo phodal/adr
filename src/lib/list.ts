@@ -10,7 +10,7 @@ import StatusColor from './enum/StatusColor'
 
 let path = Config.getSavePath()
 
-function getStatusColor (lastStatus: string) {
+export function getStatusColor (lastStatus: string) {
   let allStatus = Utils.getI18n()['status']
   let color: string | undefined = ''
   Object.keys(allStatus).forEach(function (statusKey) {
@@ -45,8 +45,7 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
   return bodyString.push(newItem)
 }
 
-function listAdr (): string {
-  let path = Config.getSavePath()
+function listAdrByPath (path: string): string {
   let i18n = Utils.getI18n()
   let tableData = [i18n.decision, i18n.modifiedDate, i18n.lastStatus]
   let listGenerateBuilder = new ListGenerateBuilder(path)
@@ -60,7 +59,8 @@ function listAdr (): string {
 }
 
 export function list (): string {
-  let adrs = listAdr()
+  let path = Config.getSavePath()
+  let adrs = listAdrByPath(path)
   // TODO: not to remove again
   console.log(adrs)
   return adrs
