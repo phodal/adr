@@ -11,6 +11,7 @@ let {update} = require('./lib/update')
 let {init} = require('./lib/init')
 let {logs} = require('./lib/logs')
 let {output} = require('./lib/output')
+let {search} = require('./lib/search')
 
 program
   .version(version)
@@ -22,6 +23,7 @@ program
   .option('-init, init <language>', 'init ADR with language, e.g. ``adr init en``', init)
   .option('-logs, logs <index>', 'list one ADR status logs', logs)
   .option('-o, export <format>', 'export ADR reporter in HTML, CSV, JSON, Markdown', output)
+  .option('-s, search <keywords>', 'search ADRs by keywords', search)
 
 program.parse(process.argv)
 
