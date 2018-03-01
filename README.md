@@ -25,13 +25,13 @@ ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blo
  - 更好的列表展示
  - 兼容 adr-tools
 
-[查看本项目的架构决策记录](/doc/adr)
+[查看本项目的架构决策记录](/docs/adr)
 
 **Features**
 
  - Supported Windows, GNU/Linux, Mac OS
  - **report for PM, BA**: html, csv, json
- - generate markdown toc（see in [doc/adr](/doc/adr) ）
+ - generate markdown toc（see in [docs/adr](/docs/adr) ）
  - **i18n**: English, 中文
  - status logs
  - status query
@@ -54,11 +54,11 @@ Screenshots
 
 ### ADR List
 
-![List Examples](./doc/list-example.png)
+![List Examples](docs/list-example.png)
 
 ### ADR Reporter 
 
-![Reporter Examples](./doc/reporter-example.png)
+![Reporter Examples](docs/reporter-example.png)
 
 Install
 ---

@@ -27,14 +27,14 @@ test('ADR: init in chinese', t => {
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-DAF编写完整的单元测试.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
       mode: 33188,
       size: 246,
       mtime: 1511435254653
     },
     {
       relativePath: '0000-tests.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
       mode: 33188,
       size: 246,
       mtime: 1511435254653

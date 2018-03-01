@@ -6,7 +6,7 @@ export function init (language): void {
   let workDir = Utils.getWorkDir()
   let defaultConfig = {
     language: 'en',
-    path: 'doc/adr/',
+    path: 'docs/adr/',
     prefix: '',
     digits: 4
   }

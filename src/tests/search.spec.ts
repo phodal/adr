@@ -28,7 +28,7 @@ let adrOptions = JSON.stringify({
 test('ADR: list', t => {
   let findSpy = sinon.stub(findInFiles, 'find').returns({
     then: cb => {
-      cb({'doc/adr/001-filename.md': {}})
+      cb({'docs/adr/001-filename.md': {}})
     }
   })
   let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
@@ -46,7 +46,7 @@ test('ADR: list', t => {
     .onCall(3).returns(JSON.stringify(adrOptions))
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
     relativePath: '001-filename.md',
-    basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+    basePath: '/Users/fdhuang/learing/adr/docs/adr/',
     mode: 33188,
     size: 246,
     mtime: 1511435254653 }

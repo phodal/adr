@@ -39,7 +39,7 @@ test('ADR: export csv', t => {
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-编写完整的单元测试.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
       mode: 33188,
       size: 246,
       mtime: 1511435254653
@@ -72,7 +72,7 @@ test('ADR: export json', t => {
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-编写完整的单元测试.md',
-      basePath: '/Users/fdhuang/learing/adr/doc/adr/',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
       mode: 33188,
       size: 246,
       mtime: 1511435254653

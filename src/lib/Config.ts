@@ -8,7 +8,7 @@ import Utils from './utils'
 
 let DEFAULT_CONFIG = {
   language: 'en',
-  path: Utils.getWorkDir() + '/doc/adr/',
+  path: Utils.getWorkDir() + '/docs/adr/',
   prefix: '',
   digits: 4
 }
