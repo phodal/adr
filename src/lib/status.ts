@@ -34,7 +34,6 @@ export function status (index): void {
         message: `${fileName}(${status}) new status:`,
         choices: statusList
     }]).then(answer => {
-        console.log(answer.status)
         StatusHelper.setStatus(path + fileName, answer.status)
     })
 }
