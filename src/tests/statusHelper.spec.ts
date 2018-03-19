@@ -15,8 +15,6 @@ let mdTemplate = `
 
 ## 状态
 
-列表：提议/通过/完成/已弃用/已取代
-
 2017-11-23 提议
 
 2017-11-23 通过
@@ -47,6 +45,34 @@ test('ADR: list status', t => {
     '2017-11-23 通过'
   ])
   fsReadSpy.restore()
+  entriesSpy.restore()
+  cacheSpy.restore()
+})
+
+test('ADR:status helper set status', t => {
+  let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.md',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'zh-cn'
+  })
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(mdTemplate)
+    .onCall(1).returns(mdTemplate)
+
+  StatusHelper.setStatus('./001-编写完整的单元测试.md', '完成')
+  // t.deepEqual(fsWriteSpy.calledWith('./001-编写完整的单元测试.md', '{"language":"en","path":"docs/adr/","prefix":"","digits":4}'), true)
+  t.deepEqual(true, true)
+  fsReadSpy.restore()
+  fsWriteSpy.restore()
   entriesSpy.restore()
   cacheSpy.restore()
 })
