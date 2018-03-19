@@ -5,6 +5,8 @@ export function getI18n () {
   let I18N = {
     en: {
       decision: 'Decision',
+      Status: 'Status',
+      statusStr: 'proposed/accepted/done/deprecated/superseded',
       modifiedDate: 'Last Modified Date',
       lastStatus: 'Last Status',
       logSavePath: 'Save Path:',
@@ -19,6 +21,8 @@ export function getI18n () {
     },
     'zh-cn': {
       decision: '决策',
+      Status: '状态',
+      statusStr: '提议/通过/完成/已弃用/已取代',
       modifiedDate: '上次修改时间',
       lastStatus: '最后状态',
       logSavePath: '保存路径：',

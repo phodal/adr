@@ -3,24 +3,19 @@ let path = require('path')
 let md = require('markdown').markdown
 
 import Config from './Config'
+import Utils from './utils'
+let i18n = Utils.getI18n()
 
-function getStatusSection (tree: any, templateStatusHeader: string) {
+function getStatusSection (tree: any) {
   let statusFlag = false
   let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
-    let hasHeader2 = node[0] === 'header' && node[1] && node[1]['level'] && node[1]['level'] === 2
-
-    if (hasHeader2) {
-      statusFlag = node[2] === templateStatusHeader
-    }
-
-    if (statusFlag) {
-      statusSection.push(node)
-    }
+    if (statusFlag && node[0] === 'header')  return statusSection
+    if(statusFlag) statusSection.push(node)
+    if (node[0] === 'header' && node[2] === i18n.Status) statusFlag = true
   }
-
-  return statusSection
+  return []
 }
 
 function getStatusWithDate (statusSections: string[]) {
@@ -37,6 +32,28 @@ function getStatusWithDate (statusSections: string[]) {
   return status
 }
 
+function setStatus(filePath, status) {
+  let fileData
+  try {
+    fileData = fs.readFileSync(filePath, 'utf8')
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+  let flag = false;
+  let regExp = `## ${i18n.Status}`
+  let data: string[] = fileData.split('\n')
+  for (let i = 0; i < data.length; i++) {
+    let line: string = data[i]
+    if(flag && line[0] === '#'){
+      data.splice(i, 0, `${Utils.createDateString()} ${status}`)
+      data.splice(i + 1, 0, '')
+      return fs.writeFileSync(filePath, data.join('\n'))
+    } 
+    if (line.match(regExp)) flag = true
+  }
+}
+
 function getAllStatus (filePath): string[] {
   let fileData
   try {
@@ -46,7 +63,7 @@ function getAllStatus (filePath): string[] {
     return []
   }
   let tree = md.parse(fileData)
-  let statusSections = getStatusSection(tree, getTemplateStatusTitle())
+  let statusSections = getStatusSection(tree)
   let status = getStatusWithDate(statusSections)
 
   if (status.length === 0) {
@@ -65,37 +82,8 @@ function getLatestStatus (filePath) {
   return allStatus[allStatus.length - 1]
 }
 
-function getStatusHeader (tree: any) {
-  let header2Count = 0
-  let statusHeader = ''
-
-  for (let i = 0; i < tree.length; i++) {
-    let node = tree[i]
-
-    if (node && node[0] === 'header') {
-      let hasHeader2 = node[1] && node[1]['level'] && node[1]['level'] === 2
-      if (hasHeader2) {
-        header2Count++
-      }
-
-      let isFirstHeader2 = header2Count === 1
-      if (isFirstHeader2) {
-        statusHeader = node[2]
-      }
-    }
-  }
-  return statusHeader
-}
-
-function getTemplateStatusTitle () {
-  let language = Config.getLanguage()
-  let template = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
-  let tree = md.parse(template)
-
-  return getStatusHeader(tree)
-}
-
 let StatusHelper = {
+  setStatus: setStatus,
   getLatestStatus: getLatestStatus,
   getAllStatus: getAllStatus
 }
