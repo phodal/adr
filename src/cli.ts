@@ -12,6 +12,7 @@ let {init} = require('./lib/init')
 let {logs} = require('./lib/logs')
 let {output} = require('./lib/output')
 let {search} = require('./lib/search')
+let {status} = require('./lib/status')
 
 program
   .version(version)
@@ -19,6 +20,7 @@ program
   .option('-n, new <title...>', 'create new ADR', create)
   .option('-l, list', 'list all ADR', list)
   .option('-u, update', 'update ADR', update)
+  .option('-S, status <index>', 'change one ADR status', status)
   .option('-g, generate <type>', 'generate toc or graph, default toc', generate)
   .option('-init, init <language>', 'init ADR with language, e.g. ``adr init en``', init)
   .option('-logs, logs <index>', 'list one ADR status logs', logs)

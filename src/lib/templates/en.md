@@ -4,8 +4,6 @@ Date: {DATE}
 
 ## Status
 
-STATUS：proposed/accepted/done/deprecated/superseded
-
 {DATE} proposed
 
 ## Context
