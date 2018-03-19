@@ -24,15 +24,15 @@ class JSONBuilder extends BasicOutput {
   buildContent () {
     let path = Config.getSavePath()
     let graphGenerate = new JsonGenerateBuilder(path)
-    let results = graphGenerate
+    this.result = graphGenerate
       .setBody(this.buildFunc)
       .build()
 
-    return JSON.stringify(results)
+    return JSON.stringify(this.result)
   }
 
   output () {
-    fs.writeFileSync(this.workDir + '/export.json', this.result, 'utf-8')
+    fs.writeFileSync(this.workDir + '/export.json', JSON.stringify(this.result), 'utf-8')
   }
 }
 
