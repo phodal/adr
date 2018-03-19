@@ -7,7 +7,7 @@ import Config from '../Config'
 import BasicOutput from './BasicOutput'
 import { GenerateBuilder } from '../base/GenerateBuilder'
 
-let savePath
+let savePath = Config.getSavePath()
 
 class CSVBuilder extends BasicOutput {
   buildFunc (index, decision, file, bodyString): string[] {

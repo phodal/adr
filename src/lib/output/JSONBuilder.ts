@@ -7,7 +7,7 @@ import BasicOutput from './BasicOutput'
 import StatusHelper from '../StatusHelper'
 import Config from '../Config'
 
-let savePath
+let savePath = Config.getSavePath()
 
 class JSONBuilder extends BasicOutput {
   buildFunc (index, decision, file, bodyString): string[] {
