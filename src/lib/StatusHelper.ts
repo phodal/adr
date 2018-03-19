@@ -1,9 +1,8 @@
 let fs = require('fs')
-let path = require('path')
 let md = require('markdown').markdown
 
-import Config from './Config'
 import Utils from './utils'
+
 let i18n = Utils.getI18n()
 
 function getStatusSection (tree: any) {
@@ -11,8 +10,8 @@ function getStatusSection (tree: any) {
   let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
-    if (statusFlag && node[0] === 'header')  return statusSection
-    if(statusFlag) statusSection.push(node)
+    if (statusFlag && node[0] === 'header') return statusSection
+    if (statusFlag) statusSection.push(node)
     if (node[0] === 'header' && node[2] === i18n.Status) statusFlag = true
   }
   return []
@@ -32,7 +31,7 @@ function getStatusWithDate (statusSections: string[]) {
   return status
 }
 
-function setStatus(filePath, status) {
+function setStatus (filePath, status) {
   let fileData
   try {
     fileData = fs.readFileSync(filePath, 'utf8')
@@ -40,16 +39,16 @@ function setStatus(filePath, status) {
     console.log(error)
     return []
   }
-  let flag = false;
+  let flag = false
   let regExp = `## ${i18n.Status}`
   let data: string[] = fileData.split('\n')
   for (let i = 0; i < data.length; i++) {
     let line: string = data[i]
-    if(flag && line[0] === '#'){
+    if (flag && line[0] === '#') {
       data.splice(i, 0, `${Utils.createDateString()} ${status}`)
       data.splice(i + 1, 0, '')
       return fs.writeFileSync(filePath, data.join('\n'))
-    } 
+    }
     if (line.match(regExp)) flag = true
   }
 }

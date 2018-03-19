@@ -1,5 +1,4 @@
 let walkSync = require('walk-sync')
-let fs = require('fs')
 let inquirer = require('inquirer')
 
 import Utils from './utils'
@@ -11,8 +10,8 @@ let i18n = Utils.getI18n()
 
 let getAllFilesName = function (): string[] {
   let outputArray = ['']
-  let files = walkSync.entries(path, { globs: ['**/*.md']})
-  files.forEach( function (file) {
+  let files = walkSync.entries(path, {globs: ['**/*.md']})
+  files.forEach(function (file) {
     let fileName = file.relativePath
 
     let index = Utils.getIndexByString(fileName)
@@ -25,15 +24,15 @@ let getAllFilesName = function (): string[] {
 }
 
 export function status (index): void {
-    let fileName = getAllFilesName()[index]
-    let status = StatusHelper.getLatestStatus(path + fileName)
-    let statusList = i18n.statusStr.split('/')
-    inquirer.prompt([{
-        type: 'list',
-        name: 'status',
-        message: `${fileName}(${status}) new status:`,
-        choices: statusList
-    }]).then(answer => {
-        StatusHelper.setStatus(path + fileName, answer.status)
-    })
+  let fileName = getAllFilesName()[index]
+  let status = StatusHelper.getLatestStatus(path + fileName)
+  let statusList = i18n.statusStr.split('/')
+  inquirer.prompt([{
+    type: 'list',
+    name: 'status',
+    message: `${fileName}(${status}) new status:`,
+    choices: statusList
+  }]).then(answer => {
+    StatusHelper.setStatus(path + fileName, answer.status)
+  })
 }
