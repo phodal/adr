@@ -13,6 +13,9 @@ let path = Config.getSavePath()
 export function getStatusColor (lastStatus: string) {
   let allStatus = Utils.getI18n()['status']
   let color: string | undefined = ''
+  if (!allStatus) {
+    return StatusColor.get('done')
+  }
   Object.keys(allStatus).forEach(function (statusKey) {
     if (allStatus[statusKey] === lastStatus) {
       color = StatusColor.get(statusKey)

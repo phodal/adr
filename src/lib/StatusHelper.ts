@@ -10,11 +10,17 @@ function getStatusSection (tree: any) {
   let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
-    if (statusFlag && node[0] === 'header') return statusSection
-    if (statusFlag) statusSection.push(node)
-    if (node[0] === 'header' && node[2] === i18n.Status) statusFlag = true
+    if (statusFlag && node[0] === 'header') {
+      return statusSection
+    }
+    if (statusFlag) {
+      statusSection.push(node)
+    }
+    if (node[0] === 'header' && node[2] === i18n.Status) {
+      statusFlag = true
+    }
   }
-  return []
+  return statusSection
 }
 
 function getStatusWithDate (statusSections: string[]) {

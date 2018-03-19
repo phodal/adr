@@ -38,7 +38,7 @@ test('ADR: list', t => {
     .onCall(2).returns(JSON.stringify(adrOptions))
     .onCall(3).returns(JSON.stringify(adrOptions))
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
-    relativePath: '001-filename.md',
+    relativePath: '0001-filename.md',
     basePath: '/Users/fdhuang/learing/adr/docs/adr/',
     mode: 33188,
     size: 246,
@@ -46,12 +46,11 @@ test('ADR: list', t => {
   ])
 
   let results = ADR.list()
-  t.deepEqual(results,
-`╔══════════════════════╤══════════════╤═══════════╗
-║ 决策                 │ 上次修改时间 │ 最后状态  ║
-╟──────────────────────┼──────────────┼───────────╢
-║ 1.编写完整的单元测试 │ 2017-11-23   │           ║
-╚══════════════════════╧══════════════╧═══════════╝
+  t.deepEqual(results, `╔══════════════════════╤══════════════╤═══════════════════╗
+║ 决策                 │ 上次修改时间 │ 最后状态          ║
+╟──────────────────────┼──────────────┼───────────────────╢
+║ 1.编写完整的单元测试 │ 2017-11-23   │ 2017-11-26 已完成 ║
+╚══════════════════════╧══════════════╧═══════════════════╝
 `)
   ADRGetSavePathSpy.restore()
   entriesSpy.restore()

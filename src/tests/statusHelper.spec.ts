@@ -41,7 +41,7 @@ test('ADR: list status', t => {
     .onCall(0).returns(mdTemplate)
     .onCall(1).returns(mdTemplate)
 
-  let status = StatusHelper.getAllStatus('./001-README.md')
+  let status = StatusHelper.getAllStatus('./001-编写完整的单元测试.md')
   t.deepEqual(status, [
     '2017-11-23 提议',
     '2017-11-23 通过'
