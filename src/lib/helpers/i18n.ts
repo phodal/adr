@@ -38,7 +38,7 @@ export function getI18n() {
     'pt-br': {
       decision: 'Decisão',
       Status: 'Status',
-      statusStr: 'proposto/aceito/finalizado/descontinuado/suplantado',
+      statusStr: 'proposto/aceito/finalizado/descontinuado/cancelado',
       modifiedDate: 'Data da última modificação',
       lastStatus: 'Último status',
       logSavePath: 'Salvo em:',
@@ -48,7 +48,7 @@ export function getI18n() {
         accepted: 'Aceito',
         done: 'Finalizado',
         deprecated: 'Descontinuado',
-        superseded: 'Suplantado'
+        superseded: 'Cancelado'
       }
     }
   };
