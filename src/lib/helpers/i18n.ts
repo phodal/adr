@@ -1,7 +1,7 @@
-import Config from '../Config'
+import Config from '../Config';
 
-export function getI18n () {
-  let language = Config.getLanguage()
+export function getI18n() {
+  let language = Config.getLanguage();
   let I18N = {
     en: {
       decision: 'Decision',
@@ -34,8 +34,24 @@ export function getI18n () {
         deprecated: '已弃用',
         superseded: '已取代'
       }
+    },
+    'pt-br': {
+      decision: 'Decisão',
+      Status: 'Status',
+      statusStr: 'proposto/aceito/finalizado/descontinuado/suplantado',
+      modifiedDate: 'Data da última modificação',
+      lastStatus: 'Último status',
+      logSavePath: 'Salvo em:',
+      tocHeader: 'Registros de Decisão de Arquitetura',
+      status: {
+        proposed: 'Proposto',
+        accepted: 'Aceito',
+        done: 'Finalizado',
+        deprecated: 'Descontinuado',
+        superseded: 'Suplantado'
+      }
     }
-  }
+  };
 
-  return I18N[language]
+  return I18N[language];
 }
