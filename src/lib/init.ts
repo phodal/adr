@@ -5,7 +5,7 @@ import Utils from './utils'
 export function init (language): void {
   let workDir = Utils.getWorkDir()
   let defaultConfig = {
-    language: 'en',
+    language: language,
     path: 'docs/adr/',
     prefix: '',
     digits: 4
