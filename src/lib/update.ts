@@ -15,9 +15,9 @@ function generateNewFileName (newIndex: number, title: string | any) {
 }
 
 function updateNameByTitle (): void {
-  let files = walkSync.entries(savePath, {globs: ['**/*.md'], ignore: ['README.md']})
+  let files = walkSync.entries(savePath, { globs: ['**/*.md'], ignore: ['README.md'] })
 
-  files.forEach( function (file) {
+  files.forEach(function (file) {
     let fileName = file.relativePath
     let fileData = fs.readFileSync(savePath + fileName, 'utf8')
     let firstLine = fileData.split('\n')[0]
@@ -43,7 +43,7 @@ function updateNameByTitle (): void {
 }
 
 function updateToc (): void {
-  let toc = generate('toc', {output: false})
+  let toc = generate('toc', { output: false })
   fs.writeFileSync(savePath + 'README.md', toc)
 }
 

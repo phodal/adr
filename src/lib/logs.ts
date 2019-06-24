@@ -9,8 +9,8 @@ let path = Config.getSavePath()
 
 let getAllFilesName = function (): string[] {
   let outputArray = ['']
-  let files = walkSync.entries(path, { globs: ['**/*.md']})
-  files.forEach( function (file) {
+  let files = walkSync.entries(path, { globs: ['**/*.md'] })
+  files.forEach(function (file) {
     let fileName = file.relativePath
 
     let index = Utils.getIndexByString(fileName)

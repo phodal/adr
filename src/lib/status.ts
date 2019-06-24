@@ -10,7 +10,7 @@ let i18n = Utils.getI18n()
 
 let getAllFilesName = function (): string[] {
   let outputArray = ['']
-  let files = walkSync.entries(path, {globs: ['**/*.md']})
+  let files = walkSync.entries(path, { globs: ['**/*.md'] })
   files.forEach(function (file) {
     let fileName = file.relativePath
 

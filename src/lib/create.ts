@@ -28,6 +28,6 @@ export function create (name: string) {
   mkdirp.sync(savePath)
 
   createDecisions(name, savePath)
-  let toc = generate('toc', {output: false})
+  let toc = generate('toc', { output: false })
   fs.writeFileSync(savePath + 'README.md', toc)
 }
