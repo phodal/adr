@@ -8,6 +8,8 @@ exclude_patterns:
   - "config"
   - "**/*.d.ts"
   - "src/**/*.spec.ts"
+  - "test"
+  - "src/tests"
 ratings:
   paths:
     - "src/**/*.ts"
