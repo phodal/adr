@@ -3,7 +3,7 @@ let walkSync = require('walk-sync')
 let fs = require('fs')
 let LRU = require('lru-cache')
 
-import { test } from 'ava'
+import test from 'ava'
 import ADR from 'adr'
 
 let Config = ADR.Config

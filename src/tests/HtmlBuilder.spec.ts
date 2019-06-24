@@ -1,4 +1,4 @@
-import { test } from 'ava'
+import test from 'ava'
 
 let sinon = require('sinon')
 let walkSync = require('walk-sync')

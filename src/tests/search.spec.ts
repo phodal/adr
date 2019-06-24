@@ -3,7 +3,7 @@ let fs = require('fs')
 let walkSync = require('walk-sync')
 let findInFiles = require('find-in-files')
 
-import { test } from 'ava'
+import test from 'ava'
 import ADR from 'adr'
 
 let Utils = ADR.Utils

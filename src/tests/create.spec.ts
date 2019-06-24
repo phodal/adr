@@ -3,7 +3,7 @@ let fs = require('fs')
 let mkdirp = require('mkdirp')
 let walkSync = require('walk-sync')
 
-import { test } from 'ava'
+import test from 'ava'
 
 import ADR from 'adr'
 let Config = ADR.Config
