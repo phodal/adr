@@ -11,6 +11,8 @@ Inspired by [https://github.com/npryce/adr-tools](https://github.com/npryce/adr-
 
 ADR Blogpost: [Documenting Architecture Decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)
 
+A good material about [Architecture decision record](https://github.com/joelparkerhenderson/architecture_decision_record)
+
 中文翻译：[架构决策记录](https://www.phodal.com/blog/documenting-architecture-decisions/)
 
 **功能特性**
