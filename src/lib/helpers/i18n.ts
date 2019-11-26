@@ -1,7 +1,7 @@
-import Config from '../Config';
+import Config from '../Config'
 
-export function getI18n() {
-  let language = Config.getLanguage();
+export function getI18n () {
+  let language = Config.getLanguage()
   let I18N = {
     en: {
       decision: 'Decision',
@@ -51,7 +51,7 @@ export function getI18n() {
         superseded: 'Cancelado'
       }
     },
-    'it-IT: {
+    'it-IT': {
       decision: 'Decisione',
       Status: 'Stato',
       statusStr: 'proposta/accettata/implementata/deprecata/sostituita',
@@ -66,8 +66,8 @@ export function getI18n() {
         deprecated: 'Deprecata',
         superseded: 'Sostituita'
       }
-    },
-  };
+    }
+  }
 
-  return I18N[language];
+  return I18N[language]
 }
