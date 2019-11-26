@@ -50,7 +50,23 @@ export function getI18n() {
         deprecated: 'Descontinuado',
         superseded: 'Cancelado'
       }
-    }
+    },
+    'it-IT: {
+      decision: 'Decisione',
+      Status: 'Stato',
+      statusStr: 'proposta/accettata/implementata/deprecata/sostituita',
+      modifiedDate: 'Ultima Modifica',
+      lastStatus: 'Stato più recente',
+      logSavePath: 'Cartella di salvataggio:',
+      tocHeader: 'Registro Decisioni Architetturali',
+      status: {
+        proposed: 'Proposta',
+        accepted: 'Accettata',
+        done: 'Implementata',
+        deprecated: 'Deprecata',
+        superseded: 'Sostituita'
+      }
+    },
   };
 
   return I18N[language];
