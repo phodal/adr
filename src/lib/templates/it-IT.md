@@ -1,19 +1,19 @@
 # {NUMBER}. {TITLE}
 
-Date: {DATE}
+Data: {DATE}
 
-## Status
+## Stato
 
-{DATE} proposed
+{DATE} proposta
 
-## Context
+## Contesto
 
-Context here...
+Inserisci informazioni di contesto qui...
 
-## Decision
+## Decisione
 
-Decision here...
+Inserisci i dettagli della decisione qui...
 
-## Consequences
+## Conseguenze
 
-Consequences here...
+Inserisci le conseguenze della decisione qui...
