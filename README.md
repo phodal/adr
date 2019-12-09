@@ -21,7 +21,7 @@ A good material about [Architecture decision record](https://github.com/joelpark
  - Markdown 目录生成
  - 为项目经理、业务人员等非开发人员，生成报表：HTML，CSV, JSON
  - 兼容 adr-tools
- - 国际化支持：English、中文、Brazilian Portuguese
+ - 国际化支持：English、中文、Brazilian Portuguese (pt-br), Standard Italian (it-IT)
  - 状态历史
  - 状态查询
  - 更好的列表展示
@@ -34,7 +34,7 @@ A good material about [Architecture decision record](https://github.com/joelpark
  - Supported Windows, GNU/Linux, Mac OS
  - **report for PM, BA**: html, csv, json
  - generate markdown toc（see in [docs/adr](/docs/adr) ）
- - **i18n**: English, 中文, Brazilian Portuguese
+ - **i18n**: English (en), 中文(zh-cn), Brazilian Portuguese (pt-br), Standard Italian (it-IT)
  - status logs
  - status query
  - better list view
