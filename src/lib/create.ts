@@ -29,5 +29,5 @@ export function create (name: string) {
 
   createDecisions(name, savePath)
   let toc = generate('toc', { output: false })
-  fs.writeFileSync(savePath + 'README.md', toc)
+  fs.writeFileSync(savePath + 'README.md', toc + '\n')
 }
