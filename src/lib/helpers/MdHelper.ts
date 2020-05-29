@@ -1,7 +1,7 @@
 import { htmlRender } from './htmlRender'
 
 let toc = require('markdown-toc')
-let Remarkable = require('remarkable')
+const { Remarkable } = require('remarkable')
 
 export function mdRender (fileData) {
   let lastH1Index = 0
