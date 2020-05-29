@@ -4,7 +4,7 @@ let walkSync = require('walk-sync')
 
 import test from 'ava'
 
-import ADR from 'adr'
+import ADR from '../index'
 
 let Config = ADR.Config
 

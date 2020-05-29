@@ -18,7 +18,7 @@
     "lint": "tslint --project . src/**/*.ts",
     "unit": "yarn build && yarn build:tests && nyc ava",
     "check-coverage": "nyc check-coverage --lines 85 --functions 80 --branches 80",
-    "test": "yarn lint && yarn unit && yarn check-coverage",
+    "test": "yarn lint && yarn unit && nyc report --reporter=lcov && yarn check-coverage",
     "watch": "yarn build && yarn build:tests --no-browser  && yarn html-coverage && concurrently -r --kill-others 'npm run --silent build:main -- -w' 'npm run --silent build:tests -- -w --no-browser' 'sleepms 2000 && ava --watch'",
     "cov": "yarn unit && yarn html-coverage && opn coverage/index.html",
     "html-coverage": "nyc report --reporter=html",
@@ -111,6 +111,13 @@
       "test/**/*.js",
       "build/**/*.js",
       "!build/**/*.spec.js"
+    ],
+    "failFast": true,
+    "files": [
+      "build/main/**/*.spec.js"
+    ],
+    "sources": [
+      "build/main/**/*.js"
     ]
   },
   "dependencies": {

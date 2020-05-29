@@ -1,7 +1,7 @@
 let sinon = require('sinon')
 // let fs = require('fs')
 import test from 'ava'
-import ADR from 'adr'
+import ADR from '../index'
 
 let MdHelper = ADR.MdHelper
 

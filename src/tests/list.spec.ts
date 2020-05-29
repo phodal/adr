@@ -3,7 +3,7 @@ let fs = require('fs')
 let walkSync = require('walk-sync')
 let colors = require('colors/safe')
 import test from 'ava'
-import ADR from 'adr'
+import ADR from '../index'
 
 let Utils = ADR.Utils
 let Config = ADR.Config

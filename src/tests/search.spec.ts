@@ -4,7 +4,7 @@ let walkSync = require('walk-sync')
 let findInFiles = require('find-in-files')
 
 import test from 'ava'
-import ADR from 'adr'
+import ADR from '../index'
 
 let Utils = ADR.Utils
 let Config = ADR.Config

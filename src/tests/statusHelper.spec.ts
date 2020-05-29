@@ -5,7 +5,7 @@ let LRU = require('lru-cache')
 
 import test from 'ava'
 
-import ADR from 'adr'
+import ADR from '../index'
 let StatusHelper = ADR.StatusHelper
 
 let mdTemplate = `

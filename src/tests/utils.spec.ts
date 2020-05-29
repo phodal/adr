@@ -4,7 +4,7 @@ let walkSync = require('walk-sync')
 let LRU = require('lru-cache')
 
 import test from 'ava'
-import ADR from 'adr'
+import ADR from '../index'
 
 let Utils = ADR.Utils
 let Config = ADR.Config
@@ -47,17 +47,17 @@ test('getSavePath: when exist config file', t => {
   cacheSpy.restore()
 })
 
-test('createIndexByNumber: should return correct pad', t => {
+test('createIndexByNumber: should return correct pad 1', t => {
   let str = Utils.createIndexByNumber(1)
   t.deepEqual(str, '0001')
 })
 
-test('createIndexByNumber: should return correct pad', t => {
+test('createIndexByNumber: should return correct pad 11', t => {
   let str = Utils.createIndexByNumber(11)
   t.deepEqual(str, '0011')
 })
 
-test('createIndexByNumber: should return correct pad', t => {
+test('createIndexByNumber: should return correct pad 999', t => {
   let str = Utils.createIndexByNumber(999)
   t.deepEqual(str, '0999')
 })
@@ -108,7 +108,7 @@ test('getNewNumber: when exist last number', t => {
   entriesSpy.restore()
 })
 
-test('getNewNumber: when exist last number', t => {
+test('getNewNumber: when exist last number 001', t => {
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([])
 
   let newIndexString = Utils.getNewIndexString()

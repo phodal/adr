@@ -4,7 +4,7 @@ let walkSync = require('walk-sync')
 let LRU = require('lru-cache')
 
 import test from 'ava'
-import ADR from 'adr'
+import ADR from '../index'
 
 let mdTemplate = `# 1. 更友好的 CLI
 

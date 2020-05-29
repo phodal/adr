@@ -3,7 +3,7 @@ import test from 'ava'
 let sinon = require('sinon')
 let walkSync = require('walk-sync')
 let fs = require('fs')
-import ADR from 'adr'
+import ADR from '../index'
 
 let MdHelper = ADR.MdHelper
 let Utils = ADR.Utils
