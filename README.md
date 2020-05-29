@@ -43,13 +43,10 @@ A good material about [Architecture decision record](https://github.com/joelpark
 HTML Reporter Example
 ---
  
-[ADR Example](https://phodal.github.io/adr/examples/export-1.html)
-
-[ADR Tools Example](https://phodal.github.io/adr/examples/export-3.html)
-
-[会分期 Example](https://phodal.github.io/adr/examples/export-2.html)
-
-[Arachne Framework Example](https://phodal.github.io/adr/examples/export-4.html)
+ - [ADR Example](https://phodal.github.io/adr/examples/export-1.html)
+ - [ADR Tools Example](https://phodal.github.io/adr/examples/export-3.html)
+ - [会分期 Example](https://phodal.github.io/adr/examples/export-2.html)
+ - [Arachne Framework Example](https://phodal.github.io/adr/examples/export-4.html)
 
 Screenshots
 ---
@@ -81,15 +78,15 @@ e.x: ``adr init 'en'``
 
 ### new
 
-```
+```bash
 adr new <decision>
 ```
 
-e.x: ``adr new "创建项目"``
+e.x: ``adr new "create project"``
 
 ### list
 
-```
+```bash
 adr list
 ```
 
@@ -111,13 +108,13 @@ result:
 
 ### generate toc
 
-```
+```bash
 adr generate toc
 ```
 
 results:
 
-```
+```markdown
 # Architecture Decision Records
 
 * [1. 编写完整的单元测试](001-编写完整的单元测试.md)
