@@ -27,10 +27,12 @@ function getStatusWithDate (statusSections: string[]) {
   let status: string[] = []
   for (let i = 0; i < statusSections.length; i++) {
     let currentStatusSection = statusSections[i]
-    if (currentStatusSection[0] === 'para') {
-      if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection[1])) {
-        status.push(currentStatusSection[1])
-      }
+    if (currentStatusSection[0] !== 'para') {
+      continue
+    }
+
+    if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection[1])) {
+      status.push(currentStatusSection[1])
     }
   }
 
