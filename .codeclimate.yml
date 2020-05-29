@@ -10,6 +10,7 @@ exclude_patterns:
   - "src/**/*.spec.ts"
   - "test"
   - "src/tests"
+  - "src/**/*.i18n.ts"
 ratings:
   paths:
     - "src/**/*.ts"
