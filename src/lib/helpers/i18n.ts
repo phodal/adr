@@ -1,6 +1,6 @@
 import Config from '../Config'
 
-export function getI18n () {
+export function getI18n() {
   let language = Config.getLanguage()
   let I18N = {
     en: {
@@ -66,8 +66,24 @@ export function getI18n () {
         deprecated: 'Deprecata',
         superseded: 'Sostituita'
       }
+    },
+    'fr': {
+      decision: 'Décision',
+      Status: 'Statut',
+      statusStr: 'propose/accepte/termine/deprecie/remplace',
+      modifiedDate: 'Date dernière modif.',
+      lastStatus: 'Dernier statut',
+      logSavePath: 'Chemin de sauvegarde:',
+      tocHeader: 'Compte-rendu de Décision d’Architecture',
+      status: {
+        propose: 'Proposé',
+        accepte: 'Accepté',
+        termine: 'Terminé',
+        deprecie: 'Déprécié',
+        remplace: 'Remplacé'
+      }
     }
-  }
+  };
 
   return I18N[language]
 }
