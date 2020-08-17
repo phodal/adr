@@ -1,6 +1,21 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.2.0](https://github.com/phodal/adr/compare/v1.1.3...v1.2.0) (2020-08-17)
+
+
+### Features
+
+* Adding a newline on toc generation and update ([6712261](https://github.com/phodal/adr/commit/6712261d1e145f410ec0e3789f69e0c13df70eb4)), closes [#17](https://github.com/phodal/adr/issues/17)
+
+
+### Bug Fixes
+
+* fix coverage error issue ([8196d87](https://github.com/phodal/adr/commit/8196d873af48a037fb83fc2005f0ef9f2c61e3fe))
+* fix lint issue ([e2aa26f](https://github.com/phodal/adr/commit/e2aa26f6d6496b4af73ca6063638ffc5368c5fb3))
+* fix long line issue ([4d1a725](https://github.com/phodal/adr/commit/4d1a725750d7305d07a26a1cabab603791c87acf))
+* fix testing ([485a98a](https://github.com/phodal/adr/commit/485a98a6b5d4a526868a803284ba2bae590bb234))
 
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/phodal/adr/compare/v1.0.7...v1.1.2) (2019-04-27)
