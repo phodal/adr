@@ -1,6 +1,6 @@
 import Config from '../Config'
 
-export function getI18n() {
+export function getI18n () {
   let language = Config.getLanguage()
   let I18N = {
     en: {
@@ -83,7 +83,7 @@ export function getI18n() {
         remplace: 'Remplacé'
       }
     }
-  };
+  }
 
   return I18N[language]
 }
