@@ -6,9 +6,18 @@ import Config from './Config'
 import Utils from './utils'
 import { generate } from './generate'
 
+function getTemplatePath (language: string) {
+  const customTemplate = path.join(Config.getSavePath(), 'template.md');
+  if (fs.existsSync(customTemplate)) {
+    return customTemplate;
+  } else {
+    return __dirname + path.normalize('/templates/' + language + '.md')
+  }
+}
+
 function createDecisions (name: string, savePath: string | any | void) {
   let language = Config.getLanguage()
-  let raw = fs.readFileSync(__dirname + path.normalize('/templates/' + language + '.md'), 'utf8')
+  let raw = fs.readFileSync(getTemplatePath(language), 'utf8')
   let newDate = Utils.createDateString()
   let fileName = Utils.generateFileName(name)
 
