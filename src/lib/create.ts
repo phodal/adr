@@ -7,9 +7,9 @@ import Utils from './utils'
 import { generate } from './generate'
 
 function getTemplatePath (language: string) {
-  const customTemplate = path.join(Config.getSavePath(), 'template.md');
+  const customTemplate = path.join(Config.getSavePath(), 'template.md')
   if (fs.existsSync(customTemplate)) {
-    return customTemplate;
+    return customTemplate
   } else {
     return __dirname + path.normalize('/templates/' + language + '.md')
   }
