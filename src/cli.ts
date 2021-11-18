@@ -70,7 +70,7 @@ program
 program
   .command('export <format>')
   .alias('o')
-  .description('export ADR reporter in HTML, CSV, JSON, Markdown', {
+  .description('export ADR reporter in HTML, CSV, JSON', {
     format: 'csv | json | html'
   })
   .action(output)
