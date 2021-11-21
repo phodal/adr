@@ -50,6 +50,10 @@ function createLogsBody (allStatus: string[], tableData: string[][]): string[][]
 export function logs (index): string {
   let outputArray = getAllFilesName()
   let currentFileName = outputArray[index]
+  if (!currentFileName) {
+    console.log(`File with index ${index} does not exist.`)
+    return `File with index ${index} does not exist.`
+  }
   let filePath = path + currentFileName
   let allStatus = StatusHelper.getAllStatus(filePath)
   if (allStatus.length === 0) {

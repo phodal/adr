@@ -25,6 +25,9 @@ let getAllFilesName = function (): string[] {
 
 export function status (index): void {
   let fileName = getAllFilesName()[index]
+  if (!fileName) {
+    console.log(`File with index ${index} does not exist.`)
+  }
   let status = StatusHelper.getLatestStatus(path + fileName)
   let statusList = i18n.statusStr.split('/')
   inquirer.prompt([{
