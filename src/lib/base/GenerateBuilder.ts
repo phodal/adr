@@ -1,12 +1,13 @@
 ///<reference path="AbstractBuilder.ts"/>
-let walkSync = require('walk-sync')
 import { AbstractBuilder } from './AbstractBuilder'
 
 import Utils from '../utils'
+import getAdrFiles from '../helpers/getAdrFiles'
+import * as walkSync from'walk-sync'
 
 export class GenerateBuilder implements AbstractBuilder {
   path: string
-  files: [{ relativePath: string }]
+  files: walkSync.Entry[]
   startString: string | string[]
   endString: string | string[]
   bodyString: string[] | any
@@ -14,7 +15,7 @@ export class GenerateBuilder implements AbstractBuilder {
   constructor (path: string) {
     this.path = path
     this.bodyString = ['']
-    this.files = walkSync.entries(this.path, {globs: ['**/*.md']})
+    this.files = getAdrFiles()
   }
 
   setBody (handleBody: any) {

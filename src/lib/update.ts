@@ -1,10 +1,10 @@
 ///<reference path="generate.ts"/>
-let walkSync = require('walk-sync')
 let fs = require('fs')
 
 import Utils from './utils'
 import { generate } from './generate'
 import Config from './Config'
+import getAdrFiles from './helpers/getAdrFiles'
 
 let savePath = Config.getSavePath()
 
@@ -15,7 +15,7 @@ function generateNewFileName (newIndex: number, title: string | any) {
 }
 
 function updateNameByTitle (): void {
-  let files = walkSync.entries(savePath, { globs: ['**/*.md'], ignore: ['README.md'] })
+  let files = getAdrFiles()
 
   files.forEach(function (file) {
     let fileName = file.relativePath
