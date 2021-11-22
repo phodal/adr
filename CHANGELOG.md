@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://github.com/phodal/adr/compare/v1.3.1...v1.3.3) (2021-11-22)
+
+
+### Bug Fixes
+
+* fix typo for description && fixed [#28](https://github.com/phodal/adr/issues/28) ([c147a63](https://github.com/phodal/adr/commit/c147a638bf51c1b14b30c458b586ab0d67be0849))
+
 ### [1.3.1](https://github.com/phodal/adr/compare/v1.2.0...v1.3.1) (2020-11-09)
 
 ### [1.2.1](https://github.com/phodal/adr/compare/v1.2.0...v1.2.1) (2020-08-19)
