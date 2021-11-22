@@ -1,12 +1,12 @@
-let walkSync = require('walk-sync')
 let fs = require('fs')
 
+import getAdrFiles from '../helpers/getAdrFiles'
 import MdHelper from '../helpers/MdHelper'
 import BasicOutput from './BasicOutput'
 
 class HtmlBuilder extends BasicOutput {
   buildFunc () {
-    let files = walkSync.entries(this.path, {globs: ['**/*.md']})
+    let files = getAdrFiles()
     let path = this.path
     files.forEach(function (file) {
       let fileName = file.relativePath

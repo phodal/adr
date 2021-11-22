@@ -1,15 +1,15 @@
-let walkSync = require('walk-sync')
 let Table = require('table')
 
 import Utils from './utils'
 import StatusHelper from './StatusHelper'
 import Config from './Config'
+import getAdrFiles from './helpers/getAdrFiles'
 
 let path = Config.getSavePath()
 
 let getAllFilesName = function (): string[] {
   let outputArray = ['']
-  let files = walkSync.entries(path, { globs: ['**/*.md'] })
+  let files = getAdrFiles()
   files.forEach(function (file) {
     let fileName = file.relativePath
 

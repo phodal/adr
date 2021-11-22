@@ -1,8 +1,8 @@
 import { getI18n } from './helpers/i18n'
 import Config from './Config'
+import getAdrFiles from './helpers/getAdrFiles'
 
 let moment = require('moment')
-let walkSync = require('walk-sync')
 
 function getWorkDir () {
   return process.cwd()
@@ -32,8 +32,7 @@ function getMaxIndex (files: {relativePath: string}[]) {
 }
 
 function getLatestIndex (): number {
-  let path = Config.getSavePath()
-  let files = walkSync.entries(path, { globs: ['**/*.md'] })
+  let files = getAdrFiles()
 
   if (!(files && files.length > 0)) {
     return 0
