@@ -34,7 +34,7 @@ A good material about [Architecture decision record](https://github.com/joelpark
  - Supported Windows, GNU/Linux, Mac OS
  - **report for PM, BA**: html, csv, json
  - generate markdown toc（see in [docs/adr](/docs/adr) ）
- - **i18n**: English (en), 中文(zh-cn), Brazilian Portuguese (pt-br), Standard Italian (it-IT)
+ - **i18n**: English (en), 中文(zh-cn), Brazilian Portuguese (pt-br), Standard Italian (it-IT), Farsi (fa), French (fr)
  - status logs
  - status query
  - better list view
