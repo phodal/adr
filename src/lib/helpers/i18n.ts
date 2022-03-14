@@ -19,6 +19,22 @@ export function getI18n () {
         superseded: 'Superseded'
       }
     },
+    fa: {
+      decision: 'تصمیم',
+      Status: 'وضعیت',
+      statusStr: 'پیشنهاد شده/پذیرفته شده/پیاده شده/منسوخ/جایگزین شده',
+      modifiedDate: 'آخرین تاریخ ویرایش',
+      lastStatus: 'آخرین وضعیت',
+      logSavePath: 'مسیر ذخیره سازی:',
+      tocHeader: 'مدارک تصمیمات معماری',
+      status: {
+        proposed: 'پیشنهاد شده',
+        accepted: 'پذیرفته شده',
+        done: 'پیاده شده',
+        deprecated: 'منسوخ',
+        superseded: 'جایگزین شده'
+      }
+    },
     'zh-cn': {
       decision: '决策',
       Status: '状态',
