@@ -39,6 +39,7 @@ A good material about [Architecture decision record](https://github.com/joelpark
  - status query
  - better list view
  - compatible adr-tools
+ - custom templates: add a `template.md` file in the save path
 
 HTML Reporter Example
 ---
