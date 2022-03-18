@@ -75,7 +75,7 @@ npm install -g adr
 adr init <language>
 ```
 
-e.x: ``adr init 'en'``
+e.x: ``adr init en``
 
 ### new
 
