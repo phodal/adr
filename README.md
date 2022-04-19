@@ -83,7 +83,7 @@ e.x: ``adr init en``
 adr new <decision>
 ```
 
-e.x: ``adr new "create project"``
+e.x: ``adr new "create project"``. It will open the new file with your config [editor](#config)
 
 ### list
 
@@ -210,6 +210,7 @@ current:
   - **path**, save path
   - **digits**, the index length, e.x. digits:3 001-index.md
   - **prefix**, the prefix of files, e.x. adr-0001
+  - **editor**, the editor to open file, e.x. code, [more information](https://github.com/lahmatiy/open-in-editor#editor), and you can also use the editor by setting the program path, such as `/System/Applications/TextEdit.app/Contents/MacOS/TextEdit`
 
 example config: 
 
@@ -218,7 +219,8 @@ example config:
   "path":"doc/adr/",
   "language":"zh-cn",
   "prefix": "",
-  "digits": 4
+  "digits": 4,
+  "editor": "code"
 }
 ```
 
