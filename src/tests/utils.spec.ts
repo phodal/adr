@@ -2,6 +2,7 @@ let sinon = require('sinon')
 let fs = require('fs')
 let walkSync = require('walk-sync')
 let LRU = require('lru-cache')
+let OpenInEditor = require('open-in-editor')
 
 import test from 'ava'
 import ADR from '../index'
@@ -141,4 +142,15 @@ test('createDateString: should return correct date string', t => {
   let language = Utils.createDateString()
   t.deepEqual(language, '2099-01-01')
   clock.restore()
+})
+
+test('openInEditor: should open in editor successfully', t => {
+  let filename = 'test-open-in-editor.md'
+
+  let openInEditorSpy = sinon.stub(OpenInEditor, 'configure').returns({open: async (filePath: string) => {
+    t.is(filePath, filename)
+  }})
+
+  Utils.openInEditor(filename)
+  openInEditorSpy.restore()
 })
