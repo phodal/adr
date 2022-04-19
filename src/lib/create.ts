@@ -15,7 +15,7 @@ function getTemplatePath (language: string) {
   }
 }
 
-function createDecisions (name: string, savePath: string | any | void) {
+function createDecisions (name: string, savePath: string | any | void): string {
   let language = Config.getLanguage()
   let raw = fs.readFileSync(getTemplatePath(language), 'utf8')
   let newDate = Utils.createDateString()
@@ -28,6 +28,8 @@ function createDecisions (name: string, savePath: string | any | void) {
 
   let filePath = savePath + newIndex + '-' + fileName + '.md'
   fs.writeFileSync(filePath, fileData)
+
+  return filePath
 }
 
 export function create (name: string) {
@@ -36,7 +38,9 @@ export function create (name: string) {
   console.log(i18n.logSavePath + savePath)
   mkdirp.sync(savePath)
 
-  createDecisions(name, savePath)
+  const filePath = createDecisions(name, savePath)
+  Utils.openInEditor(path.join(process.cwd(), filePath))
+
   let toc = generate('toc', { output: false })
   fs.writeFileSync(savePath + 'README.md', toc + '\n')
 }

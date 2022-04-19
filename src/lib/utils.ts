@@ -1,8 +1,25 @@
 import { getI18n } from './helpers/i18n'
 import Config from './Config'
 import getAdrFiles from './helpers/getAdrFiles'
+import SupportedEditor from './enum/SupportedEditor'
 
 let moment = require('moment')
+let OpenInEditor = require('open-in-editor')
+
+function getEditor () {
+  return OpenInEditor.configure(
+    SupportedEditor.has(Config.getEditor()) ? { editor: Config.getEditor() } : { cmd: Config.getEditor(), pattern: '{filename}' },
+    console.warn
+  )
+}
+
+function openInEditor (filePath: string) {
+  const editor = getEditor()
+
+  editor.open(filePath)
+    .then(() => console.debug(`${filePath} open in editor successfully!`))
+    .catch(console.warn)
+}
 
 function getWorkDir () {
   return process.cwd()
@@ -87,7 +104,8 @@ let Utils = {
   getI18n: getI18n,
   createDateString: createDateString,
   getNumberLength: getNumberLength,
-  getIndexByString: getIndexByString
+  getIndexByString: getIndexByString,
+  openInEditor: openInEditor
 }
 
 export default Utils

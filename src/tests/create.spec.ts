@@ -1,7 +1,9 @@
 let sinon = require('sinon')
+let path = require('path')
 let fs = require('fs')
 let mkdirp = require('mkdirp')
 let walkSync = require('walk-sync')
+let OpenInEditor = require('open-in-editor')
 
 import test from 'ava'
 
@@ -23,10 +25,14 @@ let adrOptions = JSON.stringify({
 })
 
 test('ADR: create', t => {
+  const filename = '0002-create.md'
   let consoleSpy = sinon.stub(console, 'log')
   let mkdirpSync = sinon.stub(mkdirp, 'sync')
   let generateSpy = sinon.stub(ADR, 'generate')
   let fsWriteSyncSpy = sinon.stub(fs, 'writeFileSync')
+  let openInEditorSpy = sinon.stub(OpenInEditor, 'configure').returns({open: async (filePath: string) => {
+    t.is(path.basename(filePath), filename)
+  }})
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
       relativePath: '001-编写完整的单元测试.md',
@@ -48,11 +54,12 @@ test('ADR: create', t => {
 
   ADR.create('create')
   // create
-  t.deepEqual(fsWriteSyncSpy.calledWith('./0002-create.md'), true)
+  t.deepEqual(fsWriteSyncSpy.calledWith(`./${filename}`), true)
   // TOC
   t.deepEqual(fsWriteSyncSpy.calledWith('./README.md'), true)
   t.deepEqual(mkdirpSync.callCount, 1)
 
+  openInEditorSpy.restore()
   fsWriteSyncSpy.restore()
   ADRGetSavePathSpy.restore()
   fsExistSpy.restore()

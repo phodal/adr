@@ -10,7 +10,8 @@ let DEFAULT_CONFIG = {
   language: 'en',
   path: Utils.getWorkDir() + '/docs/adr/',
   prefix: '',
-  digits: 4
+  digits: 4,
+  editor: 'code'
 }
 
 function getAllConfig (defaultValue: string) {
@@ -60,12 +61,17 @@ function getSavePath (): string {
   return getConfig('path')
 }
 
+function getEditor (): string {
+  return getConfig('editor')
+}
+
 let Config = {
   getAllConfig: getAllConfig,
   getSavePath: getSavePath,
   getLanguage: getLanguage,
   getPrefix: getPrefix,
   getDigits: getDigits,
+  getEditor: getEditor,
   getConfig: getConfig
 }
 
