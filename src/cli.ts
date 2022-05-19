@@ -14,6 +14,7 @@ let { logs } = require('./lib/logs')
 let { output } = require('./lib/output')
 let { search } = require('./lib/search')
 let { status } = require('./lib/status')
+let { compress } = require('./lib/compress')
 
 program
   .command('new <title...>')
@@ -80,6 +81,12 @@ program
   .alias('s')
   .description('search ADRs by keywords')
   .action(search)
+
+program
+  .command('compress')
+  .alias('c')
+  .description('compress ADR image assets')
+  .action(compress)
 
 program.parse(process.argv)
 

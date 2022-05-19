@@ -2,6 +2,8 @@ import Config from './Config'
 
 let fs = require('fs')
 
+// TODO handle parallel cache operation
+
 function initCache () {
   let cachePath = Config.getCachePath()
   let cacheInitObj = {
