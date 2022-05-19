@@ -3,7 +3,7 @@ import { AbstractBuilder } from './AbstractBuilder'
 
 import Utils from '../utils'
 import getAdrFiles from '../helpers/getAdrFiles'
-import * as walkSync from'walk-sync'
+import * as walkSync from 'walk-sync'
 
 export class GenerateBuilder implements AbstractBuilder {
   path: string
@@ -21,7 +21,7 @@ export class GenerateBuilder implements AbstractBuilder {
   setBody (handleBody: any) {
     let files = this.files
     let bodyString = this.bodyString
-    this.files.forEach( function (file) {
+    this.files.forEach(function (file) {
       let fileName = file.relativePath
       let fileNameLength = fileName.length
       let numberLength = Utils.getNumberLength(fileName) + '-'.length

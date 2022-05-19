@@ -10,7 +10,7 @@ export class ListGenerateBuilder extends GenerateBuilder {
   setBody (handleBody: any) {
     let files = this.files
     let bodyString = this.bodyString
-    files.forEach( function (file) {
+    files.forEach(function (file) {
       let fileName = file.relativePath
       let index = Utils.getIndexByString(fileName)
       let fileData = fs.readFileSync(savePath + fileName, 'utf8')
