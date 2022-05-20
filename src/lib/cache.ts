@@ -1,6 +1,6 @@
-import Config from './Config'
-
 let fs = require('fs')
+
+import Config from './Config'
 
 // TODO handle parallel cache operation
 
