@@ -63,11 +63,11 @@ function getSavePath (): string {
 }
 
 function getCachePath (): string {
-  return path.resolve(getConfig('path'), '/.cache')
+  return path.resolve(getConfig('path'), './.cache')
 }
 
 function getAssetsPath (): string {
-  return path.resolve(getConfig('path'), './assets/')
+  return path.resolve(getConfig('path'), './assets')
 }
 
 function getEditor (): string {
