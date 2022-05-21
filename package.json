@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@lisnote/image-generator": "^1.0.3",
     "@types/node": "^14.0.5",
     "ava": "3.8.2",
     "browserify": "^16.2.3",
@@ -134,6 +135,7 @@
     "moment": "^2.24.0",
     "open-in-editor": "^2.2.0",
     "remarkable": "^2.0.1",
+    "sharp": "^0.30.4",
     "table": "^5.4.1",
     "tslib": "^2.0.0",
     "walk": "^2.3.14",

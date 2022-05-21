@@ -3,6 +3,7 @@ let LRU = require('lru-cache')
 let cache = new LRU({
   max: 500
 })
+let path = require('path')
 
 import Utils from './utils'
 
@@ -61,6 +62,14 @@ function getSavePath (): string {
   return getConfig('path')
 }
 
+function getCachePath (): string {
+  return path.resolve(getConfig('path'), './.cache')
+}
+
+function getAssetsPath (): string {
+  return path.resolve(getConfig('path'), './assets')
+}
+
 function getEditor (): string {
   return getConfig('editor')
 }
@@ -72,7 +81,9 @@ let Config = {
   getPrefix: getPrefix,
   getDigits: getDigits,
   getEditor: getEditor,
-  getConfig: getConfig
+  getConfig: getConfig,
+  getAssetsPath: getAssetsPath,
+  getCachePath: getCachePath
 }
 
 export default Config
