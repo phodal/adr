@@ -98,7 +98,23 @@ export function getI18n () {
         deprecie: 'Déprécié',
         remplace: 'Remplacé'
       }
-    }
+    },
+    ru: {
+      decision: 'Решение',
+      Status: 'Статус',
+      statusStr: 'предложено/принято/реализовано/устарело/изменено',
+      modifiedDate: 'Дата последнего изменения',
+      lastStatus: 'Последний статус',
+      logSavePath: 'Путь хранения логов:',
+      tocHeader: 'Лог архитектурных решений',
+      status: {
+        proposed: 'Предложено',
+        accepted: 'Принято',
+        done: 'Реализовано',
+        deprecated: 'Устарело',
+        superseded: 'Изменено'
+      }
+    },
   }
 
   return I18N[language]
