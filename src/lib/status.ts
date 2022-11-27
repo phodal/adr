@@ -1,4 +1,4 @@
-let inquirer = require('inquirer')
+import inquirer from 'inquirer'
 
 import Utils from './utils'
 import StatusHelper from './StatusHelper'
@@ -8,34 +8,22 @@ import getAdrFiles from './helpers/getAdrFiles'
 let path = Config.getSavePath()
 let i18n = Utils.getI18n()
 
-let getAllFilesName = function (): string[] {
-  let outputArray = ['']
-  let files = getAdrFiles()
-  files.forEach(function (file) {
-    let fileName = file.relativePath
+const getAllFilesName = (): string[] => getAdrFiles().map(item => item.relativePath)
 
-    let index = Utils.getIndexByString(fileName)
-    if (index) {
-      outputArray[index] = fileName
-    }
-  })
-
-  return outputArray
-}
-
-export function status (index): void {
-  let fileName = getAllFilesName()[index]
+export const status = async (index): Promise<void> => {
+  const prefix = Config.getPrefix()
+  let fileName = getAllFilesName().find((item => item.includes(`${prefix ? prefix : ''}${index}-`)))
   if (!fileName) {
-    console.log(`File with index ${index} does not exist.`)
+    console.error(`File with index ${index} does not exist.`)
+    process.exit()
   }
   let status = StatusHelper.getLatestStatus(path + fileName)
   let statusList = i18n.statusStr.split('/')
-  inquirer.prompt([{
+  const answer = await inquirer.prompt([{
     type: 'list',
     name: 'status',
     message: `${fileName}(${status}) new status:`,
     choices: statusList
-  }]).then(answer => {
-    StatusHelper.setStatus(path + fileName, answer.status)
-  })
+  }])
+  StatusHelper.setStatus(path + fileName, answer.status)
 }

@@ -64,7 +64,7 @@ function listAdrByPath (path: string): string {
 export function list (): string {
   let path = Config.getSavePath()
   let adrs = listAdrByPath(path)
-  // TODO: not to remove again
+  // DO NOT REMOVE THIS CONSOLE.LOG
   console.log(adrs)
   return adrs
 }

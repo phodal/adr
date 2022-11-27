@@ -44,6 +44,7 @@ let cache = new Proxy(_cacheInternal, {
       _cacheInternal.init()
     }
 
+/* tslint:disable-next-line */
     return typeof target[key] === 'function'
       ? (target[key] as any).bind(target)
       : target[key]
