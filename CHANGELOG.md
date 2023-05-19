@@ -1,3 +1,14 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.4.5](https://github.com/phodal/adr/compare/v1.4.2...v1.4.5) (2023-05-19)
+
+
+### Bug Fixes
+
+* avoid 'Expression is always true' error ([fc94019](https://github.com/phodal/adr/commit/fc94019e7c6569903b8e0074c1b90a6b3f9998ce))
+
 ## [1.4.1](https://github.com/phodal/adr/compare/v1.3.4...v1.4.1) (2022-05-21)
 
 
@@ -170,6 +181,3 @@
 
 
 ## 0.0.4 (2017-11-22)
-
-
-
