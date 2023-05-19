@@ -44,7 +44,7 @@ let cache = new Proxy(_cacheInternal, {
       _cacheInternal.init()
     }
 
-    return typeof target[key] === 'function'
+    return target[key] instanceof Function
       ? (target[key] as any).bind(target)
       : target[key]
   }
