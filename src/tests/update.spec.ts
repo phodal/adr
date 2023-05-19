@@ -8,7 +8,7 @@ import ADR from '../index'
 
 let Config = ADR.Config
 
-let mdTemplate = `# 1. 更友好的 CLI
+let mdTemplateCn = `# 1. 更友好的 CLI
 
 日期: 2017-11-23
 
@@ -42,8 +42,8 @@ test('ADR: init in chinese', t => {
   ])
   let fsReadSpy = sinon.stub(fs, 'readFileSync')
   fsReadSpy
-    .onCall(0).returns(mdTemplate)
-    .onCall(2).returns(mdTemplate)
+    .onCall(0).returns(mdTemplateCn)
+    .onCall(2).returns(mdTemplateCn)
     .onCall(3).returns('{}')
     .onCall(1).returns(JSON.stringify({
       path: 'some'
