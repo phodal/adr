@@ -62,7 +62,7 @@ test('ADR: init in chinese', t => {
   ADRGetSavePathSpy.restore()
 })
 
-let mdTemplateJp = `# 1. 更友好的 CLI
+let mdTemplateJp = `# 1. Foo は Bar ではなく Baz で管理する
 
 年月日: 2017-11-23
 
@@ -80,7 +80,7 @@ test('ADR: init in japanese', t => {
   let renameSpy = sinon.stub(fs, 'renameSync')
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
-      relativePath: '001-DAF编写完整的单元测试.md',
+      relativePath: '001-foo-は-bar-ではなく-baz-で管理する.md',
       basePath: '/Users/fdhuang/learing/adr/docs/adr/',
       mode: 33188,
       size: 246,
@@ -107,7 +107,7 @@ test('ADR: init in japanese', t => {
   t.deepEqual(fsWriteSpy.callCount, 2)
   t.deepEqual(fsReadSpy.callCount, 2)
   t.deepEqual(renameSpy.callCount, 1)
-  t.deepEqual(consoleSpy.calledWith('001-DAF编写完整的单元测试.md -> 0001-更友好的-cli.md'), true)
+  t.deepEqual(consoleSpy.calledWith('001-foo-は-bar-ではなく-baz-で管理する.md -> 0001-foo-は-bar-ではなく-baz-で管理する.md'), true)
   fsWriteSpy.restore()
   fsReadSpy.restore()
   entriesSpy.restore()
