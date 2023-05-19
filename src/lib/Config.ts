@@ -12,7 +12,8 @@ let DEFAULT_CONFIG = {
   path: Utils.getWorkDir() + '/docs/adr/',
   prefix: '',
   digits: 4,
-  editor: 'code'
+  editor: 'code',
+  force_nfc: false
 }
 
 function getAllConfig (defaultValue: string) {
@@ -74,6 +75,10 @@ function getEditor (): string {
   return getConfig('editor')
 }
 
+function getForceNfc (): string {
+  return getConfig('force_nfc')
+}
+
 let Config = {
   getAllConfig: getAllConfig,
   getSavePath: getSavePath,
@@ -83,7 +88,8 @@ let Config = {
   getEditor: getEditor,
   getConfig: getConfig,
   getAssetsPath: getAssetsPath,
-  getCachePath: getCachePath
+  getCachePath: getCachePath,
+  getForceNfc: getForceNfc
 }
 
 export default Config

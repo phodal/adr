@@ -68,7 +68,15 @@ function getNewIndexString (): string {
 }
 
 function generateFileName (originFileName) {
-  return originFileName.toLowerCase().trim()
+  let normalizedFileName = originFileName.toLowerCase().trim()
+
+  if (Config.getForceNfc()) {
+    normalizedFileName = normalizedFileName.normalize('NFC')
+  } else {
+    normalizedFileName = normalizedFileName.normalize('NFD')
+  }
+
+  return normalizedFileName
     .replace(/[\s_-]+/g, '-') // swap any length of whitespace, underscore, hyphen characters with a single _
     .replace(/^-+|-+$/g, '') // remove leading, trailing -
     .replace(/，/g, '')
