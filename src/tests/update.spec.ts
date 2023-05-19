@@ -74,6 +74,7 @@ let mdTemplateJp = `# 1. Foo は Bar ではなく Baz で管理する
 `
 
 test('ADR: init in japanese', t => {
+  let getForceNfcStub = sinon.stub(Config, 'getForceNfc').returns(true)
   let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
   let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
   let consoleSpy = sinon.stub(console, 'log')
@@ -114,4 +115,5 @@ test('ADR: init in japanese', t => {
   consoleSpy.restore()
   renameSpy.restore()
   ADRGetSavePathSpy.restore()
+  getForceNfcStub.restore()
 })
