@@ -77,7 +77,9 @@ function generateFileName (originFileName) {
   }
 
   return normalizedFileName
-    .replace(/[\s_-]+/g, '-') // swap any length of whitespace, underscore, hyphen characters with a single _
+    .replace(/[\s_-]+/g, '-') // swap any length of whitespace, underscore, hyphen characters with a single -
+    .replace(/\\/g, '-') // swap Windows directory separator by -
+    .replace(/\//g, '-') // swap macOS / Linux directory separator by -
     .replace(/^-+|-+$/g, '') // remove leading, trailing -
     .replace(/，/g, '')
     .replace(/。/g, '')
