@@ -1,9 +1,13 @@
 ///<reference path="AbstractBuilder.ts"/>
+let fs = require('fs')
 import { AbstractBuilder } from './AbstractBuilder'
 
+import Config from '../Config'
 import Utils from '../utils'
 import getAdrFiles from '../helpers/getAdrFiles'
 import * as walkSync from 'walk-sync'
+
+let savePath = Config.getSavePath()
 
 export class GenerateBuilder implements AbstractBuilder {
   path: string
@@ -23,12 +27,11 @@ export class GenerateBuilder implements AbstractBuilder {
     let bodyString = this.bodyString
     this.files.forEach(function (file) {
       let fileName = file.relativePath
-      let fileNameLength = fileName.length
-      let numberLength = Utils.getNumberLength(fileName) + '-'.length
-      let markdownWithPrefixLength = '.md'.length
       let index = Utils.getIndexByString(fileName)
+      let fileData = fs.readFileSync(savePath + fileName, 'utf8')
+      let firstLine = fileData.split('\n')[0]
       if (index) {
-        let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
+        let decision = firstLine.replace(/#\s\d+\.\s/g, '')
         handleBody(index, decision, file, bodyString, files.length)
       }
     })
