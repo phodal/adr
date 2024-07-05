@@ -91,8 +91,10 @@ function generateFileName (originFileName) {
 }
 
 function getNumberLength (fileName: string): number {
-  let numberLength = fileName.split('-')[0]
-  return numberLength.length
+  let numberLength = fileName
+    .substring(Config.getPrefix().length)
+    .split('-')[0]
+  return Config.getPrefix().length + numberLength.length
 }
 
 function getIndexByString (fileName: string): number {
