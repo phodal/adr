@@ -41,7 +41,7 @@ function generateToc (options?: {output: boolean}) {
 function generateAsciidocToc (options?: {output: boolean}) {
   let path = Config.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
-  let header = '= ' + getI18n().tocHeader + '\n'
+  let header = '.' + getI18n().tocHeader + '\n'
   let results = graphGenerate
     .setStart(header)
     .setEnd('')

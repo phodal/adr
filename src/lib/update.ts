@@ -22,7 +22,7 @@ function updateNameByTitle (): void {
     let fileName = file.relativePath
     let fileExt = Config.getDocExtension()
     let startChar = fileExt === 'adoc' ? '=' : '#'
-    let fileData = fs.readFileSync(savePath + fileName, 'let fileExt = Config.getDocExtension()utf8')
+    let fileData = fs.readFileSync(savePath + fileName, 'utf8')
     let firstLine = fileData.split('\n')[0]
     let indexRegexValue = new RegExp(String.raw`${startChar}\s(\d+)\.\s`, '')
     let title = firstLine.replace(indexRegexValue, '')
