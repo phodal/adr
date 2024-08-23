@@ -2,9 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-=== [Unreleased]
+### [1.5.1](https://github.com/phodal/adr/compare/v1.4.6...v1.5.1) (2024-08-23)
 
-* Add support of Asciidoc
+
+### Bug Fixes
+
+* fix test for [#58](https://github.com/phodal/adr/issues/58) and [#52](https://github.com/phodal/adr/issues/52) ([a51687e](https://github.com/phodal/adr/commit/a51687e90b78977b859ff56dcd0031ff9bb27088))
 
 ### [1.4.5](https://github.com/phodal/adr/compare/v1.4.2...v1.4.5) (2023-05-19)
 
