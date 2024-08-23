@@ -167,7 +167,7 @@ test('ADR: generate toc with asciodoc', t => {
   let results = ADR.generate('toc')
   console.log(results)
   t.deepEqual(results,
-    `= 架构决策记录
+    `.架构决策记录
 
 * xref:001-编写完整的单元测试.adoc[1. 编写完整的单元测试]
 * xref:002-编写完整的单元测试.adoc[2. 编写完整的单元测试]`)
