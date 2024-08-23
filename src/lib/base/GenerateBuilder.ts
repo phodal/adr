@@ -4,6 +4,7 @@ import { AbstractBuilder } from './AbstractBuilder'
 import Utils from '../utils'
 import getAdrFiles from '../helpers/getAdrFiles'
 import * as walkSync from 'walk-sync'
+import Config from '../Config'
 
 export class GenerateBuilder implements AbstractBuilder {
   path: string
@@ -23,12 +24,13 @@ export class GenerateBuilder implements AbstractBuilder {
     let bodyString = this.bodyString
     this.files.forEach(function (file) {
       let fileName = file.relativePath
+      let fileExt = Config.getDocExtension()
       let fileNameLength = fileName.length
       let numberLength = Utils.getNumberLength(fileName) + '-'.length
-      let markdownWithPrefixLength = '.md'.length
+      let fileExtLength = ('.'+fileExt).length
       let index = Utils.getIndexByString(fileName)
       if (index) {
-        let decision = fileName.substring(numberLength, fileNameLength - markdownWithPrefixLength)
+        let decision = fileName.substring(numberLength, fileNameLength - fileExtLength)
         handleBody(index, decision, file, bodyString, files.length)
       }
     })

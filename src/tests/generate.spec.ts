@@ -92,3 +92,88 @@ test('ADR: generate error', t => {
   t.deepEqual(consoleSpy.called, true)
   consoleSpy.restore()
 })
+
+test('ADR: generate graph with asciidoc', t => {
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
+  let consoleSpy = sinon.stub(console, 'log')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.adoc',
+      basePath: '/test',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: '002-编写完整的单元测试.adoc',
+      basePath: '/test',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.adoc',
+      basePath: '/test',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653 }
+  ])
+
+  let results = ADR.generate('graph')
+  console.log(results)
+  t.deepEqual(results,
+    `digraph {
+  node [shape=plaintext];
+  _1 [label="1.编写完整的单元测试"; URL="001-编写完整的单元测试.adoc"]
+  _2 [label="2.编写完整的单元测试"; URL="002-编写完整的单元测试.adoc"]
+  _1 -> _2 [style="dotted"];
+}
+`)
+
+  consoleSpy.restore()
+  ADRGetSavePathSpy.restore()
+  entriesSpy.restore()
+  ADRGetDocExtensionSpy.restore()
+})
+
+test('ADR: generate toc with asciodoc', t => {
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
+  let consoleSpy = sinon.stub(console, 'log')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.adoc',
+      basePath: '/test',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: '002-编写完整的单元测试.adoc',
+      basePath: '/test',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.adoc',
+      basePath: '/test',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653 }
+  ])
+
+  let results = ADR.generate('toc')
+  console.log(results)
+  t.deepEqual(results,
+    `= 架构决策记录
+
+* xref:001-编写完整的单元测试.adoc[1. 编写完整的单元测试]
+* xref:002-编写完整的单元测试.adoc[2. 编写完整的单元测试]`)
+
+  consoleSpy.restore()
+  ADRGetSavePathSpy.restore()
+  entriesSpy.restore()
+  ADRGetDocExtensionSpy.restore()
+})

@@ -21,7 +21,22 @@ let mdTemplate = `# 1. 更友好的 CLI
 2017-11-25 通过
 `
 
-test('ADR: logs', t => {
+let asciodocTemplate = `= 1. 更友好的 CLI
+
+日期: 2017-11-23
+
+== 状态
+
+列表：提议/通过/完成/已弃用/已取代
+
+2017-11-23 提议
+
+2017-11-24 讨论
+
+2017-11-25 通过
+`
+
+test('ADR: logs Markdown', t => {
   let consoleSpy = sinon.stub(console, 'log')
   let renameSpy = sinon.stub(fs, 'renameSync')
   let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
@@ -66,6 +81,55 @@ test('ADR: logs', t => {
   consoleSpy.restore()
   renameSpy.restore()
   cacheSpy.restore()
+})
+
+test('ADR: logs Asciidoc', t => {
+  let consoleSpy = sinon.stub(console, 'log')
+  let renameSpy = sinon.stub(fs, 'renameSync')
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'zh-cn'
+  })
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-DAF编写完整的单元测试.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+  fsReadSpy
+    .onCall(0).returns(asciodocTemplate)
+    .onCall(1).returns(asciodocTemplate)
+
+  let logs = ADR.logs('1')
+  t.deepEqual(logs, `╔════════════╤══════╗
+║  -         │  -   ║
+╟────────────┼──────╢
+║ 2017-11-23 │ 提议 ║
+╟────────────┼──────╢
+║ 2017-11-24 │ 讨论 ║
+╟────────────┼──────╢
+║ 2017-11-25 │ 通过 ║
+╚════════════╧══════╝
+`)
+  fsReadSpy.restore()
+  entriesSpy.restore()
+  consoleSpy.restore()
+  renameSpy.restore()
+  cacheSpy.restore()
+  ADRGetDocExtensionSpy.restore()
 })
 
 test('ADR: logs handles non existent indexes', t => {

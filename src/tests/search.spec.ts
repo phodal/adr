@@ -20,12 +20,23 @@ let adrTemplate = `# 1. 编写完整的单元测试
 2017-11-26 已完成
 `
 
+let adrTemplateAsciidoc = `= 1. 编写完整的单元测试
+
+日期: 2017/11/22
+
+== 状态
+
+2017-11-22 提议
+
+2017-11-26 已完成
+`
+
 let adrOptions = JSON.stringify({
   path: './',
   language: 'zh-cn'
 })
 
-test('ADR: list', t => {
+test('ADR: list Markdown', t => {
   let findSpy = sinon.stub(findInFiles, 'find').returns({
     then: cb => {
       cb({ 'docs/adr/001-filename.md': {} })
@@ -66,4 +77,49 @@ test('ADR: list', t => {
   consoleSpy.restore()
   fsReadSpy.restore()
   i18nSpy.restore()
+})
+
+test('ADR: list Asciidoc', t => {
+  let findSpy = sinon.stub(findInFiles, 'find').returns({
+    then: cb => {
+      cb({ 'docs/adr/001-filename.adpc': {} })
+    }
+  })
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
+  let i18nSpy = sinon.stub(Utils, 'getI18n').returns({
+    decision: '决策',
+    modifiedDate: '上次修改时间',
+    lastStatus: '最后状态',
+    logSavePath: '保存路径：'
+  })
+  let consoleSpy = sinon.stub(console, 'log')
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(adrTemplateAsciidoc)
+    .onCall(1).returns(adrTemplateAsciidoc)
+    .onCall(2).returns(JSON.stringify(adrOptions))
+    .onCall(3).returns(JSON.stringify(adrOptions))
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([{
+    relativePath: '001-filename.adoc',
+    basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+    mode: 33188,
+    size: 246,
+    mtime: 1511435254653 }
+  ])
+
+  ADR.search('测试')
+  t.deepEqual(consoleSpy.calledWith(
+    `╔════════════╤═══════════════════╗
+║ 决策       │ 最后状态          ║
+╟────────────┼───────────────────╢
+║ 1.filename │ 2017-11-26 已完成 ║
+╚════════════╧═══════════════════╝
+`), true)
+  findSpy.restore()
+  ADRGetSavePathSpy.restore()
+  entriesSpy.restore()
+  consoleSpy.restore()
+  fsReadSpy.restore()
+  i18nSpy.restore()
+  ADRGetDocExtensionSpy.restore()
 })

@@ -9,9 +9,10 @@ import getAdrFiles from './helpers/getAdrFiles'
 let savePath = Config.getSavePath()
 
 function generateNewFileName (newIndex: number, title: string | any) {
+  let fileExt = Config.getDocExtension()
   let indexString = Utils.createIndexByNumber(newIndex)
   let decisionInfile = Utils.generateFileName(title)
-  return indexString + '-' + decisionInfile + '.md'
+  return indexString + '-' + decisionInfile + '.' + fileExt
 }
 
 function updateNameByTitle (): void {
@@ -19,10 +20,13 @@ function updateNameByTitle (): void {
 
   files.forEach(function (file) {
     let fileName = file.relativePath
-    let fileData = fs.readFileSync(savePath + fileName, 'utf8')
+    let fileExt = Config.getDocExtension()
+    let startChar = fileExt === 'adoc' ? '=' : '#'
+    let fileData = fs.readFileSync(savePath + fileName, 'let fileExt = Config.getDocExtension()utf8')
     let firstLine = fileData.split('\n')[0]
-    let title = firstLine.replace(/#\s\d+\.\s/g, '')
-    let indexRegex = /#\s(\d+)\.\s/.exec(firstLine)
+    let indexRegexValue = new RegExp(String.raw`${startChar}\s(\d+)\.\s`, '')
+    let title = firstLine.replace(indexRegexValue, '')
+    let indexRegex = indexRegexValue.exec(firstLine)
     let oldIndex
     if (!indexRegex) {
       oldIndex = Utils.getIndexByString(fileName)
@@ -43,8 +47,9 @@ function updateNameByTitle (): void {
 }
 
 function updateToc (): void {
+  let fileExt = Config.getDocExtension()
   let toc = generate('toc', { output: false })
-  fs.writeFileSync(savePath + 'README.md', toc + '\n')
+  fs.writeFileSync(savePath + 'README.' + fileExt, toc + '\n')
 }
 
 export function update (): void {

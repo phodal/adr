@@ -15,7 +15,7 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
 }
 
 export function search (keywords) {
-  findInFiles.find({ 'term': keywords, 'flags': 'ig' }, savePath, '.md$')
+  findInFiles.find({ 'term': keywords, 'flags': 'ig' }, savePath, '.(md|adoc|asciidoc)$')
     .then(results => {
       let files: object[] = []
       for (let result in results) {
