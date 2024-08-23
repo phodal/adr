@@ -17,6 +17,11 @@ function buildTocBodyFun (index, decision, file, bodyString): string[] {
   return bodyString
 }
 
+function buildAsciidocTocBodyFun (index, decision, file, bodyString): string[] {
+  bodyString[index] = '\n* xref:' + file.relativePath + '[' + index + '. ' + decision + ']'
+  return bodyString
+}
+
 function generateToc (options?: {output: boolean}) {
   let path = Config.getSavePath()
   let graphGenerate = new GenerateBuilder(path)
@@ -25,6 +30,22 @@ function generateToc (options?: {output: boolean}) {
     .setStart(header)
     .setEnd('')
     .setBody(buildTocBodyFun)
+    .build()
+
+  if (options && options.output) {
+    console.log(results)
+  }
+  return results
+}
+
+function generateAsciidocToc (options?: {output: boolean}) {
+  let path = Config.getSavePath()
+  let graphGenerate = new GenerateBuilder(path)
+  let header = '= ' + getI18n().tocHeader + '\n'
+  let results = graphGenerate
+    .setStart(header)
+    .setEnd('')
+    .setBody(buildAsciidocTocBodyFun)
     .build()
 
   if (options && options.output) {
@@ -48,7 +69,13 @@ function generateGraph () {
 }
 
 export function generate (type, options?: {output: boolean}) {
+  const fileExt = Config.getDocExtension()
   if (type === 'toc') {
+    if (fileExt === 'adoc') {
+      let toc = generateAsciidocToc(options)
+      fs.writeFileSync(Config.getSavePath() + 'README.adoc', toc)
+      return toc
+    }
     let toc = generateToc(options)
     fs.writeFileSync(Config.getSavePath() + 'README.md', toc)
     return toc

@@ -13,7 +13,8 @@ let DEFAULT_CONFIG = {
   prefix: '',
   digits: 4,
   editor: 'code',
-  force_nfc: false
+  force_nfc: false,
+  extension: 'md'
 }
 
 function getAllConfig (defaultValue: string) {
@@ -79,6 +80,10 @@ function getForceNfc (): string {
   return getConfig('force_nfc')
 }
 
+function getDocExtension (): string {
+  return getConfig('extension')
+}
+
 let Config = {
   getAllConfig: getAllConfig,
   getSavePath: getSavePath,
@@ -89,7 +94,8 @@ let Config = {
   getConfig: getConfig,
   getAssetsPath: getAssetsPath,
   getCachePath: getCachePath,
-  getForceNfc: getForceNfc
+  getForceNfc: getForceNfc,
+  getDocExtension: getDocExtension
 }
 
 export default Config

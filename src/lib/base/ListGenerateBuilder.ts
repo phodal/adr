@@ -16,7 +16,10 @@ export class ListGenerateBuilder extends GenerateBuilder {
       let fileData = fs.readFileSync(savePath + fileName, 'utf8')
       let firstLine = fileData.split('\n')[0]
       if (index) {
+        // for markdown support
         let decision = firstLine.replace(/#\s\d+\.\s/g, '')
+        // for asciidoc support
+        decision = decision.replace(/=\s\d+\.\s/g, '')
         handleBody(index, decision, file, bodyString, files.length)
       }
     })

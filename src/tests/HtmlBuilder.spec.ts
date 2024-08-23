@@ -57,3 +57,55 @@ test('ADR: export html', t => {
   dirSpy.restore()
   // consoleSpy.restore()
 })
+
+let asciidocTemplate = `= 1. 编写完整的单元测试
+
+日期: 2017/11/22
+
+== 状态
+
+2017-11-22 提议
+2017-11-26 已完成
+`
+
+test('ADR: export html from asciidoc', t => {
+  let renderHtml = `<html>`
+
+  let ADRGetSavePathSpy = sinon.stub(Config, 'getSavePath').returns('./')
+  let ADRGetDocExtensionSpy = sinon.stub(Config, 'getDocExtension').returns('adoc')
+
+  let dirSpy = sinon.stub(Utils, 'getWorkDir').returns('.')
+  let mdHelperSpy = sinon.stub(MdHelper, 'mdRender').returns(renderHtml)
+  // let consoleSpy = sinon.stub(console, 'log')
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(asciidocTemplate)
+    .onCall(1).returns(asciidocTemplate)
+    .onCall(2).returns('')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.asciidoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.adciidoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+
+  let htmlBuilder = new ADR.HtmlBuilder('', '')
+  let output = htmlBuilder.buildContent()
+  t.deepEqual(renderHtml, output)
+  ADRGetSavePathSpy.restore()
+  fsReadSpy.restore()
+  entriesSpy.restore()
+  mdHelperSpy.restore()
+  dirSpy.restore()
+  // consoleSpy.restore()
+  ADRGetDocExtensionSpy.restore()
+})

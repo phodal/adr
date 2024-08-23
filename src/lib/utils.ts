@@ -34,7 +34,8 @@ function getMaxIndex (files: {relativePath: string}[]) {
   let maxNumber = 0
   files.forEach(function (file) {
     let fileName = file.relativePath
-    if (fileName === 'README.md') {
+    let fileExt = Config.getDocExtension()
+    if (fileName === 'README.' + fileExt) {
       return
     }
 
@@ -86,8 +87,10 @@ function generateFileName (originFileName) {
     .replace(/ /g, '-')
     .replace(/\?/g, '-')
     .replace(/#/g, '')
+    .replace(/=/g, '')
     .replace(/:/g, '')
     .replace(/# /g, '')
+    .replace(/= /g, '')
 }
 
 function getNumberLength (fileName: string): number {

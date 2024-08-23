@@ -86,6 +86,31 @@ test('getLatestIndex: when exist config file', t => {
   entriesSpy.restore()
 })
 
+test('getLatestIndex: when exist config file with asciidoc', t => {
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+
+  let lastNumber = Utils.getLatestIndex()
+  t.deepEqual(1, lastNumber)
+  entriesSpy.restore()
+  ADRGetDocExtensionSpy.restore()
+})
+
 test('getNewNumber: when exist last number', t => {
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
@@ -107,6 +132,31 @@ test('getNewNumber: when exist last number', t => {
   let newIndexString = Utils.getNewIndexString()
   t.deepEqual('0002', newIndexString)
   entriesSpy.restore()
+})
+
+test('getNewNumber: when exist last number with asciidoc', t => {
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    },
+    {
+      relativePath: 'README.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+
+  let newIndexString = Utils.getNewIndexString()
+  t.deepEqual('0002', newIndexString)
+  entriesSpy.restore()
+  ADRGetDocExtensionSpy.restore()
 })
 
 test('getNewNumber: when exist last number 001', t => {
@@ -146,6 +196,17 @@ test('createDateString: should return correct date string', t => {
 
 test('openInEditor: should open in editor successfully', t => {
   let filename = 'test-open-in-editor.md'
+
+  let openInEditorSpy = sinon.stub(OpenInEditor, 'configure').returns({open: async (filePath: string) => {
+    t.is(filePath, filename)
+  }})
+
+  Utils.openInEditor(filename)
+  openInEditorSpy.restore()
+})
+
+test('openInEditor: should open in editor successfully with asciidoc', t => {
+  let filename = 'test-open-in-editor.adoc'
 
   let openInEditorSpy = sinon.stub(OpenInEditor, 'configure').returns({open: async (filePath: string) => {
     t.is(filePath, filename)

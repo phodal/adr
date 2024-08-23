@@ -21,6 +21,19 @@ let mdTemplate = `
 
 `
 
+let asciidocTemplate = `
+= 10. 更友好的 CLI
+
+日期: 2017-11-23
+
+== 状态
+
+2017-11-23 提议
+
+2017-11-23 通过
+
+`
+
 test('ADR: list status', t => {
   let entriesSpy = sinon.stub(walkSync, 'entries').returns([
     {
@@ -75,4 +88,64 @@ test('ADR:status helper set status', t => {
   fsWriteSpy.restore()
   entriesSpy.restore()
   cacheSpy.restore()
+})
+
+test('ADR: list status ith Asciidoc', t => {
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'zh-cn'
+  })
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(asciidocTemplate)
+    .onCall(1).returns(asciidocTemplate)
+
+  let status = StatusHelper.getAllStatus('./001-编写完整的单元测试.adoc')
+  t.deepEqual(status, [
+    '2017-11-23 提议',
+    '2017-11-23 通过'
+  ])
+  fsReadSpy.restore()
+  entriesSpy.restore()
+  cacheSpy.restore()
+  ADRGetDocExtensionSpy.restore()
+})
+
+test('ADR:status helper set status with Asciidoc', t => {
+  let ADRGetDocExtensionSpy = sinon.stub(ADR.Config, 'getDocExtension').returns('adoc')
+  let fsWriteSpy = sinon.stub(fs, 'writeFileSync')
+  let entriesSpy = sinon.stub(walkSync, 'entries').returns([
+    {
+      relativePath: '001-编写完整的单元测试.adoc',
+      basePath: '/Users/fdhuang/learing/adr/docs/adr/',
+      mode: 33188,
+      size: 246,
+      mtime: 1511435254653
+    }
+  ])
+  let cacheSpy = sinon.stub(LRU.prototype, 'get').returns({
+    path: 'some',
+    language: 'zh-cn'
+  })
+  let fsReadSpy = sinon.stub(fs, 'readFileSync')
+    .onCall(0).returns(asciidocTemplate)
+    .onCall(1).returns(asciidocTemplate)
+
+  StatusHelper.setStatus('./001-编写完整的单元测试.adoc', '完成')
+  // t.deepEqual(fsWriteSpy.calledWith('./001-编写完整的单元测试.md', '{"language":"en","path":"docs/adr/","prefix":"","digits":4}'), true)
+  t.deepEqual(true, true)
+  fsReadSpy.restore()
+  fsWriteSpy.restore()
+  entriesSpy.restore()
+  cacheSpy.restore()
+  ADRGetDocExtensionSpy.restore()
 })

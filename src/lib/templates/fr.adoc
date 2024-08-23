@@ -1,0 +1,19 @@
+= {NUMBER}. {TITLE}
+
+Date: {DATE}
+
+== Statut
+
+{DATE} proposé
+
+== Contexte
+
+Contexte ici...
+
+== Décision
+
+Décision ici...
+
+== Conséquences
+
+Conséquences ici...
