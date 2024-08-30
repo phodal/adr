@@ -8,7 +8,7 @@ import { generate } from './generate'
 
 function getTemplatePath (language: string) {
   const fileExt = Config.getDocExtension()
-  const customTemplate = path.join(Config.getSavePath(), 'template.', fileExt)
+  const customTemplate = path.join(Config.getSavePath(), 'template.' + fileExt)
   if (fs.existsSync(customTemplate)) {
     return customTemplate
   } else {
