@@ -1,8 +1,8 @@
 import * as console from 'node:console'
 
 let fs = require('fs')
-let md = require('markdown').markdown
 let asciidoctor = require('@asciidoctor/core')()
+const { Remarkable } = require('remarkable')
 
 import Config from './Config'
 import Utils from './utils'
@@ -11,16 +11,18 @@ let i18n = Utils.getI18n()
 
 function getStatusSection (tree: any) {
   let statusFlag = false
-  let statusSection: string[] = []
+  let statusSection: any[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
-    if (statusFlag && node[0] === 'header') {
+    if (statusFlag && node.type === 'heading_open') {
       return statusSection
     }
     if (statusFlag) {
-      statusSection.push(node)
+      if (node.type === 'inline') {
+        statusSection.push([ 'para', node.content ])
+      }
     }
-    if (node[0] === 'header' && node[2] === i18n.Status) {
+    if (node.type === 'inline' && tree[i - 1] && tree[i - 1].type === 'heading_open' && node.content === i18n.Status) {
       statusFlag = true
     }
   }
@@ -49,7 +51,7 @@ function getAsciidocStatusSection (tree: any) {
   return statusSection
 }
 
-function getStatusWithDate (statusSections: string[]) {
+function getStatusWithDate (statusSections: any[]) {
   let status: string[] = []
   for (let i = 0; i < statusSections.length; i++) {
     let currentStatusSection = statusSections[i]
@@ -121,7 +123,7 @@ function getAllStatus (filePath): string[] {
     statusSections = getAsciidocStatusSection(tree)
     status = getAsciidocStatusWithDate(statusSections)
   } else {
-    let tree = md.parse(fileData)
+    let tree = new Remarkable().parse(fileData, {})
     statusSections = getStatusSection(tree)
     status = getStatusWithDate(statusSections)
   }

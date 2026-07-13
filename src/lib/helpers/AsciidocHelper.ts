@@ -1,10 +1,6 @@
 import { htmlRender } from './htmlRender'
-import { generate } from '../generate'
 
 let asciidoctor = require('@asciidoctor/core')()
-
-let toc = require('markdown-toc')
-const { Remarkable } = require('remarkable')
 
 export function AsciidocRender (fileData) {
   let regExp1 = new RegExp('^=(.*)', 'gm')

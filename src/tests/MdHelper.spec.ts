@@ -36,5 +36,7 @@ test('ADR: MdHelper', t => {
   // t.deepEqual(results, output)
   t.deepEqual(true, true)
   t.deepEqual(results.indexOf('在这里记录结果') !== - 1, true)
+  t.deepEqual(results.indexOf('href="#10-%E6%9B%B4%E5%8F%8B%E5%A5%BD%E7%9A%84-cli"') !== - 1, true)
+  t.deepEqual(results.indexOf('href="#%E7%8A%B6%E6%80%81"') !== - 1, true)
   htmlRenderSpy.restore()
 })
