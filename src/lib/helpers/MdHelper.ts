@@ -26,8 +26,9 @@ function generateToc (fileData: string) {
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i].type !== 'heading_open') continue
     let content = tokens[i + 1].content
-    let number = seen[content] || 0
-    seen[content] = number + 1
+    let baseSlug = slugify(content, 0)
+    let number = seen[baseSlug] || 0
+    seen[baseSlug] = number + 1
     headings.push({ content, level: tokens[i].hLevel, slug: slugify(content, number) })
   }
 

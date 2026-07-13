@@ -9,9 +9,16 @@ import Utils from './utils'
 
 let i18n = Utils.getI18n()
 
+function isStatusHeading (node: any, previousNode: any) {
+  return node.type === 'inline' &&
+    previousNode &&
+    previousNode.type === 'heading_open' &&
+    node.content === i18n.Status
+}
+
 function getStatusSection (tree: any) {
   let statusFlag = false
-  let statusSection: any[] = []
+  let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
     if (statusFlag && node.type === 'heading_open') {
@@ -19,10 +26,10 @@ function getStatusSection (tree: any) {
     }
     if (statusFlag) {
       if (node.type === 'inline') {
-        statusSection.push([ 'para', node.content ])
+        statusSection.push(node.content)
       }
     }
-    if (node.type === 'inline' && tree[i - 1] && tree[i - 1].type === 'heading_open' && node.content === i18n.Status) {
+    if (isStatusHeading(node, tree[i - 1])) {
       statusFlag = true
     }
   }
@@ -51,16 +58,12 @@ function getAsciidocStatusSection (tree: any) {
   return statusSection
 }
 
-function getStatusWithDate (statusSections: any[]) {
+function getStatusWithDate (statusSections: string[]) {
   let status: string[] = []
   for (let i = 0; i < statusSections.length; i++) {
     let currentStatusSection = statusSections[i]
-    if (currentStatusSection[0] !== 'para') {
-      continue
-    }
-
-    if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection[1])) {
-      status.push(currentStatusSection[1])
+    if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection)) {
+      status.push(currentStatusSection)
     }
   }
 
@@ -130,10 +133,10 @@ function getAllStatus (filePath): string[] {
 
   if (status.length === 0) {
     let lastStatusSection = statusSections[statusSections.length - 1]
-    if (!(lastStatusSection && lastStatusSection[1])) {
+    if (!lastStatusSection) {
       return []
     }
-    status = [lastStatusSection[1]]
+    status = [lastStatusSection]
   }
 
   return status
