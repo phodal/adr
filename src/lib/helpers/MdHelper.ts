@@ -48,9 +48,9 @@ export function mdRender (fileData) {
         let content = tokens[idx + 1].content
         if (tokens[idx].hLevel === 1) {
           lastH1Index = content.split('. ')[0] - 1
-          return '<h' + tokens[idx].hLevel + ' id="' + encodeURIComponent(slugify(content, 0)) + '">'
+          return `<h${tokens[idx].hLevel} id="${encodeURIComponent(slugify(content, 0))}">`
         } else {
-          return '<h' + tokens[idx].hLevel + ' id="' + encodeURIComponent(slugify(content + ' ' + lastH1Index, 0)) + '">'
+          return `<h${tokens[idx].hLevel} id="${encodeURIComponent(slugify(content + ' ' + lastH1Index, 0))}">`
         }
       }
     })
