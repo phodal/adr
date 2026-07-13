@@ -1,26 +1,40 @@
 import * as console from 'node:console'
 
 let fs = require('fs')
-let md = require('markdown').markdown
 let asciidoctor = require('@asciidoctor/core')()
+const { Remarkable } = require('remarkable')
 
 import Config from './Config'
 import Utils from './utils'
 
 let i18n = Utils.getI18n()
 
-function getStatusSection (tree: any) {
+interface MarkdownToken {
+  type: string
+  content?: string
+}
+
+function isStatusHeading (node: MarkdownToken, previousNode?: MarkdownToken) {
+  return node.type === 'inline' &&
+    previousNode &&
+    previousNode.type === 'heading_open' &&
+    node.content === i18n.Status
+}
+
+function getStatusSection (tree: MarkdownToken[]) {
   let statusFlag = false
   let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
     let node = tree[i]
-    if (statusFlag && node[0] === 'header') {
+    if (statusFlag && node.type === 'heading_open') {
       return statusSection
     }
     if (statusFlag) {
-      statusSection.push(node)
+      if (node.type === 'inline' && node.content) {
+        statusSection.push(node.content)
+      }
     }
-    if (node[0] === 'header' && node[2] === i18n.Status) {
+    if (isStatusHeading(node, tree[i - 1])) {
       statusFlag = true
     }
   }
@@ -53,12 +67,8 @@ function getStatusWithDate (statusSections: string[]) {
   let status: string[] = []
   for (let i = 0; i < statusSections.length; i++) {
     let currentStatusSection = statusSections[i]
-    if (currentStatusSection[0] !== 'para') {
-      continue
-    }
-
-    if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection[1])) {
-      status.push(currentStatusSection[1])
+    if (/\d{1,4}-\d{1,2}-\d{1,2}/.test(currentStatusSection)) {
+      status.push(currentStatusSection)
     }
   }
 
@@ -121,17 +131,17 @@ function getAllStatus (filePath): string[] {
     statusSections = getAsciidocStatusSection(tree)
     status = getAsciidocStatusWithDate(statusSections)
   } else {
-    let tree = md.parse(fileData)
+    let tree: MarkdownToken[] = new Remarkable().parse(fileData, {})
     statusSections = getStatusSection(tree)
     status = getStatusWithDate(statusSections)
   }
 
   if (status.length === 0) {
     let lastStatusSection = statusSections[statusSections.length - 1]
-    if (!(lastStatusSection && lastStatusSection[1])) {
+    if (!lastStatusSection) {
       return []
     }
-    status = [lastStatusSection[1]]
+    status = [lastStatusSection]
   }
 
   return status
