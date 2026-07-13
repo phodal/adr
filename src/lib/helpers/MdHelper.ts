@@ -1,17 +1,18 @@
 import { htmlRender } from './htmlRender'
 
 const { Remarkable } = require('remarkable')
+const punctuation = new Set('|$&`~=\\/@+*!?({[]})<>=.,;:\'"^。？！，、；：“”【】（）〔〕［］﹃﹄“ ”‘’﹁﹂—…－～《》〈〉「」')
+const bullets = [ '-', '*', '+' ]
 
 function slugify (content: string, number: number) {
   let slug = ''
-  let punctuation = '|$&`~=\\/@+*!?({[]})<>=.,;:\'"^。？！，、；：“”【】（）〔〕［］﹃﹄“ ”‘’﹁﹂—…－～《》〈〉「」'
 
   for (let character of content.toLowerCase().normalize('NFD')) {
     let code = character.charCodeAt(0)
     if (code >= 0x0300 && code <= 0x036f) continue
     if (character === ' ') slug += '-'
     else if (character === '\t') slug += '--'
-    else if (!punctuation.includes(character)) slug += character
+    else if (!punctuation.has(character)) slug += character
   }
 
   slug = slug || 'heading'
@@ -35,7 +36,7 @@ function generateToc (fileData: string) {
   let highestLevel = headings.length ? Math.min(...headings.map(heading => heading.level)) : 0
   return headings.map(heading => {
     let indent = '  '.repeat(heading.level - highestLevel)
-    let bullet = [ '-', '*', '+' ][(heading.level - highestLevel) % 3]
+    let bullet = bullets[(heading.level - highestLevel) % 3]
     return `${indent}${bullet} [${heading.content}](#${encodeURIComponent(heading.slug)})`
   }).join('\n')
 }

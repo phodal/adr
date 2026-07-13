@@ -9,14 +9,19 @@ import Utils from './utils'
 
 let i18n = Utils.getI18n()
 
-function isStatusHeading (node: any, previousNode: any) {
+interface MarkdownToken {
+  type: string
+  content?: string
+}
+
+function isStatusHeading (node: MarkdownToken, previousNode?: MarkdownToken) {
   return node.type === 'inline' &&
     previousNode &&
     previousNode.type === 'heading_open' &&
     node.content === i18n.Status
 }
 
-function getStatusSection (tree: any) {
+function getStatusSection (tree: MarkdownToken[]) {
   let statusFlag = false
   let statusSection: string[] = []
   for (let i = 0; i < tree.length; i++) {
@@ -25,7 +30,7 @@ function getStatusSection (tree: any) {
       return statusSection
     }
     if (statusFlag) {
-      if (node.type === 'inline') {
+      if (node.type === 'inline' && node.content) {
         statusSection.push(node.content)
       }
     }
@@ -126,7 +131,7 @@ function getAllStatus (filePath): string[] {
     statusSections = getAsciidocStatusSection(tree)
     status = getAsciidocStatusWithDate(statusSections)
   } else {
-    let tree = new Remarkable().parse(fileData, {})
+    let tree: MarkdownToken[] = new Remarkable().parse(fileData, {})
     statusSections = getStatusSection(tree)
     status = getStatusWithDate(statusSections)
   }
